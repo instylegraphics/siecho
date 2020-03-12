@@ -21,11 +21,11 @@ class TournamentViewSet(viewsets.ModelViewSet):
 class SeriesViewSet(viewsets.ModelViewSet):
     queryset = Series.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = SeriesSerializer
 
-
+    
 class SceneViewSet(viewsets.ModelViewSet):
     queryset = Scene.objects.all()
     permission_classes = [
