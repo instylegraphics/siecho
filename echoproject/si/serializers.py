@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from si.models import (Tournament, Series, Scene,
-                       Team, Player, GameFaction, Match, PlayerStats, Game, GameMode, Map)
+                       Team, Player, GameFaction, Match, PlayerStats, Game, GameMode, GameMap)
 
 
 class TournamentSerializer(serializers.ModelSerializer):
@@ -64,7 +64,7 @@ class GameModeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class MapSerializer(serializers.ModelSerializer):
+class GameMapSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Map
+        model = GameMap
         fields = '__all__'

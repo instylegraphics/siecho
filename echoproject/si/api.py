@@ -4,10 +4,10 @@ from rest_framework.views import APIView
 
 
 from si.models import (Tournament, Series, Scene,
-                       Team, Player, GameFaction, Match, PlayerStats, Game, GameMode, Map)
+                       Team, Player, GameFaction, Match, PlayerStats, Game, GameMode, GameMap)
 
 from si.serializers import ( TournamentSerializer, SeriesSerializer, SceneSerializer, TeamSerializer, PlayerSerializer,
-                            GameFactionSerializer, MatchSerializer,  PlayerStatsSerializer, GameSerializer, GameModeSerializer, MapSerializer)
+                            GameFactionSerializer, MatchSerializer,  PlayerStatsSerializer, GameSerializer, GameModeSerializer, GameMapSerializer)
 
 
 class TournamentViewSet(viewsets.ModelViewSet):
@@ -90,9 +90,9 @@ class GameModeViewSet(viewsets.ModelViewSet):
     serializer_class = GameModeSerializer
 
 
-class MapViewSet(viewsets.ModelViewSet):
-    queryset = Map.objects.all()
+class GameMapViewSet(viewsets.ModelViewSet):
+    queryset = GameMap.objects.all()
     permission_classes = [
         permissions.AllowAny
     ]
-    serializer_class = MapSerializer
+    serializer_class = GameMapSerializer

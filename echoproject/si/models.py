@@ -26,6 +26,7 @@ class GameMode(models.Model):
 class GameFaction(models.Model):
 
     name = models.CharField(max_length=50)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
     htmlcolorvalue = models.CharField(max_length=10, blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
@@ -33,7 +34,7 @@ class GameFaction(models.Model):
         return self.name
 
 
-class Map(models.Model):
+class GameMap(models.Model):
 
     name = models.CharField(max_length=50)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
@@ -59,7 +60,7 @@ class Tournament(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return '{} - {}'.format(self.tournament.name, self.name)
+        return '{} - {}'.format(self.game.name, self.name)
 
     class Meta:
         ordering = ['scheduled_date']
@@ -130,7 +131,7 @@ class Series(models.Model):
 class Match(models.Model):
 
     series = models.ForeignKey(Series, on_delete=models.CASCADE)
-    map = models.ForeignKey(Map, on_delete=models.DO_NOTHING)
+    gamemap = models.ForeignKey(GameMap, on_delete=models.DO_NOTHING)
     gamemode = models.ForeignKey(
         GameMode, on_delete=models.DO_NOTHING, null=True)
     match_order = models.PositiveIntegerField(default=1)
@@ -171,7 +172,7 @@ class PlayerStats(models.Model):
     losses = models.PositiveIntegerField(default=0)
     gamesplayed = models.PositiveIntegerField(default=0)
     gamemode = models.ForeignKey(GameMode, on_delete=models.CASCADE)
-    gamemap = models.ForeignKey(Map, on_delete=models.CASCADE)
+    gamemap = models.ForeignKey(GameMap, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.player.username

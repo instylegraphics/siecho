@@ -1,6 +1,6 @@
 from django.contrib import admin
 from si.models import (Tournament, Series, Scene,
-                       Team, Player, GameFaction, Match, PlayerStats, Game, GameMode, Map)
+                       Team, Player, GameFaction, Match, PlayerStats, Game, GameMode, GameMap)
 
 
 @admin.register(Game)
@@ -48,8 +48,8 @@ class MatchAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Map)
-class MapAdmin(admin.ModelAdmin):
+@admin.register(GameMap)
+class GameMapAdmin(admin.ModelAdmin):
     pass
 
 
