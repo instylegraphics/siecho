@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addSeries } from "../../actions/series";
 
-export class Form extends Component {
+export class FormSeries extends Component {
   state = {
     tournament: "",
     name: "",
@@ -159,4 +159,4 @@ export class Form extends Component {
 export default connect(
   null,
   { addSeries }
-)(Form);
+)(FormSeries);

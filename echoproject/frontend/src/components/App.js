@@ -12,7 +12,7 @@ import AlertTemplate from "react-alert-template-basic";
 
 import Header from "./layout/Header";
 import Dashboard from "./leads/Dashboard";
-import SeriesPage from "./series/Page";
+import SeriesPage from "./series/PageSeries";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";

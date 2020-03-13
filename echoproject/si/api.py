@@ -13,7 +13,7 @@ from si.serializers import ( TournamentSerializer, SeriesSerializer, SceneSerial
 class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = TournamentSerializer
 
@@ -29,7 +29,7 @@ class SeriesViewSet(viewsets.ModelViewSet):
 class SceneViewSet(viewsets.ModelViewSet):
     queryset = Scene.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = SceneSerializer
 
@@ -37,7 +37,7 @@ class SceneViewSet(viewsets.ModelViewSet):
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = TeamSerializer
 
@@ -45,7 +45,7 @@ class TeamViewSet(viewsets.ModelViewSet):
 class PlayerViewSet(viewsets.ModelViewSet):
     queryset = Player.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = PlayerSerializer
 
@@ -53,7 +53,7 @@ class PlayerViewSet(viewsets.ModelViewSet):
 class GameFactionViewSet(viewsets.ModelViewSet):
     queryset = GameFaction.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = GameFactionSerializer
 
@@ -61,7 +61,7 @@ class GameFactionViewSet(viewsets.ModelViewSet):
 class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = MatchSerializer
 
@@ -69,7 +69,7 @@ class MatchViewSet(viewsets.ModelViewSet):
 class PlayerStatsViewSet(viewsets.ModelViewSet):
     queryset = PlayerStats.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = PlayerStatsSerializer
 
@@ -77,7 +77,7 @@ class PlayerStatsViewSet(viewsets.ModelViewSet):
 class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = GameSerializer
 
@@ -85,7 +85,7 @@ class GameViewSet(viewsets.ModelViewSet):
 class GameModeViewSet(viewsets.ModelViewSet):
     queryset = GameMode.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = GameModeSerializer
 
@@ -93,6 +93,6 @@ class GameModeViewSet(viewsets.ModelViewSet):
 class GameMapViewSet(viewsets.ModelViewSet):
     queryset = GameMap.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = GameMapSerializer
