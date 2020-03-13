@@ -59,7 +59,13 @@ class GameMapSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TournamentSerializer(serializers.ModelSerializer):
+class TournamentSerializer(serializers.ModelSerializer):    
+    class Meta:
+        model = Tournament
+        fields = '__all__'
+        
+
+class TournamentGetSerializer(serializers.ModelSerializer):
 
     game = GameSerializer(read_only=True)
     producer = UserSerializer(read_only=True)
@@ -70,8 +76,16 @@ class TournamentSerializer(serializers.ModelSerializer):
         model = Tournament
         fields = '__all__'
         
-        
+
 class SeriesSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Series
+        fields = '__all__'
+        
+                
+        
+class SeriesGetSerializer(serializers.ModelSerializer):
     
     tournament = TournamentSerializer(read_only=True)
     team_one = TeamSerializer(read_only=True)
@@ -80,8 +94,15 @@ class SeriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Series
         fields = '__all__'
+
+
+class MatchSerializer(serializers.ModelSerializer):    
+    class Meta:
+        model = Match
+        fields = '__all__'
         
-class MatchSerializer(serializers.ModelSerializer):
+                
+class MatchGetSerializer(serializers.ModelSerializer):
 
     series = SeriesSerializer(read_only=True)
     gamemap = GameMapSerializer(read_only=True) 
