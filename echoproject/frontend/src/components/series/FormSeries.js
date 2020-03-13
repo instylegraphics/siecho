@@ -79,7 +79,10 @@ export class FormSeries extends Component {
             <label>series_order</label>
             <input
               className="form-control"
-              type="text"
+              type="number"
+              min="0" 
+              max="100" 
+              step="1"
               name="series_order"
               onChange={this.onChange}
               value={series_order}
@@ -113,7 +116,10 @@ export class FormSeries extends Component {
             <label>best_of</label>
             <input
               className="form-control"
-              type="text"
+              type="number"
+              min="0" 
+              max="100" 
+              step="1"
               name="best_of"
               onChange={this.onChange}
               value={best_of}
