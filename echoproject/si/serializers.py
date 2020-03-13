@@ -1,15 +1,16 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
 from si.models import (Tournament, Series, Scene,
                        Team, Player, GameFaction, Match, PlayerStats, Game, GameMode, GameMap)
 
 
-class TournamentSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tournament
-        fields = '__all__'
-
-
+      model = User
+      fields = '__all__'
+      
+          
 class SceneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Scene
@@ -58,6 +59,18 @@ class GameMapSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TournamentSerializer(serializers.ModelSerializer):
+
+    game = GameSerializer(read_only=True)
+    producer = UserSerializer(read_only=True)
+    coproducer_one = UserSerializer(read_only=True)
+    coproducer_two = UserSerializer(read_only=True)
+    
+    class Meta:
+        model = Tournament
+        fields = '__all__'
+        
+        
 class SeriesSerializer(serializers.ModelSerializer):
     
     tournament = TournamentSerializer(read_only=True)
