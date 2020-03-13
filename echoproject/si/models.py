@@ -125,7 +125,10 @@ class Series(models.Model):
         return '{} - {} vs {} - Best of {}'.format(
             self.name, self.team_one.name, self.team_two.name, self.best_of)
 
-
+    class Meta:
+        ordering = ['series_order']
+        
+        
 class Match(models.Model):
 
     series = models.ForeignKey(Series, on_delete=models.CASCADE)

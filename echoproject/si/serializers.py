@@ -10,12 +10,6 @@ class TournamentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class SeriesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Series
-        fields = '__all__'
-
-
 class SceneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Scene
@@ -40,12 +34,6 @@ class GameFactionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class MatchSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Match
-        fields = '__all__'
-
-
 class PlayerStatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlayerStats
@@ -67,4 +55,30 @@ class GameModeSerializer(serializers.ModelSerializer):
 class GameMapSerializer(serializers.ModelSerializer):
     class Meta:
         model = GameMap
+        fields = '__all__'
+
+
+class SeriesSerializer(serializers.ModelSerializer):
+    
+    tournament = TournamentSerializer(read_only=True)
+    team_one = TeamSerializer(read_only=True)
+    team_two = TeamSerializer(read_only=True)
+    
+    class Meta:
+        model = Series
+        fields = '__all__'
+        
+class MatchSerializer(serializers.ModelSerializer):
+
+    series = SeriesSerializer(read_only=True)
+    gamemap = GameMapSerializer(read_only=True) 
+    gamemode = GameModeSerializer(read_only=True) 
+    team_one = TeamSerializer(read_only=True)
+    team_one_faction = GameFactionSerializer(read_only=True) 
+    team_two = TeamSerializer(read_only=True)
+    team_two_faction = GameFactionSerializer(read_only=True)  
+    winner = TeamSerializer(read_only=True)
+    
+    class Meta:
+        model = Match
         fields = '__all__'
