@@ -9,7 +9,8 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  ADD_MATCHES
 } from "./types";
 
 // CHECK TOKEN & LOAD USER
@@ -24,6 +25,7 @@ export const loadUser = () => (dispatch, getState) => {
         type: USER_LOADED,
         payload: res.data
       });
+      console.log(res.data);
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));

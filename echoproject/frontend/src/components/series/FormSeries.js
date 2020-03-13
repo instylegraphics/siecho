@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addSeries } from "../../actions/series";
 import { getTournaments } from "../../actions/tournaments";
+import axios from "axios";
 
 export class FormSeries extends Component {
   state = {
@@ -19,16 +20,23 @@ export class FormSeries extends Component {
     tournaments: PropTypes.array.isRequired,
     getTournaments: PropTypes.func.isRequired      
   };
-    componentDidMount() {
-      this.props.getTournaments();
-    }
+    
+  componentDidMount() {
+    this.props.getTournaments();
+  }
+    
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   onSubmit = e => {
     e.preventDefault();
     const { tournament, name, series_order, team_one, team_two, best_of } = this.state;
     const series = { tournament, name, series_order, team_one, team_two, best_of };
+
     this.props.addSeries(series);
+
+    console.log(series);
+    console.log("best of:" + series.best_of);
+ 
     this.setState({
       tournament: "",
       name: "",
@@ -43,6 +51,7 @@ export class FormSeries extends Component {
     const { tournament, name, series_order, team_one, team_two, best_of } = this.state;
     return (
       <div className="card card-body mt-4 mb-4">
+        { console.log(this.props) }
         <h2>Add Series</h2>
         <form onSubmit={this.onSubmit}>
           
@@ -118,6 +127,7 @@ export class FormSeries extends Component {
             </button>
           </div>
         </form>
+        
       </div>
     );
   }

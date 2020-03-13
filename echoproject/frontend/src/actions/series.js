@@ -2,7 +2,7 @@ import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
 
-import { GET_SERIES, DELETE_SERIES, ADD_SERIES } from "./types";
+import { GET_SERIES, DELETE_SERIES, ADD_SERIES, ADD_MATCHES } from "./types";
 
 // GET SERIES
 export const getSeries = () => (dispatch, getState) => {
@@ -43,6 +43,37 @@ export const addSeries = series => (dispatch, getState) => {
         type: ADD_SERIES,
         payload: res.data
       });
+      // ADD MATCHES Base on Best Of
+      console.log(res.data);
+      console.log(res.data.best_of);
+      console.log(res.data.id);
+      for (var i = 1; i <= res.data.best_of; i++){
+        //console.log("loop - best of:" + i);
+        //console.log("series id:" + res.data.id);
+        //console.log("match_order:" + i);
+        //console.log("series id:" + res.data.team_one);
+        //console.log("series id:" + res.data.team_two);
+
+        // POST
+        const matchData = {
+          match_order: i,
+          series: res.data.id,
+          team_one: res.data.team_one,
+          team_two: res.data.team_two
+        }
+      
+        axios.post('/si/match/', matchData, tokenConfig(getState))
+         .then(res => {
+              // post matching
+              dispatch({ type: ADD_MATCHES });   
+              console.log("success add match" + i);
+              console.log(res.data);
+         })
+         .catch(err => console.log(err));
+
+      }// for loop
+      
+
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))

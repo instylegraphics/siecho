@@ -1,4 +1,5 @@
 export const GET_TOURNAMENTS = "GET_TOURNAMENTS";
+export const ADD_MATCHES = "ADD_MATCHES";
 
 export const GET_LEADS = "GET_LEADS";
 export const DELETE_LEAD = "DELETE_LEAD";
