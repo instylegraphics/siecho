@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addSeries } from "../../actions/series";
+import { getTournaments } from "../../actions/tournaments";
 
 export class FormSeries extends Component {
   state = {
@@ -9,52 +10,50 @@ export class FormSeries extends Component {
     name: "",
     series_order: "",
     team_one: "",
-    team_one_score: "",
     team_two: "",
-    team_two_score: "",
-    best_of: "",
-    active: ""
+    best_of: ""
   };
 
   static propTypes = {
-    addSeries: PropTypes.func.isRequired
+    addSeries: PropTypes.func.isRequired,
+    tournaments: PropTypes.array.isRequired,
+    getTournaments: PropTypes.func.isRequired      
   };
-
+    componentDidMount() {
+      this.props.getTournaments();
+    }
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   onSubmit = e => {
     e.preventDefault();
-    const { tournament, name, series_order, team_one, team_one_score, team_two, team_two_score, best_of, active } = this.state;
-    const series = { tournament, name, series_order, team_one, team_one_score, team_two, team_two_score, best_of, active };
+    const { tournament, name, series_order, team_one, team_two, best_of } = this.state;
+    const series = { tournament, name, series_order, team_one, team_two, best_of };
     this.props.addSeries(series);
     this.setState({
       tournament: "",
       name: "",
       series_order: "",
       team_one: "",
-      team_one_score: "",
       team_two: "",
-      team_two_score: "",
-      best_of: "",
-      active: ""
+      best_of: ""
     });
   };
 
   render() {
-    const { tournament, name, series_order, team_one, team_one_score, team_two, team_two_score, best_of, active } = this.state;
+    const { tournament, name, series_order, team_one, team_two, best_of } = this.state;
     return (
       <div className="card card-body mt-4 mb-4">
         <h2>Add Series</h2>
         <form onSubmit={this.onSubmit}>
+          
           <div className="form-group">
-            <label>tournament</label>
-            <input
-              className="form-control"
-              type="text"
-              name="tournament"
-              onChange={this.onChange}
-              value={tournament}
-            />
+            <label>Tournament</label>          
+               <select name="tournament" className="form-control custom-select" onChange={this.onChange}>
+                <option>Select Tournament</option>
+               {this.props.tournaments.map(tournament => (
+                <option key={tournament.id} value={tournament.id}>{tournament.name}</option>
+               ))}
+              </select>
           </div>
           
           <div className="form-group">
@@ -90,17 +89,7 @@ export class FormSeries extends Component {
             />
           </div>
           
-           <div className="form-group">
-            <label>team_one_score</label>
-            <input
-              className="form-control"
-              type="text"
-              name="team_one_score"
-              onChange={this.onChange}
-              value={team_one_score}
-            />
-          </div>
-                    <div className="form-group">
+          <div className="form-group">
             <label>team_two</label>
             <input
               className="form-control"
@@ -110,28 +99,6 @@ export class FormSeries extends Component {
               value={team_two}
             />
           </div>         
-          
-           <div className="form-group">
-            <label>team_two_score</label>
-            <input
-              className="form-control"
-              type="text"
-              name="team_two_score"
-              onChange={this.onChange}
-              value={team_two_score}
-            />
-          </div>
- 
-            <div className="form-group">
-            <label>active</label>
-            <input
-              className="form-control"
-              type="text"
-              name="active"
-              onChange={this.onChange}
-              value={active}
-            />
-          </div>
                    
            <div className="form-group">
             <label>best_of</label>
@@ -156,7 +123,11 @@ export class FormSeries extends Component {
   }
 }
 
-export default connect(
-  null,
-  { addSeries }
+const mapStateToProps = state => ({
+  tournaments: state.tournaments.tournaments
+});
+
+export default connect( 
+  mapStateToProps,
+    { addSeries, getTournaments } 
 )(FormSeries);
