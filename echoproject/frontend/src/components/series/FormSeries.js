@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addSeries } from "../../actions/series";
 import { getTournaments } from "../../actions/tournaments";
-import axios from "axios";
+import { getTeams} from "../../actions/teams";
 
 export class FormSeries extends Component {
   state = {
@@ -18,11 +18,13 @@ export class FormSeries extends Component {
   static propTypes = {
     addSeries: PropTypes.func.isRequired,
     tournaments: PropTypes.array.isRequired,
-    getTournaments: PropTypes.func.isRequired      
+    getTournaments: PropTypes.func.isRequired,
+    getTeams: PropTypes.func.isRequired   
   };
     
   componentDidMount() {
     this.props.getTournaments();
+    this.props.getTeams();
   }
     
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -31,12 +33,9 @@ export class FormSeries extends Component {
     e.preventDefault();
     const { tournament, name, series_order, team_one, team_two, best_of } = this.state;
     const series = { tournament, name, series_order, team_one, team_two, best_of };
-
     this.props.addSeries(series);
-
-    console.log(series);
-    console.log("best of:" + series.best_of);
- 
+    //console.log(series);
+    //console.log("best of:" + series.best_of);
     this.setState({
       tournament: "",
       name: "",
@@ -86,28 +85,29 @@ export class FormSeries extends Component {
               value={series_order}
             />
           </div>
-          
+ 
+ 
           <div className="form-group">
-            <label>team_one</label>
-            <input
-              className="form-control"
-              type="text"
-              name="team_one"
-              onChange={this.onChange}
-              value={team_one}
-            />
+            <label>Team One</label>          
+               <select name="team_one" className="form-control custom-select" onChange={this.onChange}>
+                <option>Select Team One</option>
+               {this.props.teams.map(team => (
+                <option key={team.id} value={team.id}>{team.name}</option>
+               ))}
+              </select>
           </div>
+ 
           
           <div className="form-group">
-            <label>team_two</label>
-            <input
-              className="form-control"
-              type="text"
-              name="team_two"
-              onChange={this.onChange}
-              value={team_two}
-            />
-          </div>         
+            <label>Team One</label>          
+               <select name="team_two" className="form-control custom-select" onChange={this.onChange}>
+                <option>Select Team Two</option>
+               {this.props.teams.map(team => (
+                <option key={team.id} value={team.id}>{team.name}</option>
+               ))}
+              </select>
+          </div>
+                
                    
            <div className="form-group">
             <label>best_of</label>
@@ -134,10 +134,11 @@ export class FormSeries extends Component {
 }
 
 const mapStateToProps = state => ({
-  tournaments: state.tournaments.tournaments
+  tournaments: state.tournaments.tournaments,
+  teams: state.teams.teams
 });
 
 export default connect( 
   mapStateToProps,
-    { addSeries, getTournaments } 
+    { addSeries, getTournaments, getTeams } 
 )(FormSeries);
