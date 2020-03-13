@@ -129,7 +129,7 @@ class Series(models.Model):
 class Match(models.Model):
 
     series = models.ForeignKey(Series, on_delete=models.CASCADE)
-    gamemap = models.ForeignKey(GameMap, on_delete=models.DO_NOTHING)
+    gamemap = models.ForeignKey(GameMap, on_delete=models.DO_NOTHING, blank=True, null=True)
     gamemode = models.ForeignKey(
         GameMode, on_delete=models.DO_NOTHING, blank=True, null=True)
     match_order = models.PositiveIntegerField(default=1)
