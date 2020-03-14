@@ -23,6 +23,13 @@ export class Header extends Component {
             Create Series
           </Link>
         </li>
+
+        <li className="nav-item">
+          <Link to="/matchselect" className="nav-link">
+            Edit Match
+          </Link>
+        </li>
+                
         <li className="nav-item">
           <button
             onClick={this.props.logout}

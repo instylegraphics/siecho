@@ -102,7 +102,7 @@ export class FormSeries extends Component {
  
           
           <div className="form-group">
-            <label>Team One</label>          
+            <label>Team Two</label>          
                <select name="team_two" className="form-control custom-select" onChange={this.onChange}>
                 <option>Select Team Two</option>
                {this.props.teams.map(team => (
