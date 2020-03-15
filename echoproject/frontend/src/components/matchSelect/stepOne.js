@@ -18,18 +18,17 @@ export class StepOneTournamentForm extends Component {
   
   }
   render() {
-    const { matches, handleChange } = this.props;
+    const { valueProps, handleChange } = this.props;
     console.log(this.props);
     return (
        
         <React.Fragment>
         <div className="card card-body mt-4 mb-4">
-                    <h1>Pick Tournament</h1>
-
-          
+                    <h1>Step 1: Pick Tournament</h1>
+                              
           <div className="form-group">
             <label>Tournament</label>          
-               <select required value={matches.tournament} name="tournament" className="form-control custom-select" onChange={handleChange('tournament')}>
+               <select required value={valueProps.tournament} name="tournament" className="form-control custom-select" onChange={handleChange('tournament')}>
                 <option>Select Tournament</option>
                {this.props.tournaments.map(tournament => (
                 <option key={tournament.id} value={tournament.id}>{tournament.name}</option>
@@ -37,7 +36,6 @@ export class StepOneTournamentForm extends Component {
               </select>
           </div>
 
- 
             <br />
    
             

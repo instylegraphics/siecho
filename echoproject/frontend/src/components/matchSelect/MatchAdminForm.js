@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StepOneTournamentForm from './stepOne';
 import StepTwoSeriesForm from './stepTwo';
-import StepThreeMatchForm from './stepThree';
+import StepThreeSeriesForm from './stepThree';
 import Confirm from './Confirm';
 import Success from './Success';
 
@@ -42,7 +42,8 @@ export class matchAdminForm extends Component {
   render() {
     const { step } = this.state;
     const { tournament, series, match } = this.state;
-    const matches = { tournament, series, match };
+    const valueProps = { tournament, series, match };
+    console.log("return props from main page");
     console.log(this.props);
      
     switch (step) {
@@ -51,7 +52,7 @@ export class matchAdminForm extends Component {
           <StepOneTournamentForm
             nextStep={this.nextStep}
             handleChange={this.handleChange}
-            matches={matches}
+            valueProps={valueProps}
           />
         );
       case 2:
@@ -60,16 +61,16 @@ export class matchAdminForm extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
-            matches={matches}
+            valueProps={valueProps}
           />
         );
       case 3:
         return (
-          <StepThreeMatchForm
+          <StepThreeSeriesForm
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
-            matches={matches}
+            valueProps={valueProps}
           />
         );       
       case 4:
@@ -77,7 +78,7 @@ export class matchAdminForm extends Component {
           <Confirm
             nextStep={this.nextStep}
             prevStep={this.prevStep}
-            matches={matches}
+            valueProps={valueProps}
           />
         );
       case 5:

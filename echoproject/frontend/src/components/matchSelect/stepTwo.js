@@ -19,13 +19,13 @@ export class StepTwoSeriesForm extends Component {
   };
     
   componentDidMount() {
-    this.props.getSeries(this.props.matches.tournament);
+    this.props.getSeries(this.props.valueProps.tournament);
     console.log('tid:');
-    console.log(this.props.matches.tournament);
+    console.log(this.props.valueProps.tournament);
   }
   
   render() {
-    const { matches, handleChange } = this.props;
+    const { valueProps, handleChange } = this.props;
     console.log('series props');
     console.log(this.props);
     
@@ -34,16 +34,14 @@ export class StepTwoSeriesForm extends Component {
      
         <React.Fragment>
          <div className="card card-body mt-4 mb-4">
-            <h1>Pick Series</h1>
+            <h1>Step 2: Pick Series</h1>
 
            <div className="form-group">
-            <label>Select Series :t-{matches.tournament}:</label>          
-               <select required value={matches.series} name="series" className="form-control custom-select" onChange={handleChange('series')}>
+            <label>Select Series :t- {valueProps.tournament}:</label>          
+               <select required value={valueProps.series} name="series" className="form-control custom-select" onChange={handleChange('series')}>
                 <option>Select Series</option>
-               {this.props.series.map(series => (
-               
-                  <option  key={series.id} value={series.id}>{series.name}</option>
-           
+               {this.props.series.map(series => (            
+                  <option  key={series.id} value={series.id}>{series.name}</option>  
                ))}
               </select>
           </div>

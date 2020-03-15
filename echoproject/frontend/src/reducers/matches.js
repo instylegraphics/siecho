@@ -9,7 +9,7 @@ export default function (state = initialState, action) {
     case GET_MATCHES:
       return {
         ...state,
-        series: action.payload
+        matches: action.payload
       };
     default:
       return state;
