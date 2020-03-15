@@ -104,7 +104,7 @@ class MatchSerializer(serializers.ModelSerializer):
                 
 class MatchGetSerializer(serializers.ModelSerializer):
 
-    series = SeriesSerializer(read_only=True)
+    series = SeriesGetSerializer(read_only=True)
     gamemap = GameMapSerializer(read_only=True) 
     gamemode = GameModeSerializer(read_only=True) 
     team_one = TeamSerializer(read_only=True)

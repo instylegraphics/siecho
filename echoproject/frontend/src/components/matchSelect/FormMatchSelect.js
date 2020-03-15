@@ -18,8 +18,7 @@ export class FormMatchSelect extends Component {
     
   componentDidMount() {
     this.props.getMatches();
-    console.log("1st mount props:");
-    console.log(this.props);
+  
   }
     
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -27,7 +26,7 @@ export class FormMatchSelect extends Component {
     e.preventDefault();
     const { tournament, series, match } = this.state;
     const matches = { tournament, series, match };
-    //this.props.getMatches(matches);
+    //this.props.selectMatche(matches.match);
 
     console.log(matches);
     console.log("tournament:" + matches.tournament);
@@ -45,7 +44,7 @@ export class FormMatchSelect extends Component {
     const { tournament, series, match } = this.state;
     return (
       <div className="card card-body mt-4 mb-4">
-        { console.log(this.props) }
+        <p>props: { console.log(this.props) }</p>
         <h2>Select Match</h2>
         <form onSubmit={this.onSubmit}>
           
