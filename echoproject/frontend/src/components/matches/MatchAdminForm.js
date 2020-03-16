@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import StepOneTournamentForm from './stepOne';
 import StepTwoSeriesForm from './stepTwo';
-import StepThreeSeriesForm from './stepThree';
+import StepThreeMatchForm from './stepThree';
+import StepFourMatchAdminForm from './stepFour';
 import Confirm from './Confirm';
 import Success from './Success';
 
@@ -10,11 +11,18 @@ export class matchAdminForm extends Component {
     step: 1,
     tournament: "",
     series: "",
-    match: ""
+    match: "",
+    room_code: "",
+    game_mode: "",
+    game_map: "",
+    team_one_side: "",
+    team_one_score: "",
+    team_two_side: "",
+    team_two_score: "",
+    winner_match: ""    
   };
   
 
-  
   // Proceed to next step
   nextStep = () => {
     const { step } = this.state;
@@ -41,8 +49,8 @@ export class matchAdminForm extends Component {
 
   render() {
     const { step } = this.state;
-    const { tournament, series, match } = this.state;
-    const valueProps = { tournament, series, match };
+    const { tournament, series, match, room_code, game_mode, game_map, team_one_side, team_one_score, team_two_side, team_two_score, winner_match } = this.state;
+    const valueProps = { tournament, series, match, room_code, game_mode, game_map, team_one_side, team_one_score, team_two_side, team_two_score, winner_match };
     console.log("return props from main page");
     console.log(this.props);
      
@@ -66,14 +74,23 @@ export class matchAdminForm extends Component {
         );
       case 3:
         return (
-          <StepThreeSeriesForm
+          <StepThreeMatchForm
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
             valueProps={valueProps}
           />
-        );       
+        );      
       case 4:
+        return (
+          <StepFourMatchAdminForm
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            handleChange={this.handleChange}
+            valueProps={valueProps}
+          />
+        );            
+      case 5:
         return (
           <Confirm
             nextStep={this.nextStep}
@@ -81,7 +98,7 @@ export class matchAdminForm extends Component {
             valueProps={valueProps}
           />
         );
-      case 5:
+      case 6:
         return <Success />;
     }
   }

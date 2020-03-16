@@ -34,7 +34,7 @@ export class StepTwoSeriesForm extends Component {
      
         <React.Fragment>
          <div className="card card-body mt-4 mb-4">
-            <h1>Step 2: Pick Series</h1>
+            <h1>Step 2: Pick a Series</h1>
 
            <div className="form-group">
             <label>Select Series :t- {valueProps.tournament}:</label>          

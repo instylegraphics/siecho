@@ -51,7 +51,7 @@ export class FormSeries extends Component {
     return (
       <div className="card card-body mt-4 mb-4">
         { console.log(this.props) }
-        <h2>Add Series</h2>
+        <h2>Create a Series</h2>
         <form onSubmit={this.onSubmit}>
           
           <div className="form-group">
@@ -65,7 +65,7 @@ export class FormSeries extends Component {
           </div>
           
           <div className="form-group">
-            <label>name</label>
+            <label>Name of Series</label>
             <input
               className="form-control"
               type="text"
@@ -76,7 +76,7 @@ export class FormSeries extends Component {
           </div>
 
           <div className="form-group">
-            <label>series_order</label>
+            <label>Series Order</label>
             <input
               className="form-control"
               type="number"
@@ -113,7 +113,7 @@ export class FormSeries extends Component {
                 
                    
            <div className="form-group">
-            <label>best_of</label>
+            <label>Total Matches (Best of)</label>
             <input
               className="form-control"
               type="number"

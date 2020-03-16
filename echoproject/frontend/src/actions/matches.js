@@ -2,7 +2,7 @@ import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
 
-import { GET_MATCHES } from "./types";
+import { GET_MATCHES, UPDATE_MATCHES } from "./types";
 
  
 // GET MATCHES with optional series ID param which returns only selected matches with series id passed
@@ -37,6 +37,23 @@ export const getMatches = id => (dispatch, getState) => {
         type: GET_MATCHES,
         payload: dataSeries
       });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+// UPDATE MATCH SERIES
+export const updateMatches = matches => (dispatch, getState) => {
+  axios
+    .post("/si/match/", matches, tokenConfig(getState))
+    .then(res => {
+      dispatch(createMessage({ updateMatches: "Match Updated" }));
+      dispatch({
+        type: UDPATE_MATCHES,
+        payload: res.data
+      });
+ 
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))

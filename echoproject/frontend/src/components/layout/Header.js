@@ -19,14 +19,14 @@ export class Header extends Component {
           <strong>{user ? `Welcome ${user.username}` : ""}</strong>
         </span>
         <li className="nav-item">
-          <Link to="/series" className="nav-link">
-            Create Series
+          <Link to="/" className="nav-link">
+            Create Series & Matches
           </Link>
         </li>
 
         <li className="nav-item">
-          <Link to="/matchselect" className="nav-link">
-            Edit Match
+          <Link to="/matches" className="nav-link">
+            Edit a Match
           </Link>
         </li>
                 

@@ -13,7 +13,7 @@ import AlertTemplate from "react-alert-template-basic";
 import Header from "./layout/Header";
 import Dashboard from "./leads/Dashboard";
 import SeriesPage from "./series/PageSeries";
-import MatchSelectPage from "./matchSelect/PageMatchSelect";
+import MatchesPage from "./matches/PageMatchSelect";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
@@ -44,9 +44,9 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <PrivateRoute exact path="/" component={Dashboard} />
-                  <PrivateRoute exact path="/matchselect" component={MatchSelectPage} />
-                  <PrivateRoute exact path="/series" component={SeriesPage} />
+                  <PrivateRoute exact path="/leads" component={Dashboard} />
+                  <PrivateRoute exact path="/matches" component={MatchesPage} />
+                  <PrivateRoute exact path="/" component={SeriesPage} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                 </Switch>

@@ -1,6 +1,6 @@
 export const GET_TOURNAMENTS = "GET_TOURNAMENTS";
-export const ADD_MATCHES = "ADD_MATCHES";
 export const GET_MATCHES = "GET_MATCHES";
+export const UPDATE_MATCHES = "UPDATE_MATCHES";
 export const GET_TEAMS = "GET_TEAMS";
 export const GET_GAMES = "GET_GAMES";
 

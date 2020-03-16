@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getMatches } from "../../actions/matches";
 
-export class StepThreeSeriesForm extends Component {
+export class StepThreeMatchForm extends Component {
   continue = e => {
     e.preventDefault();
     this.props.nextStep();
@@ -34,7 +34,7 @@ export class StepThreeSeriesForm extends Component {
      
         <React.Fragment>
          <div className="card card-body mt-4 mb-4">
-            <h1>Step 3: Pick Match</h1>
+            <h1>Step 3: Pick a Match</h1>
 
            <div className="form-group">
             <label>Select Match - series id:{valueProps.series}:</label>          
@@ -72,5 +72,5 @@ const mapStateToProps = state => ({
   matches: state.matches.matches,
 });
 
-export default connect( mapStateToProps,{ getMatches } )(StepThreeSeriesForm);
+export default connect( mapStateToProps,{ getMatches } )(StepThreeMatchForm);
  
