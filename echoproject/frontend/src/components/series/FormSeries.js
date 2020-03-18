@@ -6,6 +6,7 @@ import { getTournaments } from "../../actions/tournaments";
 import { getTeams} from "../../actions/teams";
 
 export class FormSeries extends Component {
+
   state = {
     tournament: "",
     name: "",

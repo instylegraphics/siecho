@@ -1,6 +1,7 @@
 export const GET_TOURNAMENTS = "GET_TOURNAMENTS";
 export const GET_MATCHES = "GET_MATCHES";
-export const UPDATE_MATCHES = "UPDATE_MATCHES";
+export const GET_MATCH = "GET_MATCH";
+export const UDPATE_MATCH = "UDPATE_MATCH";
 export const GET_TEAMS = "GET_TEAMS";
 export const GET_GAMES = "GET_GAMES";
 

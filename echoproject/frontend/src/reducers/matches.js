@@ -1,7 +1,8 @@
-import { GET_MATCHES, ADD_MATCHES } from "../actions/types.js";
+import { GET_MATCHES, GET_MATCH, UPDATE_MATCH } from "../actions/types.js";
 
 const initialState = {
-  matches: []
+  matches: [],
+  match: []
 };
 
 export default function (state = initialState, action) {
@@ -11,10 +12,15 @@ export default function (state = initialState, action) {
         ...state,
         matches: action.payload
       };
-    case ADD_MATCHES:
+    case GET_MATCH:
       return {
         ...state,
-        matches: [...state.matches, action.payload]
+        match: action.payload
+      };      
+    case UPDATE_MATCH:
+      return {
+        ...state,
+        match: action.payload
       };      
     default:
       return state;

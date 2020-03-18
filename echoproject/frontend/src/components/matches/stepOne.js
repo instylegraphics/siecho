@@ -6,9 +6,9 @@ import { getTournaments } from "../../actions/tournaments";
 export class StepOneTournamentForm extends Component {
   continue = e => {
     e.preventDefault();
-    this.props.nextStep();
-
+    this.props.nextStep(); 
   };
+  
   static propTypes = {
     getTournaments: PropTypes.func.isRequired   
   };

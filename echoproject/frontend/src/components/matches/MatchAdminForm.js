@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import StepOneTournamentForm from './stepOne';
 import StepTwoSeriesForm from './stepTwo';
 import StepThreeMatchForm from './stepThree';
@@ -11,18 +12,11 @@ export class matchAdminForm extends Component {
     step: 1,
     tournament: "",
     series: "",
-    match: "",
-    room_code: "",
-    game_mode: "",
-    game_map: "",
-    team_one_side: "",
-    team_one_score: "",
-    team_two_side: "",
-    team_two_score: "",
-    winner_match: ""    
+    match: "" 
   };
   
-
+ 
+  
   // Proceed to next step
   nextStep = () => {
     const { step } = this.state;
@@ -30,7 +24,7 @@ export class matchAdminForm extends Component {
       step: step + 1
     });
   };
-
+  
   // Go back to prev step
   prevStep = () => {
     const { step } = this.state;
@@ -42,17 +36,14 @@ export class matchAdminForm extends Component {
   // Handle fields change
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
-    
-    
+    //this.setState({ [e.target.name]: e.target.value });
   };
  
 
   render() {
     const { step } = this.state;
-    const { tournament, series, match, room_code, game_mode, game_map, team_one_side, team_one_score, team_two_side, team_two_score, winner_match } = this.state;
-    const valueProps = { tournament, series, match, room_code, game_mode, game_map, team_one_side, team_one_score, team_two_side, team_two_score, winner_match };
-    console.log("return props from main page");
-    console.log(this.props);
+    const { tournament, series, match } = this.state;
+    const valueProps = { tournament, series, match };
      
     switch (step) {
       case 1:

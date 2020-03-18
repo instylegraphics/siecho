@@ -31,7 +31,7 @@ export const getSeries = id => (dispatch, getState) => {
     }
     console.log("series records results AFTER deletion");    
     console.log(dataSeries);
- 
+    
       dispatch({
         type: GET_SERIES,
         payload: dataSeries
@@ -61,7 +61,7 @@ export const addSeries = series => (dispatch, getState) => {
   axios
     .post("/si/series/", series, tokenConfig(getState))
     .then(res => {
-      dispatch(createMessage({ addSeries: "Series Added" }));
+      dispatch(createMessage({ addSeries: "Series & Matches Added" }));
       dispatch({
         type: ADD_SERIES,
         payload: res.data

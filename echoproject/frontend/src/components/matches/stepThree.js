@@ -28,7 +28,6 @@ export class StepThreeMatchForm extends Component {
     const { valueProps, handleChange } = this.props;
     console.log('step3: matches props');
     console.log(this.props);
-    
  
     return (
      
@@ -41,7 +40,7 @@ export class StepThreeMatchForm extends Component {
                <select required value={valueProps.match} name="series" className="form-control custom-select" onChange={handleChange('match')}>
                 <option>Select Match</option>
                {this.props.matches.map(match => ( 
-                  <option  key={match.id} value={match.id}>Match {match.match_order} for Series: {match.series.name} - Tournament: {match.series.tournament.name} </option>
+                  <option key={match.id} value={match.id}>Match {match.match_order} for Series: {match.series.name} - Tournament: {match.series.tournament.name} </option>
                ))}
               </select>
           </div>

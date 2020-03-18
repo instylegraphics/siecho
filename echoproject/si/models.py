@@ -131,19 +131,19 @@ class Series(models.Model):
         
 class Match(models.Model):
 
-    series = models.ForeignKey(Series, on_delete=models.CASCADE)
+    series = models.ForeignKey(Series, on_delete=models.CASCADE, blank=True, null=True)
     gamemap = models.ForeignKey(GameMap, on_delete=models.DO_NOTHING, blank=True, null=True)
     gamemode = models.ForeignKey(
         GameMode, on_delete=models.DO_NOTHING, blank=True, null=True)
     match_order = models.PositiveIntegerField(default=1)
     roomcode = models.CharField(max_length=50, blank=True, null=True)
     team_one = models.ForeignKey(
-        Team, on_delete=models.DO_NOTHING, related_name='match_team_one')
+        Team, on_delete=models.DO_NOTHING, related_name='match_team_one', blank=True, null=True)
     team_one_score = models.PositiveIntegerField(default=0, blank=True, null=True)
     team_one_faction = models.ForeignKey(
         GameFaction, on_delete=models.DO_NOTHING, related_name='match_team_one_faction', blank=True, null=True)
     team_two = models.ForeignKey(
-        Team, on_delete=models.DO_NOTHING, related_name='match_team_two')
+        Team, on_delete=models.DO_NOTHING, related_name='match_team_two', blank=True, null=True)
     team_two_score = models.PositiveIntegerField(default=0, blank=True, null=True)
     team_two_faction = models.ForeignKey(
         GameFaction, on_delete=models.DO_NOTHING, related_name='match_team_two_faction', blank=True, null=True)

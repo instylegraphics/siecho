@@ -7,6 +7,7 @@ export class StepTwoSeriesForm extends Component {
   continue = e => {
     e.preventDefault();
     this.props.nextStep();
+    
   };
 
   back = e => {
@@ -28,10 +29,9 @@ export class StepTwoSeriesForm extends Component {
     const { valueProps, handleChange } = this.props;
     console.log('series props');
     console.log(this.props);
-    
- 
+
     return (
-     
+       
         <React.Fragment>
          <div className="card card-body mt-4 mb-4">
             <h1>Step 2: Pick a Series</h1>

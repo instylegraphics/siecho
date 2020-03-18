@@ -2,7 +2,7 @@ import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
 
-import { GET_MATCHES, UPDATE_MATCHES } from "./types";
+import { GET_MATCHES, GET_MATCH, UDPATE_MATCH } from "./types";
 
  
 // GET MATCHES with optional series ID param which returns only selected matches with series id passed
@@ -43,14 +43,34 @@ export const getMatches = id => (dispatch, getState) => {
     );
 };
 
-// UPDATE MATCH SERIES
-export const updateMatches = matches => (dispatch, getState) => {
+// GEAT A MATCH 
+export const getMatch = id => (dispatch, getState) => {
   axios
-    .post("/si/match/", matches, tokenConfig(getState))
+    .get("/si/match/" + id + "/", tokenConfig(getState))
     .then(res => {
-      dispatch(createMessage({ updateMatches: "Match Updated" }));
       dispatch({
-        type: UDPATE_MATCHES,
+        type: GET_MATCH,
+        payload: res.data
+      });
+ 
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+// UPDATE MATCH 
+export const updateMatch = (match) => (dispatch, getState) => {
+
+  console.log("inside updateMatch func");
+  console.log("match values");
+  console.log(match);
+  axios
+    .put("/si/match/" + match.matchid + "/", match, tokenConfig(getState))
+    .then(res => {
+      dispatch(createMessage({ updateMatch: "Match Updated" }));
+      dispatch({
+        type: UDPATE_MATCH,
         payload: res.data
       });
  
