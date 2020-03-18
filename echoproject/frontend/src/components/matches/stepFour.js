@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getMatch, updateMatch } from "../../actions/matches";
+import { getTeams} from "../../actions/teams";
+import { getGameMaps } from "../../actions/gamemaps";
+import { getGameModes } from "../../actions/gamemodes";
 
 export class StepFourMatchAdminForm extends Component {
 
@@ -28,7 +31,10 @@ export class StepFourMatchAdminForm extends Component {
     console.log(this.props);
     console.log('componentDidMount this.props.match');    
     console.log(this.props.match);
-            
+    this.props.getTeams();
+    this.props.getGameMaps();
+    this.props.getGameModes();
+    
     const { matchData } = this.state;
     this.setState({ 
       matchData: this.props.match   
@@ -250,10 +256,14 @@ export class StepFourMatchAdminForm extends Component {
   
   static propTypes = {
     getMatch: PropTypes.func.isRequired,
-    updateMatch: PropTypes.func.isRequired    
+    updateMatch: PropTypes.func.isRequired,
+    getTeams: PropTypes.func.isRequired,
+    getGameMaps: PropTypes.func.isRequired,
+    getGameModes: PropTypes.func.isRequired, 
   };
   
  
+
 
   render() {
     const { valueProps, handleChange } = this.props;
@@ -270,11 +280,7 @@ export class StepFourMatchAdminForm extends Component {
           <form onSubmit={this.onSubmit.bind(this)}>
             <h1>Match Editor</h1>
             <p>match id: { valueProps.match }</p>
-            <script>
-            initMatchFormMain();
-            </script>
 
-            
             <div className="form-group">
             <label>Room Code</label>
             <input
@@ -294,44 +300,49 @@ export class StepFourMatchAdminForm extends Component {
             />
           </div>       
             
-
-           <div className="form-group">
+ 
+ 		  		<div className="form-group">
             <label>Game Mode</label>          
-               <input
-              id="gamemode" 
-              className="form-control"
-              type="text"
-              name="gamemode"
-              onChange={(e) => {
+               <select id="gamemode" name="gamemode" className="form-control custom-select" 
+               onChange={(e) => {
               let { currentMatchData } = this.state;
-              currentMatchData.gamemode = e.target.value;
+              currentMatchData.winner = e.target.value;
               console.log("e.target.value:" + e.target.value);
               console.log("currentMatchData.gamemode:" + currentMatchData.gamemode );
               this.setState({ currentMatchData });          
               }}
-              defaultValue={ this.props.match.gamemode }              
-            /> 
-            </div>
- 
- 
-            <div className="form-group">
+              defaultValue={ this.props.match.gamemode }
+               >
+              <option value="">Select Game Mode</option>
+                {this.props.gamemodes.map(gmode => (
+                <option key={gmode.id} value={gmode.id}>{gmode.name}</option>
+               ))}
+              </select>
+          </div>
+          
+          
+
+		  		<div className="form-group">
             <label>Game Map</label>          
-               <input
-              id="gamemap" 
-              className="form-control"
-              type="text"
-              name="gamemap"
-              onChange={(e) => {
+               <select id="gamemap" name="gamemap" className="form-control custom-select" 
+               onChange={(e) => {
               let { currentMatchData } = this.state;
-              currentMatchData.gamemap = e.target.value;
+              currentMatchData.winner = e.target.value;
               console.log("e.target.value:" + e.target.value);
               console.log("currentMatchData.gamemap:" + currentMatchData.gamemap );
               this.setState({ currentMatchData });          
               }}
-              defaultValue={ this.props.match.gamemap }              
-            /> 
-            </div>
-            
+              defaultValue={ this.props.match.gamemap }
+               >
+              <option value="">Select Game Map</option>
+                {this.props.gamemaps.map(gmap => (
+                <option key={gmap.id} value={gmap.id}>{gmap.name}</option>
+               ))}
+              </select>
+          </div>
+          
+          
+                      
             <div className="form-group">
             <label>Team One Side</label>          
                <input
@@ -412,25 +423,33 @@ export class StepFourMatchAdminForm extends Component {
             /> 
             </div>
  
-            <div className="form-group">
-            <label>Match Winner</label>          
-               <input
-              id="winner" 
-              className="form-control"
-              type="text"
-              name="winner"
-              onChange={(e) => {
+		            <div className="form-group">
+            <label>Match Winner</label>         
+               <select 
+               id="winner" name="winner" className="form-control custom-select"
+               datainitval={ this.props.match.winner }
+               onChange={(e) => {
               let { currentMatchData } = this.state;
               currentMatchData.winner = e.target.value;
               console.log("e.target.value:" + e.target.value);
               console.log("currentMatchData.winner:" + currentMatchData.winner );
               this.setState({ currentMatchData });          
               }}
-              defaultValue={ this.props.match.winner }              
-            /> 
-            </div>
+              defaultValue={ this.props.match.winner }
+               >
+              <option value="">Select Winner</option>
+                {this.props.teams.map(team => (
+                <option key={team.id} value={team.id}>{team.name}</option>
+               ))}
+              </select>
+          </div>
  
- 
+          <div className="form-group">
+            <button type="button" className="btn btn-primary" onClick={this.back}>
+              Back
+            </button>
+          </div>
+           
            <div className="form-group">
             <button type="submit" className="btn btn-primary">
               Update Match
@@ -448,7 +467,10 @@ export class StepFourMatchAdminForm extends Component {
 }
 const mapStateToProps = state => ({
   match: state.match.match,
+  teams: state.teams.teams,
+  gamemaps: state.gamemaps.gamemaps,
+  gamemodes: state.gamemodes.gamemodes
 });
 
-export default connect( mapStateToProps,{ getMatch, updateMatch } )(StepFourMatchAdminForm);
+export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes } )(StepFourMatchAdminForm);
  

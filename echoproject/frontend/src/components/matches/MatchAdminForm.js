@@ -4,6 +4,8 @@ import StepOneTournamentForm from './stepOne';
 import StepTwoSeriesForm from './stepTwo';
 import StepThreeMatchForm from './stepThree';
 import StepFourMatchAdminForm from './stepFour';
+import ConfirmMatchForm from './confirmMatch';
+
 import Confirm from './Confirm';
 import Success from './Success';
 
@@ -33,6 +35,8 @@ export class matchAdminForm extends Component {
     });
   };
 
+ 
+  
   // Handle fields change
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
@@ -71,8 +75,17 @@ export class matchAdminForm extends Component {
             handleChange={this.handleChange}
             valueProps={valueProps}
           />
-        );      
+        );
       case 4:
+        return (
+          <ConfirmMatchForm
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            handleChange={this.handleChange}
+            valueProps={valueProps}
+          />
+        );                
+      case 5:
         return (
           <StepFourMatchAdminForm
             nextStep={this.nextStep}
@@ -81,7 +94,7 @@ export class matchAdminForm extends Component {
             valueProps={valueProps}
           />
         );            
-      case 5:
+      case 6:
         return (
           <Confirm
             nextStep={this.nextStep}
