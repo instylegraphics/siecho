@@ -73,7 +73,7 @@ export const updateMatch = (match) => (dispatch, getState) => {
         type: UDPATE_MATCH,
         payload: res.data
       });
- 
+    alert("Match Updated.");
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))

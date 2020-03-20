@@ -71,11 +71,11 @@ export const addSeries = series => (dispatch, getState) => {
       console.log(res.data.best_of);
       console.log(res.data.id);
       for (var i = 1; i <= res.data.best_of; i++){
-        //console.log("loop - best of:" + i);
-        //console.log("series id:" + res.data.id);
-        //console.log("match_order:" + i);
-        //console.log("series id:" + res.data.team_one);
-        //console.log("series id:" + res.data.team_two);
+        console.log("loop - best of:" + i);
+        console.log("series id:" + res.data.id);
+        console.log("match_order:" + i);
+        console.log("team_one id:" + res.data.team_one);
+        console.log("team_two:" + res.data.team_two);
 
         // POST
         const matchData = {
@@ -88,15 +88,15 @@ export const addSeries = series => (dispatch, getState) => {
         axios.post('/si/match/', matchData, tokenConfig(getState))
          .then(res => {
               // post matching
-              dispatch({ type: ADD_MATCHES });   
-              console.log("success add match" + i);
-              console.log(res.data);
+              // dispatch(createMessage({ addSeries: "Series & Matches Added" }));
+              //console.log("success add match");
+              //console.log(res.data);
          })
          .catch(err => console.log(err));
 
       }// for loop
       
-
+    alert("Series and " + series.best_of + "Match  added ");
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))

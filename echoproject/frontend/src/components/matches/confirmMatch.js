@@ -5,6 +5,7 @@ import { getMatch, updateMatch, getMatches } from "../../actions/matches";
 import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
+import { getGameFactions } from "../../actions/gamefactions";
 
 export class ConfirmMatchForm extends Component {
 
@@ -35,7 +36,8 @@ export class ConfirmMatchForm extends Component {
     this.props.getGameMaps();
     this.props.getGameModes();
     this.props.getMatches(this.props.valueProps.series);
-    
+    this.props.getGameFactions();
+        
     const { matchData } = this.state;
     this.setState({ 
       matchData: this.props.match   
@@ -97,7 +99,9 @@ export class ConfirmMatchForm extends Component {
     var match_active = jsonQuery('[id=' + match_id + '].active', { data: this.props.matches }).value;    
     var match_ended = jsonQuery('[id=' + match_id + '].ended', { data: this.props.matches }).value;     
     
-              
+    var dateFormat = require('dateformat');
+    tournament_scheduled_date = dateFormat(tournament_scheduled_date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+    
     return (
         <React.Fragment>
        
@@ -106,20 +110,21 @@ export class ConfirmMatchForm extends Component {
             <h1>Final Step: Confirmation</h1>
             <p>match id: { valueProps.match }</p>
             
-            <p>tournament_name_value: { tournament_name_value }</p>
-            <p>tournament_scheduled_date: { tournament_scheduled_date }</p>
+            <p>tournament_name_value: <strong>{ tournament_name_value }</strong></p>
             
-            <p>series_name: { series_name }</p>
-            <p>series_order: { series_order }</p>
-            <p>series_best_of: { series_best_of }</p>
-            <p>series_active: { String(series_active) }</p>
-            <p>series_ended: { String(series_ended) }</p>
+            <p>tournament_scheduled_date: <strong>{ tournament_scheduled_date } </strong></p>
             
-            <p>match_team_one_name: { match_team_one_name }</p>
-            <p>match_team_two_name: { match_team_two_name }</p>
-            <p>match_match_order: { match_match_order }</p>
-            <p>match_active: { String(match_active) }</p>
-            <p>match_ended: { String(match_ended) }</p>           
+            <p>series_name: <strong>{ series_name }</strong></p>
+            <p>series_order: <strong>{ series_order }</strong></p>
+            <p>series_best_of: <strong>{ series_best_of }</strong></p>
+            <p>series_active: <strong>{ String(series_active) }</strong></p>
+            <p>series_ended: <strong>{ String(series_ended) }</strong></p>
+            
+            <p>match_team_one_name: <strong>{ match_team_one_name }</strong></p>
+            <p>match_team_two_name: <strong>{ match_team_two_name }</strong></p>
+            <p>match_match_order: <strong>{ match_match_order }</strong></p>
+            <p>match_active: <strong>{ String(match_active) }</strong></p>
+            <p>match_ended: <strong>{ String(match_ended) }</strong></p>           
             
           <div className="form-group">
             <button type="button" className="btn btn-primary" onClick={this.back}>
@@ -150,5 +155,5 @@ const mapStateToProps = state => ({
   matches: state.matches.matches
 });
 
-export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes, getMatches } )(ConfirmMatchForm);
+export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes, getMatches, getGameFactions } )(ConfirmMatchForm);
  

@@ -5,6 +5,7 @@ import { getMatch, updateMatch } from "../../actions/matches";
 import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
+import { getGameFactions } from "../../actions/gamefactions";
 
 export class StepFourMatchAdminForm extends Component {
 
@@ -34,13 +35,16 @@ export class StepFourMatchAdminForm extends Component {
     this.props.getTeams();
     this.props.getGameMaps();
     this.props.getGameModes();
+    this.props.getGameFactions();
     
     const { matchData } = this.state;
     this.setState({ 
-      matchData: this.props.match   
-      
+      matchData: this.props.match      
    });  
- 
+   
+    //activate bs spinner
+    //$("input[type='number']").inputSpinner();    
+    
   }  
 
  
@@ -245,16 +249,19 @@ export class StepFourMatchAdminForm extends Component {
 //    this.props.getMatch(this.props.valueProps.match);
 //    console.log('get match data pull after update - this.props');
 //    console.log(this.props);
-    
+
     //clear state
     this.setState({
         matchData: [] 
     });
     
-    
   };
   
   static propTypes = {
+    teams: PropTypes.array.isRequired,  
+    match: PropTypes.array.isRequired,
+    gamemaps: PropTypes.array.isRequired,  
+    gamemodes: PropTypes.array.isRequired,    
     getMatch: PropTypes.func.isRequired,
     updateMatch: PropTypes.func.isRequired,
     getTeams: PropTypes.func.isRequired,
@@ -262,8 +269,6 @@ export class StepFourMatchAdminForm extends Component {
     getGameModes: PropTypes.func.isRequired, 
   };
   
- 
-
 
   render() {
     const { valueProps, handleChange } = this.props;
@@ -271,8 +276,6 @@ export class StepFourMatchAdminForm extends Component {
     console.log('step4 Match Admin: valueProps.match:');
     console.log(this.props.match);
 
- 
-              
     return (
         <React.Fragment>
        
@@ -343,23 +346,24 @@ export class StepFourMatchAdminForm extends Component {
           
           
                       
-            <div className="form-group">
-            <label>Team One Side</label>          
-               <input
-              id="team_one_faction" 
-              className="form-control"
-              type="text"
-              name="team_one_faction"
-              onChange={(e) => {
+ 		  		<div className="form-group">
+            <label>Team One Faction</label>          
+               <select id="team_one_faction" name="team_one_faction" className="form-control custom-select" 
+               onChange={(e) => {
               let { currentMatchData } = this.state;
               currentMatchData.team_one_faction = e.target.value;
               console.log("e.target.value:" + e.target.value);
               console.log("currentMatchData.team_one_faction:" + currentMatchData.team_one_faction );
               this.setState({ currentMatchData });          
               }}
-              defaultValue={ this.props.match.team_one_faction }              
-            /> 
-            </div>
+              defaultValue={ this.props.match.team_one_faction }
+               >
+              <option value="">Select Game Map</option>
+                {this.props.gamefactions.map(gfaction => (
+                <option key={gfaction.id} value={gfaction.id}>{gfaction.name}</option>
+               ))}
+              </select>
+          </div>
             
 
             <div className="form-group">
@@ -384,24 +388,26 @@ export class StepFourMatchAdminForm extends Component {
             </div>
             
 
-            <div className="form-group">
-            <label>Team Two Side</label>          
-               <input
-              id="team_two_faction" 
-              className="form-control"
-              type="text"
-              name="team_two_faction"
-              onChange={(e) => {
+ 		  		<div className="form-group">
+            <label>Team Two Faction</label>          
+               <select id="team_two_faction" name="team_two_faction" className="form-control custom-select" 
+               onChange={(e) => {
               let { currentMatchData } = this.state;
               currentMatchData.team_two_faction = e.target.value;
               console.log("e.target.value:" + e.target.value);
               console.log("currentMatchData.team_two_faction:" + currentMatchData.team_two_faction );
               this.setState({ currentMatchData });          
               }}
-              defaultValue={ this.props.match.team_one_faction }              
-            /> 
-            </div>
-      
+              defaultValue={ this.props.match.team_two_faction }
+               >
+              <option value="">Select Game Map</option>
+                {this.props.gamefactions.map(gfaction => (
+                <option key={gfaction.id} value={gfaction.id}>{gfaction.name}</option>
+               ))}
+              </select>
+          </div>
+          
+ 
             <div className="form-group">
             <label>Team Two Score</label>          
                <input
@@ -469,8 +475,9 @@ const mapStateToProps = state => ({
   match: state.match.match,
   teams: state.teams.teams,
   gamemaps: state.gamemaps.gamemaps,
-  gamemodes: state.gamemodes.gamemodes
+  gamemodes: state.gamemodes.gamemodes,
+  gamefactions: state.gamefactions.gamefactions
 });
 
-export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes } )(StepFourMatchAdminForm);
+export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes, getGameFactions } )(StepFourMatchAdminForm);
  
