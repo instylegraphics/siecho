@@ -18,6 +18,7 @@ export class Header extends Component {
         <span className="navbar-text mr-3">
           <strong>{user ? `Welcome ${user.username}` : ""}</strong>
         </span>
+        
         <li className="nav-item">
           <Link to="/" className="nav-link">
             Create Series & Matches
@@ -30,7 +31,12 @@ export class Header extends Component {
           </Link>
         </li>
                 
-        <li className="nav-item">
+         <li className="nav-item">
+          <Link to="/caster" className="nav-link">
+            Caster View
+          </Link>
+        </li>
+               <li className="nav-item">
           <button
             onClick={this.props.logout}
             className="nav-link btn btn-info btn-sm text-light">

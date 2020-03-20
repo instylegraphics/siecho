@@ -96,7 +96,7 @@ export const addSeries = series => (dispatch, getState) => {
 
       }// for loop
       
-    alert("Series and " + series.best_of + "Match  added ");
+    //alert("Series and " + series.best_of + "Match  added ");
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
