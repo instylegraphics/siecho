@@ -20,6 +20,13 @@ export class FormMatchSelect extends Component {
     this.props.getMatches();
   
   }
+  
+  shouldComponentUpdate() {
+  console.log("this.state.tournament:" + this.state.tournament );
+    if this.state.tournament != null {
+      console.log("shouldComponentUpdate");
+    }
+  }
     
   onChange = e => this.setState({ [e.target.name]: e.target.value });
   onSubmit = e => {

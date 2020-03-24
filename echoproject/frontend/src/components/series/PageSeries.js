@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import FormSeries from "./FormSeries";
+import FormSeries from "./formSeries";
 
 
 export default function SeriesPage() {

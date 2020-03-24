@@ -2,7 +2,7 @@ import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
 
-import { GET_SERIES, DELETE_SERIES, ADD_SERIES, ADD_MATCHES } from "./types";
+import { GET_SERIES, GET_SERIES_DETAILS, DELETE_SERIES, ADD_SERIES, ADD_MATCHES } from "./types";
 
 // GET SERIES with optional Tourname ID param which returns only selected series with tournament id passed
 export const getSeries = id => (dispatch, getState) => {
@@ -39,6 +39,44 @@ export const getSeries = id => (dispatch, getState) => {
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+// GET SERIES DETAILS
+export const getSeriesDetails = id => (dispatch, getState) => {
+  axios
+    .get("/si/seriesget/", tokenConfig(getState))
+    .then(res => {
+    //console.log('get tid from series props');
+    //console.log({id});
+    console.log("prop tournament id:"+ id);
+ 
+    var dataSeries = JSON.stringify(res.data); 
+    dataSeries = JSON.parse(dataSeries);    
+    console.log("return all series records");
+    console.log(dataSeries);
+
+    Array.prototype.removeVal = function(name, value){
+    var array = $.map(this, function(v,i){
+      return v[name].id !== value ? null : v;
+    });
+    this.length = 0; 
+    this.push.apply(this, array); //push all elements except the one we want to delete
+    }
+    //run exclusion
+    if (id !== null) {    
+      dataSeries.removeVal('tournament', parseInt(id) );
+    }
+    console.log("series records results AFTER deletion");    
+    console.log(dataSeries);
+    
+      dispatch({
+        type: GET_SERIES_DETAILS,
+        payload: dataSeries
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response, err.response.status))
     );
 };
 

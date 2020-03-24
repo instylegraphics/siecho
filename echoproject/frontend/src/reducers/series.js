@@ -1,4 +1,4 @@
-import { GET_SERIES, DELETE_SERIES, ADD_SERIES, CLEAR_SERIES } from "../actions/types.js";
+import { GET_SERIES, GET_SERIES_DETAILS, DELETE_SERIES, ADD_SERIES, CLEAR_SERIES } from "../actions/types.js";
 
 const initialState = {
   series: []
@@ -11,6 +11,11 @@ export default function (state = initialState, action) {
         ...state,
         series: action.payload
       };
+    case GET_SERIES_DETAILS:
+      return {
+        ...state,
+        series: action.payload
+      };      
     case DELETE_SERIES:
       return {
         ...state,

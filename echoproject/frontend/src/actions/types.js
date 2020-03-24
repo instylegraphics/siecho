@@ -14,6 +14,7 @@ export const ADD_LEAD = "ADD_LEAD";
 export const CLEAR_LEADS = 'CLEAR_LEADS';
 
 export const GET_SERIES = "GET_SERIES";
+export const GET_SERIES_DETAILS = "GET_SERIES_DETAILS";
 export const DELETE_SERIES = "DELETE_SERIES";
 export const ADD_SERIES = "ADD_SERIES";
 export const CLEAR_SERIES = 'CLEAR_LEADS';

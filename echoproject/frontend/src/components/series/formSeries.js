@@ -2,27 +2,33 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { addSeries } from "../../actions/series";
+import { addSeries, getSeriesDetails, deleteSeries } from "../../actions/series";
 import { getTournaments } from "../../actions/tournaments";
 import { getTeams} from "../../actions/teams";
 
 export class FormSeries extends Component {
 
-  state = {
-    tournament: "",
-    name: "",
-    series_order: "",
-    team_one: "",
-    team_two: "",
-    best_of: ""
-  };
-
+    constructor(props){
+        super(props);
+        this.state = {
+          tournament: "",
+          name: "",
+          series_order: "",
+          team_one: "",
+          team_two: "",
+          best_of: ""
+        };
+      //this.getSeriesLists = this.getSeriesLists.bind(this);
+    }
+ 
   static propTypes = {
     teams: PropTypes.array.isRequired,  
     tournaments: PropTypes.array.isRequired,
     addSeries: PropTypes.func.isRequired,
     getTournaments: PropTypes.func.isRequired,
-    getTeams: PropTypes.func.isRequired   
+    getTeams: PropTypes.func.isRequired,
+    getSeriesDetails: PropTypes.func.isRequired,
+    deleteSeries: PropTypes.func.isRequired
   };
     
  
@@ -34,7 +40,27 @@ export class FormSeries extends Component {
     //$("input[type='number']").inputSpinner();
 
   }
-    
+
+/*
+  shouldComponentUpdate() {
+  console.log("this.state.tournament:" + this.state.tournament );
+    if this.state.tournament != null {
+      console.log("shouldComponentUpdate");
+    }
+  }
+*/  
+  
+/*  static getDerivedStateFromProps(props, state) {
+    if (props.selected !== state.selected) {
+      return {
+        selected: props.selected,
+      };
+    }
+    // Return null if the state hasn't changed
+    return null;
+  }
+*/ 
+ 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   onSubmit = e => {
@@ -45,6 +71,7 @@ export class FormSeries extends Component {
     console.log(series);
     console.log("best of:" + series.best_of);
     
+/*   reset state value after submit
     this.setState({
       tournament: "",
       name: "",
@@ -53,11 +80,31 @@ export class FormSeries extends Component {
       team_two: "",
       best_of: ""
     });
+ */
   };
 
   render() {
     const { tournament, name, series_order, team_one, team_two, best_of } = this.state;
-    
+    let isTournamentHasID = false;
+    console.log("reder props output:");
+    console.log(this.props);
+    console.log("reder this.props.series:");
+    console.log(this.props.series);    
+ 
+   //check if tournament has avaialble series already created 
+    if (!Array.isArray(this.props.series) || !this.props.series.length) {
+      // array does not exist, is not an array, or is empty
+      // ? do not attempt to process array
+      console.log("array is null:");
+      console.log(this.props.series);
+      isTournamentHasID = false; 
+    }else{
+      console.log("array is NOT null:");
+      console.log(this.props.series);
+      isTournamentHasID = true; 
+    }
+    console.log("isTournamentHasID:" + isTournamentHasID);
+ 
     return (
       <div className="card card-body mt-4 mb-4">
         { console.log(this.props) }
@@ -66,7 +113,13 @@ export class FormSeries extends Component {
           
           <div className="form-group">
             <label>Tournament</label>          
-               <select name="tournament" className="form-control custom-select" onChange={this.onChange}>
+               <select name="tournament" className="form-control custom-select" 
+               onChange={(e) => {
+              console.log("tournament:" + e.target.value);
+              this.setState({ tournament: e.target.value });
+              this.props.getSeriesDetails(e.target.value);
+              }}
+               >
                 <option>Select Tournament</option>
                {this.props.tournaments.map(tournament => (
                 <option key={tournament.id} value={tournament.id}>{tournament.name}</option>
@@ -143,7 +196,47 @@ export class FormSeries extends Component {
             </button>
           </div>
         </form>
-        
+   
+         {isTournamentHasID ?
+              <div class="empty">
+      <h2>Current Series for This Tournament</h2>
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Best Of</th>
+              <th>Ended</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.series.map(listseries => (
+              <tr key={listseries.id}>
+                <td>{listseries.id}</td>
+                <td>{listseries.name}</td>
+                <td>{listseries.best_of}</td>
+                <td>{String(listseries.ended)}</td>
+                <td>
+                  <button
+                  onClick={(e) => {
+              console.log("listseries.id:" + listseries.id);
+              this.props.deleteSeries(listseries.id);
+              }}
+                  className="btn btn-danger btn-sm">{" "} Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </div>
+          : <div>
+          <h2>No Series Created for this Tournament</h2>
+          </div>         
+         }
+         
+ 
       </div>
     );
   }
@@ -151,10 +244,11 @@ export class FormSeries extends Component {
 
 const mapStateToProps = state => ({
   tournaments: state.tournaments.tournaments,
-  teams: state.teams.teams
+  teams: state.teams.teams,
+  series: state.series.series
 });
 
 export default connect( 
   mapStateToProps,
-    { addSeries, getTournaments, getTeams } 
+    { addSeries, getTournaments, getTeams, getSeriesDetails, deleteSeries } 
 )(FormSeries);

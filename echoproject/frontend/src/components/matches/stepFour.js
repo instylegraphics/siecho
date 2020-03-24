@@ -297,7 +297,6 @@ export class StepFourMatchAdminForm extends Component {
               console.log("e.target.value:" + e.target.value);
               console.log("currentMatchData.roomcode:" + currentMatchData.roomcode );
               this.setState({ currentMatchData });
-              
               }}
               defaultValue={ this.props.match.roomcode }
             />
