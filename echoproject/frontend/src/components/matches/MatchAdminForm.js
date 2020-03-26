@@ -5,19 +5,18 @@ import StepTwoSeriesForm from './stepTwo';
 import StepThreeMatchForm from './stepThree';
 import StepFourMatchAdminForm from './stepFour';
 import ConfirmMatchForm from './confirmMatch';
-
 import Confirm from './Confirm';
+
 import Success from './Success';
 
 export class matchAdminForm extends Component {
+
   state = {
     step: 1,
     tournament: "",
     series: "",
     match: "" 
   };
-  
- 
   
   // Proceed to next step
   nextStep = () => {
@@ -35,15 +34,12 @@ export class matchAdminForm extends Component {
     });
   };
 
- 
-  
   // Handle fields change
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
     //this.setState({ [e.target.name]: e.target.value });
   };
  
-
   render() {
     const { step } = this.state;
     const { tournament, series, match } = this.state;
@@ -102,11 +98,10 @@ export class matchAdminForm extends Component {
             valueProps={valueProps}
           />
         );
-      case 6:
+      case 7:
         return <Success />;
     }
   }
 }
-
 
 export default matchAdminForm;

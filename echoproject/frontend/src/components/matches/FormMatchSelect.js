@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { getMatches} from "../../actions/matches";
  
 
-
 export class FormMatchSelect extends Component {
   state = {
     tournament: "",
@@ -97,8 +96,6 @@ export class FormMatchSelect extends Component {
             />
           </div>
  
-  
-                             
           <div className="form-group">
             <button type="submit" className="btn btn-primary">
               Edit Match
