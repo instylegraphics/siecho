@@ -7,6 +7,7 @@ export const GET_GAMES = "GET_GAMES";
 export const GET_GAME_MAPS = "GET_GAME_MAPS";
 export const GET_GAME_MODES = "GET_GAME_MODES";
 export const GET_GAME_FACTIONS = "GET_GAME_FACTIONS";
+export const GET_SCENES = "GET_SCENES";
 
 export const GET_LEADS = "GET_LEADS";
 export const DELETE_LEAD = "DELETE_LEAD";

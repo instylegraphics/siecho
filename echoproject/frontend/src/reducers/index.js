@@ -8,6 +8,7 @@ import teams from "./teams"
 import gamemaps from "./gamemaps"
 import gamemodes from "./gamemodes"
 import gamefactions from "./gamefactions"
+import scenes from "./scenes";
 import errors from "./errors";
 import messages from "./messages";
 import auth from "./auth";
@@ -21,7 +22,8 @@ export default combineReducers({
   teams,
   gamemaps,
   gamemodes,
-  gamefactions,  
+  gamefactions,
+  scenes, 
   errors,
   messages,
   auth

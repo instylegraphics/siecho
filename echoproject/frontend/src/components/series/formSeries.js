@@ -258,7 +258,7 @@ export class FormSeries extends Component {
                   seriesid = listseries.id;
                   this.setState({ view, seriesid });
                   }} 
-                      className="btn btn-default btn-sm">{" "} View
+                      className="btn btn-success btn-sm">{" "} View
                       </button>
                     </td>
                   </tr>

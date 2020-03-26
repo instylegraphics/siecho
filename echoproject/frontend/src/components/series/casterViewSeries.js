@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getMatches } from "../../actions/matches";
+import { getScenes } from "../../actions/scenes";
 
  export class CasterViewSeries extends Component {
 
@@ -11,7 +12,8 @@ import { getMatches } from "../../actions/matches";
   };
  
   static propTypes = {
-    getMatches: PropTypes.func.isRequired   
+    getMatches: PropTypes.func.isRequired,
+    getScenes: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -19,6 +21,7 @@ import { getMatches } from "../../actions/matches";
     console.log('valueProps.seriesid');
     console.log(this.props.valueProps.seriesid);
     this.props.getMatches(this.props.valueProps.seriesid);
+    this.props.getScenes();
   };
   
   render() {
@@ -54,6 +57,7 @@ import { getMatches } from "../../actions/matches";
 
 const mapStateToProps = state => ({
   matches: state.matches.matches,
+  scenes: state.scenes.scenes
 });
 
-export default connect( mapStateToProps,{ getMatches } )(CasterViewSeries);
+export default connect( mapStateToProps,{ getMatches, getScenes } )(CasterViewSeries);

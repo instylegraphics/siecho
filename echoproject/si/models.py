@@ -70,7 +70,11 @@ class Scene(models.Model):
 
     name = models.CharField(max_length=255)
     img = models.ImageField(blank=True, null=True)
-    controls = models.CharField(max_length=255, blank=True, null=True)
+    video = models.CharField(max_length=255, blank=True, null=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
+    desc1 = models.CharField(max_length=500, blank=True, null=True)
+    desc2 = models.CharField(max_length=500, blank=True, null=True)
+    desc3 = models.CharField(max_length=500, blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
     def __str__(self):
