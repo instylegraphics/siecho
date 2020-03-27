@@ -2,7 +2,7 @@ import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
 
-import { GET_SERIES, GET_SERIES_DETAILS, DELETE_SERIES, ADD_SERIES, ADD_MATCHES } from "./types";
+import { GET_SERIES, GET_SERIES_DETAILS, UPDATE_SERIES_END, DELETE_SERIES, ADD_SERIES, ADD_MATCHES } from "./types";
 
 // GET SERIES with optional Tourname ID param which returns only selected series with tournament id passed
 export const getSeries = id => (dispatch, getState) => {
@@ -92,6 +92,25 @@ export const deleteSeries = id => (dispatch, getState) => {
       });
     })
     .catch(err => console.log(err));
+};
+
+// UDPATE SERIES END
+export const updateSeriesEnd = id => (dispatch, getState) => {
+  console.log("inside updateSeriesEnd func");
+  console.log("id values");
+  console.log(id);
+/*
+  axios
+    .put(`/si/series/${id}/`, tokenConfig(getState))
+    .then(res => {
+      dispatch(createMessage({ deleteSeries: "Series Updated" }));
+      dispatch({
+        type: UPDATE_SERIES_END,
+        payload: id
+      });
+    })
+    .catch(err => console.log(err));
+*/
 };
 
 // ADD SERIES

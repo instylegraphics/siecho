@@ -75,10 +75,12 @@ class Scene(models.Model):
     desc1 = models.CharField(max_length=500, blank=True, null=True)
     desc2 = models.CharField(max_length=500, blank=True, null=True)
     desc3 = models.CharField(max_length=500, blank=True, null=True)
+    active = models.BooleanField(default=False)
     enabled = models.BooleanField(default=True)
-
+    
     def __str__(self):
         return self.name
+
 
 
 class Team(models.Model):
