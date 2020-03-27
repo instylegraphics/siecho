@@ -95,23 +95,26 @@ export const deleteSeries = id => (dispatch, getState) => {
 };
 
 // UDPATE SERIES END
-export const updateSeriesEnd = id => (dispatch, getState) => {
+export const updateSeriesEnd = series => (dispatch, getState) => {
   console.log("inside updateSeriesEnd func");
-  console.log("id values");
-  console.log(id);
-/*
+  console.log("series values");
+  console.log(series);
+  console.log("id value");
+  console.log(series.seriesid);  
+
   axios
-    .put(`/si/series/${id}/`, tokenConfig(getState))
+    .put("/si/series/" + series.seriesid + "/", series, tokenConfig(getState))
     .then(res => {
       dispatch(createMessage({ deleteSeries: "Series Updated" }));
       dispatch({
         type: UPDATE_SERIES_END,
-        payload: id
+        payload: series
       });
     })
     .catch(err => console.log(err));
-*/
+
 };
+
 
 // ADD SERIES
 export const addSeries = series => (dispatch, getState) => {

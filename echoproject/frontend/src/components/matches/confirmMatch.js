@@ -6,6 +6,7 @@ import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
 import { getGameFactions } from "../../actions/gamefactions";
+import { updateSeriesEnd } from "../../actions/series";
 
 export class ConfirmMatchForm extends Component {
 
@@ -50,14 +51,42 @@ export class ConfirmMatchForm extends Component {
   //continue button function
   continue = e => {
     e.preventDefault();
+    
+    //grab values to update series to activate, then go forward to edit page
+    var f_jsonQuery = require('json-query');
+    var f_match_id = this.props.valueProps.match;
+    var f_series_name = f_jsonQuery('[id=' + f_match_id + '].series.name', { data: this.props.matches }).value;
+    var f_match_team_one_name = f_jsonQuery('[id=' + f_match_id + '].team_one.id', { data: this.props.matches }).value;
+    var f_match_team_two_name = f_jsonQuery('[id=' + f_match_id + '].team_two.id', { data: this.props.matches }).value;
+    var f_seriesid = this.props.valueProps.series;
+    var f_tournamentid = this.props.valueProps.tournament;
+     const postObj = {
+      seriesid: f_seriesid,
+      tournament: f_tournamentid,
+      name: f_series_name,
+      team_one: f_match_team_one_name,
+      team_two: f_match_team_two_name,
+      active: 'true'
+    } 
+
+    console.log('POST');       
+    console.log('seriesid:' + f_seriesid);  
+    console.log('tournament:' + f_tournamentid); 
+    console.log('name:' + f_series_name); 
+    console.log('team_one:' + f_match_team_one_name);  
+    console.log('team_two:' + f_match_team_two_name); 
+    console.log('series update: postObj:');
+    console.log(postObj);
+    
+    //post and update series
+    this.props.updateSeriesEnd( postObj );
+    //next page
     this.props.nextStep();
   };
   //back button function
   back = e => {
     e.preventDefault();
     this.props.prevStep();
-  
-    
   };
  
    
@@ -68,7 +97,8 @@ export class ConfirmMatchForm extends Component {
     getTeams: PropTypes.func.isRequired,
     getGameMaps: PropTypes.func.isRequired,
     getGameModes: PropTypes.func.isRequired,
-    getMatches: PropTypes.func.isRequired
+    getMatches: PropTypes.func.isRequired,
+    updateSeriesEnd: PropTypes.func.isRequired
   };
   
  
@@ -155,5 +185,5 @@ const mapStateToProps = state => ({
   matches: state.matches.matches
 });
 
-export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes, getMatches, getGameFactions } )(ConfirmMatchForm);
+export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes, getMatches, getGameFactions, updateSeriesEnd } )(ConfirmMatchForm);
  

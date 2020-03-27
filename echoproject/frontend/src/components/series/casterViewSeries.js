@@ -66,7 +66,10 @@ import { getSeriesDetails, updateSeriesEnd } from "../../actions/series";
                   <tr key={listmatch.id}>
                     <td>{listmatch.id}</td>
                     <td>{listmatch.match_order}</td>
-                    <td>{listmatch.winner.short_name}</td>                    
+                    { ( listmatch.winner === null || listmatch.winner.short_name === null )?
+                    <td>n/a</td>:
+                    <td>{ listmatch.winner.short_name }</td>
+                    }                    
                     <td>{String(listmatch.ended)}</td>
                     <td>{String(listmatch.active)}</td>
                   </tr>
