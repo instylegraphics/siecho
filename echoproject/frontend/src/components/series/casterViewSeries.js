@@ -3,21 +3,9 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getMatches } from "../../actions/matches";
 import { getScenes } from "../../actions/scenes";
-import { getSeriesDetails, updateSeriesEnd } from "../../actions/series";
+import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/series";
 
  export class CasterViewSeries extends Component {
-
-  back = e => {
-    e.preventDefault();
-    this.props.prevStep();
-  };
- 
-  static propTypes = {
-    getSeriesDetails: PropTypes.func.isRequired,
-    updateSeriesEnd: PropTypes.func.isRequired,
-    getMatches: PropTypes.func.isRequired,
-    getScenes: PropTypes.func.isRequired
-  };
 
   componentDidMount() {
     console.log("componentDidMount - casterViewSeries");
@@ -27,10 +15,74 @@ import { getSeriesDetails, updateSeriesEnd } from "../../actions/series";
     console.log(this.props.valueProps.tournament);
     
     this.props.getMatches(this.props.valueProps.seriesid);
-    this.props.getSeriesDetails(this.props.valueProps.tournament)
+    this.props.getSeries(this.props.valueProps.tournament);
+    this.props.getSeriesDetails(this.props.valueProps.tournament);
     this.props.getScenes();
   };
   
+  
+  back = e => {
+    e.preventDefault();
+    this.props.prevStep();
+  };
+ 
+  //function to end series active to false, make sure all matches are done. calculates team scores and winner
+  endSeriesForm = e => {
+    e.preventDefault();
+ 
+    //grab values to update series to activate, then go forward to edit page
+    var f_jsonQuery = require('json-query');
+    var f_seriesid = this.props.valueProps.seriesid;
+    var f_series_name = f_jsonQuery('[id=' + f_seriesid + '].name', { data: this.props.series }).value;
+//    var f_match_team_one_name = f_jsonQuery('[id=' + f_seriesid + '].team_one.id', { data: this.props.series }).value;
+//    var f_match_team_two_name = f_jsonQuery('[id=' + f_seriesid + '].team_two.id', { data: this.props.series }).value;
+    var f_match_team_one_name = f_jsonQuery('[id=' + f_seriesid + '].team_one', { data: this.props.series }).value;
+    var f_match_team_two_name = f_jsonQuery('[id=' + f_seriesid + '].team_two', { data: this.props.series }).value;
+
+    var f_tournamentid = this.props.valueProps.tournament;
+    
+     const postObj = {
+      id: f_seriesid,
+      tournament: f_tournamentid,
+      name: f_series_name,
+      team_one: f_match_team_one_name,
+      team_two: f_match_team_two_name,
+      active: 'false',
+      ended: 'true'
+    } 
+
+    console.log('POST');       
+    console.log('seriesid:' + f_seriesid);  
+    console.log('tournament:' + f_tournamentid); 
+    console.log('name:' + f_series_name); 
+    console.log('team_one:' + f_match_team_one_name);  
+    console.log('team_two:' + f_match_team_two_name);
+    console.log('series update: postObj:');
+    console.log(postObj);
+    
+    //post and update series
+    this.props.updateSeriesEnd( postObj );
+ 
+    // Force a render without state change...
+    
+    //setTimeout( this.props.getSeriesDetails( f_tournamentid ), 3000);
+    //setTimeout( this.forceUpdate(), 4000);
+
+    // Force a render with a simulated state change
+//    this.setState({ state: this.state });
+    
+  };
+  
+  
+  static propTypes = {
+    getSeries: PropTypes.func.isRequired,
+    getSeriesDetails: PropTypes.func.isRequired,
+    updateSeriesEnd: PropTypes.func.isRequired,
+    getMatches: PropTypes.func.isRequired,
+    getScenes: PropTypes.func.isRequired
+  };
+
+
   render() {
  
     const { valueProps } = this.props;
@@ -164,10 +216,7 @@ import { getSeriesDetails, updateSeriesEnd } from "../../actions/series";
           </div>
            <div className="form-group">  
               <button
-              onClick={(e) => {
-              console.log("this.props.valueProps.seriesid:" + this.props.valueProps.seriesid);
-              this.props.updateSeriesEnd(this.props.valueProps.seriesid);
-              }}
+              onClick={this.endSeriesForm}
               className="btn btn-danger btn-sm">End Series
               </button>
            </div>           
@@ -181,8 +230,9 @@ import { getSeriesDetails, updateSeriesEnd } from "../../actions/series";
 
 const mapStateToProps = state => ({
   series: state.series.series,
+  seriesget: state.seriesget.seriesget,
   matches: state.matches.matches,
   scenes: state.scenes.scenes
 });
 
-export default connect( mapStateToProps,{ getSeriesDetails, updateSeriesEnd, getMatches, getScenes } )(CasterViewSeries);
+export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatches, getScenes } )(CasterViewSeries);

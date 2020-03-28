@@ -2,7 +2,7 @@ import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
 
-import { GET_MATCHES, GET_MATCH, UDPATE_MATCH } from "./types";
+import { GET_MATCHES, GET_MATCH, UPDATE_MATCH } from "./types";
 
  
 // GET MATCHES with optional series ID param which returns only selected matches with series id passed
@@ -70,7 +70,7 @@ export const updateMatch = (match) => (dispatch, getState) => {
     .then(res => {
       dispatch(createMessage({ updateMatch: "Match Updated" }));
       dispatch({
-        type: UDPATE_MATCH,
+        type: UPDATE_MATCH,
         payload: res.data
       });
     //alert("Match Updated.");

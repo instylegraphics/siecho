@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { addSeries, getSeriesDetails, deleteSeries } from "../../actions/series";
+import { addSeries, getSeries, getSeriesDetails, deleteSeries } from "../../actions/series";
 import { getTournaments } from "../../actions/tournaments";
 import { getTeams} from "../../actions/teams";
 
@@ -31,6 +31,7 @@ export class FormSeries extends Component {
     addSeries: PropTypes.func.isRequired,
     getTournaments: PropTypes.func.isRequired,
     getTeams: PropTypes.func.isRequired,
+    getSeries: PropTypes.func.isRequired,
     getSeriesDetails: PropTypes.func.isRequired,
     deleteSeries: PropTypes.func.isRequired
   };
@@ -141,6 +142,7 @@ export class FormSeries extends Component {
                    onChange={(e) => {
                   console.log("tournament:" + e.target.value);
                   this.setState({ tournament: e.target.value });
+                  this.props.getSeries(e.target.value);
                   this.props.getSeriesDetails(e.target.value);
                   }}
                    >
@@ -285,10 +287,11 @@ export class FormSeries extends Component {
 const mapStateToProps = state => ({
   tournaments: state.tournaments.tournaments,
   teams: state.teams.teams,
-  series: state.series.series
+  series: state.series.series,
+  seriesget: state.seriesget.seriesget
 });
 
 export default connect( 
   mapStateToProps,
-    { addSeries, getTournaments, getTeams, getSeriesDetails, deleteSeries } 
+    { addSeries, getTournaments, getTeams, getSeries, getSeriesDetails, deleteSeries } 
 )(FormSeries);

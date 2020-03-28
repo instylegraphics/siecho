@@ -224,6 +224,7 @@ export class StepFourMatchAdminForm extends Component {
       team_one_score: f_team_one_score,
       team_two_faction: f_team_two_faction,
       team_two_score: f_team_two_score,
+      active: 'true',
       winner: f_winner
     } 
 

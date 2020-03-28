@@ -55,21 +55,26 @@ export class ConfirmMatchForm extends Component {
     //grab values to update series to activate, then go forward to edit page
     var f_jsonQuery = require('json-query');
     var f_match_id = this.props.valueProps.match;
+
+    var f_series_active = f_jsonQuery('[id=' + f_match_id + '].series.active', { data: this.props.matches }).value;
+    
     var f_series_name = f_jsonQuery('[id=' + f_match_id + '].series.name', { data: this.props.matches }).value;
     var f_match_team_one_name = f_jsonQuery('[id=' + f_match_id + '].team_one.id', { data: this.props.matches }).value;
     var f_match_team_two_name = f_jsonQuery('[id=' + f_match_id + '].team_two.id', { data: this.props.matches }).value;
     var f_seriesid = this.props.valueProps.series;
     var f_tournamentid = this.props.valueProps.tournament;
      const postObj = {
-      seriesid: f_seriesid,
+      id: f_seriesid,
       tournament: f_tournamentid,
       name: f_series_name,
       team_one: f_match_team_one_name,
       team_two: f_match_team_two_name,
-      active: 'true'
+      active: 'true',
+      ended: 'false'
     } 
 
-    console.log('POST');       
+    console.log('POST');
+    console.log('f_series_active:' + f_series_active); 
     console.log('seriesid:' + f_seriesid);  
     console.log('tournament:' + f_tournamentid); 
     console.log('name:' + f_series_name); 
@@ -78,11 +83,19 @@ export class ConfirmMatchForm extends Component {
     console.log('series update: postObj:');
     console.log(postObj);
     
-    //post and update series
-    this.props.updateSeriesEnd( postObj );
+    
+    if (f_series_active != true) {
+      //post and update series
+      this.props.updateSeriesEnd( postObj );
+      console.log("update series:" + f_series_active);
+    }else{
+    console.log("else true do not update series:" + f_series_active);
+    }
     //next page
     this.props.nextStep();
   };
+  
+  
   //back button function
   back = e => {
     e.preventDefault();

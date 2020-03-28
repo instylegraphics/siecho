@@ -100,15 +100,15 @@ export const updateSeriesEnd = series => (dispatch, getState) => {
   console.log("series values");
   console.log(series);
   console.log("id value");
-  console.log(series.seriesid);  
+  console.log(series.id);  
 
   axios
-    .put("/si/series/" + series.seriesid + "/", series, tokenConfig(getState))
+    .put("/si/series/" + series.id + "/", series, tokenConfig(getState))
     .then(res => {
       dispatch(createMessage({ deleteSeries: "Series Updated" }));
       dispatch({
         type: UPDATE_SERIES_END,
-        payload: series
+        payload: res.data
       });
     })
     .catch(err => console.log(err));
