@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getMatches} from "../../actions/matches";
+import { getMatchesDetails} from "../../actions/matches";
  
 
 export class FormMatchSelect extends Component {
@@ -12,11 +12,11 @@ export class FormMatchSelect extends Component {
   };
 
   static propTypes = {
-    getMatches: PropTypes.func.isRequired   
+    getMatchesDetails: PropTypes.func.isRequired   
   };
     
   componentDidMount() {
-    this.props.getMatches();
+    this.props.getMatchesDetails();
   
   }
   
@@ -110,10 +110,10 @@ export class FormMatchSelect extends Component {
 }
 
 const mapStateToProps = state => ({
-  matches: state.matches.matches,
+  matchesdetails: state.matchesdetails.matchesdetails,
 });
 
 export default connect( 
   mapStateToProps,
-    { getMatches } 
+    { getMatchesDetails } 
 )(FormMatchSelect);

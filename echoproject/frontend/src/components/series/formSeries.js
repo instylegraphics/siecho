@@ -288,7 +288,7 @@ const mapStateToProps = state => ({
   tournaments: state.tournaments.tournaments,
   teams: state.teams.teams,
   series: state.series.series,
-  seriesget: state.seriesget.seriesget
+  seriesdetails: state.seriesdetails.seriesdetails
 });
 
 export default connect( 

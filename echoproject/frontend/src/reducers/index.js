@@ -1,7 +1,8 @@
 import { combineReducers } from "redux";
 import leads from "./leads";
 import series from "./series";
-import seriesget from "./series";
+import seriesdetails from "./series";
+import matchesdetails from "./matches";
 import matches from "./matches";
 import match from "./matches";
 import tournaments from "./tournaments"
@@ -17,7 +18,8 @@ import auth from "./auth";
 export default combineReducers({
   leads,
   series,
-  seriesget,
+  seriesdetails,
+  matchesdetails,
   matches,
   match,
   tournaments,

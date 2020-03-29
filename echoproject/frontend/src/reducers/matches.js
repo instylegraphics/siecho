@@ -1,12 +1,18 @@
-import { GET_MATCHES, GET_MATCH, UPDATE_MATCH } from "../actions/types.js";
+import { GET_MATCHES_DETAILS, GET_MATCHES, GET_MATCH, UPDATE_MATCH } from "../actions/types.js";
 
 const initialState = {
+  matchesdetails: [],
   matches: [],
   match: []
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case GET_MATCHES_DETAILS:
+      return {
+        ...state,
+        matchesdetails: action.payload
+      };    
     case GET_MATCHES:
       return {
         ...state,

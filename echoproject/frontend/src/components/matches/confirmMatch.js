@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getMatch, updateMatch, getMatches } from "../../actions/matches";
+import { getMatch, updateMatch, getMatchesDetails } from "../../actions/matches";
 import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
@@ -36,7 +36,7 @@ export class ConfirmMatchForm extends Component {
     this.props.getTeams();
     this.props.getGameMaps();
     this.props.getGameModes();
-    this.props.getMatches(this.props.valueProps.series);
+    this.props.getMatchesDetails(this.props.valueProps.series);
     this.props.getGameFactions();
         
     const { matchData } = this.state;
@@ -56,11 +56,11 @@ export class ConfirmMatchForm extends Component {
     var f_jsonQuery = require('json-query');
     var f_match_id = this.props.valueProps.match;
 
-    var f_series_active = f_jsonQuery('[id=' + f_match_id + '].series.active', { data: this.props.matches }).value;
+    var f_series_active = f_jsonQuery('[id=' + f_match_id + '].series.active', { data: this.props.matchesdetails }).value;
     
-    var f_series_name = f_jsonQuery('[id=' + f_match_id + '].series.name', { data: this.props.matches }).value;
-    var f_match_team_one_name = f_jsonQuery('[id=' + f_match_id + '].team_one.id', { data: this.props.matches }).value;
-    var f_match_team_two_name = f_jsonQuery('[id=' + f_match_id + '].team_two.id', { data: this.props.matches }).value;
+    var f_series_name = f_jsonQuery('[id=' + f_match_id + '].series.name', { data: this.props.matchesdetails }).value;
+    var f_match_team_one_name = f_jsonQuery('[id=' + f_match_id + '].team_one.id', { data: this.props.matchesdetails }).value;
+    var f_match_team_two_name = f_jsonQuery('[id=' + f_match_id + '].team_two.id', { data: this.props.matchesdetails }).value;
     var f_seriesid = this.props.valueProps.series;
     var f_tournamentid = this.props.valueProps.tournament;
      const postObj = {
@@ -110,7 +110,7 @@ export class ConfirmMatchForm extends Component {
     getTeams: PropTypes.func.isRequired,
     getGameMaps: PropTypes.func.isRequired,
     getGameModes: PropTypes.func.isRequired,
-    getMatches: PropTypes.func.isRequired,
+    getMatchesDetails: PropTypes.func.isRequired,
     updateSeriesEnd: PropTypes.func.isRequired
   };
   
@@ -127,20 +127,20 @@ export class ConfirmMatchForm extends Component {
     var jsonQuery = require('json-query');
     var match_id = this.props.valueProps.match;
     // tournament info
-    var tournament_name_value = jsonQuery('[id=' + match_id + '].series.tournament.name', { data: this.props.matches }).value;
-    var tournament_scheduled_date = jsonQuery('[id=' + match_id + '].series.tournament.scheduled_date', { data: this.props.matches }).value;
+    var tournament_name_value = jsonQuery('[id=' + match_id + '].series.tournament.name', { data: this.props.matchesdetails }).value;
+    var tournament_scheduled_date = jsonQuery('[id=' + match_id + '].series.tournament.scheduled_date', { data: this.props.matchesdetails }).value;
     // series info
-    var series_name = jsonQuery('[id=' + match_id + '].series.name', { data: this.props.matches }).value;
-    var series_order = jsonQuery('[id=' + match_id + '].series.series_order', { data: this.props.matches }).value;
-    var series_best_of = jsonQuery('[id=' + match_id + '].series.best_of', { data: this.props.matches }).value;
-    var series_active = jsonQuery('[id=' + match_id + '].series.active', { data: this.props.matches }).value;    
-    var series_ended = jsonQuery('[id=' + match_id + '].series.ended', { data: this.props.matches }).value;
+    var series_name = jsonQuery('[id=' + match_id + '].series.name', { data: this.props.matchesdetails }).value;
+    var series_order = jsonQuery('[id=' + match_id + '].series.series_order', { data: this.props.matchesdetails }).value;
+    var series_best_of = jsonQuery('[id=' + match_id + '].series.best_of', { data: this.props.matchesdetails }).value;
+    var series_active = jsonQuery('[id=' + match_id + '].series.active', { data: this.props.matchesdetails }).value;    
+    var series_ended = jsonQuery('[id=' + match_id + '].series.ended', { data: this.props.matchesdetails }).value;
     // match info
-    var match_team_one_name = jsonQuery('[id=' + match_id + '].team_one.name', { data: this.props.matches }).value;
-    var match_team_two_name = jsonQuery('[id=' + match_id + '].team_two.name', { data: this.props.matches }).value;
-    var match_match_order = jsonQuery('[id=' + match_id + '].match_order', { data: this.props.matches }).value;
-    var match_active = jsonQuery('[id=' + match_id + '].active', { data: this.props.matches }).value;    
-    var match_ended = jsonQuery('[id=' + match_id + '].ended', { data: this.props.matches }).value;     
+    var match_team_one_name = jsonQuery('[id=' + match_id + '].team_one.name', { data: this.props.matchesdetails }).value;
+    var match_team_two_name = jsonQuery('[id=' + match_id + '].team_two.name', { data: this.props.matchesdetails }).value;
+    var match_match_order = jsonQuery('[id=' + match_id + '].match_order', { data: this.props.matchesdetails }).value;
+    var match_active = jsonQuery('[id=' + match_id + '].active', { data: this.props.matchesdetails }).value;    
+    var match_ended = jsonQuery('[id=' + match_id + '].ended', { data: this.props.matchesdetails }).value;     
     
     var dateFormat = require('dateformat');
     tournament_scheduled_date = dateFormat(tournament_scheduled_date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
@@ -195,8 +195,8 @@ const mapStateToProps = state => ({
   teams: state.teams.teams,
   gamemaps: state.gamemaps.gamemaps,
   gamemodes: state.gamemodes.gamemodes,
-  matches: state.matches.matches
+  matchesdetails: state.matchesdetails.matchesdetails
 });
 
-export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes, getMatches, getGameFactions, updateSeriesEnd } )(ConfirmMatchForm);
+export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes, getMatchesDetails, getGameFactions, updateSeriesEnd } )(ConfirmMatchForm);
  

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getMatches } from "../../actions/matches";
+import { getMatchesDetails } from "../../actions/matches";
 import { getScenes } from "../../actions/scenes";
 import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/series";
 
@@ -14,7 +14,7 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
     console.log('valueProps.tournament');
     console.log(this.props.valueProps.tournament);
     
-    this.props.getMatches(this.props.valueProps.seriesid);
+    this.props.getMatchesDetails(this.props.valueProps.seriesid);
     this.props.getSeries(this.props.valueProps.tournament);
     this.props.getSeriesDetails(this.props.valueProps.tournament);
     this.props.getScenes();
@@ -78,7 +78,7 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
     getSeries: PropTypes.func.isRequired,
     getSeriesDetails: PropTypes.func.isRequired,
     updateSeriesEnd: PropTypes.func.isRequired,
-    getMatches: PropTypes.func.isRequired,
+    getMatchesDetails: PropTypes.func.isRequired,
     getScenes: PropTypes.func.isRequired
   };
 
@@ -114,7 +114,7 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
                 </tr>
               </thead>
               <tbody>
-                {this.props.matches.map(listmatch => (
+                {this.props.matchesdetails.map(listmatch => (
                   <tr key={listmatch.id}>
                     <td>{listmatch.id}</td>
                     <td>{listmatch.match_order}</td>
@@ -230,9 +230,9 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
 
 const mapStateToProps = state => ({
   series: state.series.series,
-  seriesget: state.seriesget.seriesget,
-  matches: state.matches.matches,
+  seriesdetails: state.seriesdetails.seriesdetails,
+  matchesdetails: state.matchesdetails.matchesdetails,
   scenes: state.scenes.scenes
 });
 
-export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatches, getScenes } )(CasterViewSeries);
+export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatchesDetails, getScenes } )(CasterViewSeries);

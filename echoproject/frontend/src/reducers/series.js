@@ -2,7 +2,7 @@ import { GET_SERIES, GET_SERIES_DETAILS, UPDATE_SERIES_END, DELETE_SERIES, ADD_S
 
 const initialState = {
   series: [],
-  seriesget: []
+  seriesdetails: []
 };
 
 export default function (state = initialState, action) {
@@ -15,11 +15,8 @@ export default function (state = initialState, action) {
     case GET_SERIES_DETAILS:
       return {
         ...state,
-        seriesget: action.payload
+        seriesdetails: action.payload
       };      
-
-
-     
 
     case UPDATE_SERIES_END: {
       const series = state.series.map(el => {
