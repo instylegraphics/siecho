@@ -90,6 +90,7 @@ class SeriesGetSerializer(serializers.ModelSerializer):
     tournament = TournamentSerializer(read_only=True)
     team_one = TeamSerializer(read_only=True)
     team_two = TeamSerializer(read_only=True)
+    winner = TeamSerializer(read_only=True)
     
     class Meta:
         model = Series

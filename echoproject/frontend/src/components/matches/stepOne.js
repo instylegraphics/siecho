@@ -10,7 +10,7 @@ export class StepOneTournamentForm extends Component {
   };
   
   static propTypes = {
-    getTournaments: PropTypes.func.isRequired   
+    getTournaments: PropTypes.array.isRequired   
   };
     
   componentDidMount() {

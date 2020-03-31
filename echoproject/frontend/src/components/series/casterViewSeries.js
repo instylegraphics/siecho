@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getMatchesDetails } from "../../actions/matches";
+import { getMatches, getMatchesDetails } from "../../actions/matches";
 import { getScenes } from "../../actions/scenes";
 import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/series";
 
@@ -13,7 +13,7 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
     console.log(this.props.valueProps.seriesid);
     console.log('valueProps.tournament');
     console.log(this.props.valueProps.tournament);
-    
+    this.props.getMatches(this.props.valueProps.seriesid);
     this.props.getMatchesDetails(this.props.valueProps.seriesid);
     this.props.getSeries(this.props.valueProps.tournament);
     this.props.getSeriesDetails(this.props.valueProps.tournament);
@@ -78,6 +78,7 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
     getSeries: PropTypes.func.isRequired,
     getSeriesDetails: PropTypes.func.isRequired,
     updateSeriesEnd: PropTypes.func.isRequired,
+    getMatches: PropTypes.func.isRequired,
     getMatchesDetails: PropTypes.func.isRequired,
     getScenes: PropTypes.func.isRequired
   };
@@ -93,12 +94,29 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
     console.log(this.props.valueProps);
     //console.log("view:" + view);
     
+    
+    function getTeamName( id, propsM ) {
+      //console.log('inside: getTeamName');
+      //console.log('matchesdetails:' + propsM );
+      var r_jsonQuery = require('json-query');
+      var txt_winner = r_jsonQuery('[id=' + id + '].winner.name', { data: propsM }).value;
+      return txt_winner;
+    }
+    
     return (
        
         <React.Fragment>
          <div className="card card-body mt-4 mb-4">
             <h1>Caster View</h1>
-             
+ 
+            <div className="form-group">  
+              <button
+              onClick={this.endSeriesForm}
+              className="btn btn-danger btn-sm">End Series
+              </button>
+           </div>   
+           
+                       
               {this.props.valueProps.seriesid ?
                   <div class="empty">
           <h2>Current Matches for This Series</h2>
@@ -107,6 +125,9 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
                 <tr>
                   <th>ID</th>
                   <th>Match Order</th>
+                  <th>Room Code</th>
+                  <th>Team One Score</th>
+                  <th>Team Two Score</th>
                   <th>Match Winner</th>
                   <th>Ended</th>
                   <th>Active</th>
@@ -114,14 +135,14 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
                 </tr>
               </thead>
               <tbody>
-                {this.props.matchesdetails.map(listmatch => (
+                {this.props.matches.map(listmatch => (
                   <tr key={listmatch.id}>
                     <td>{listmatch.id}</td>
                     <td>{listmatch.match_order}</td>
-                    { ( listmatch.winner === null || listmatch.winner.short_name === null )?
-                    <td>n/a</td>:
-                    <td>{ listmatch.winner.short_name }</td>
-                    }                    
+                    <td>{listmatch.roomcode}</td>
+                    <td>{listmatch.team_one_score}</td>
+                    <td>{listmatch.team_two_score}</td>
+                    <td>{String(listmatch.winner)}:{ getTeamName(listmatch.id, this.props.matchesdetails) } </td>
                     <td>{String(listmatch.ended)}</td>
                     <td>{String(listmatch.active)}</td>
                   </tr>
@@ -136,9 +157,47 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
              
              
              
+       
              
-                        
-              {this.props.valueProps.seriesid ?
+             {this.props.valueProps.tournament ?
+                  <div class="empty">
+          <h2>Current Series for This Tournament</h2>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Series Order</th>
+                  <th># of Matches</th>
+                  <th>Series Winner</th>
+                  <th>Ended</th>
+                  <th>Active</th>
+                   
+                </tr>
+              </thead>
+              <tbody>
+                {this.props.series.map(listseries => (
+                  <tr key={listseries.id} className={ this.props.valueProps.seriesid == listseries.id ? 'table-success' : '' } >
+                    <td>{listseries.id}</td>
+                    <td>{listseries.name}</td>
+                    <td>{listseries.series_order}</td>
+                    <td>{listseries.best_of}</td>
+                    <td>{listseries.winner}</td>                    
+                    <td>{String(listseries.ended)}</td>
+                    <td>{String(listseries.active)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            </div>
+              : <div>
+              <h2>No Series Created for this Tournament</h2>
+              </div>         
+             }
+             
+ 
+ 
+               {this.props.valueProps.seriesid ?
                   <div class="empty">
           <h2>Current Scenes</h2>
             <table className="table table-striped">
@@ -172,54 +231,14 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
              
              
              
-             {this.props.valueProps.tournament ?
-                  <div class="empty">
-          <h2>Current Series for This Tournament</h2>
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Series Order</th>
-                  <th># of Matches</th>
-                  <th>Series Winner</th>
-                  <th>Ended</th>
-                  <th>Active</th>
-                   
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.series.map(listseries => (
-                  <tr key={listseries.id}>
-                    <td>{listseries.id}</td>
-                    <td>{listseries.name}</td>
-                    <td>{listseries.series_order}</td>
-                    <td>{listseries.best_of}</td>
-                    <td>{listseries.winner}</td>                    
-                    <td>{String(listseries.ended)}</td>
-                    <td>{String(listseries.active)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-              : <div>
-              <h2>No Series Created for this Tournament</h2>
-              </div>         
-             }
              
-                         
+                                     
           <div className="form-group">
             <button type="button" className="btn btn-primary" onClick={this.back}>
               Back
             </button>
           </div>
-           <div className="form-group">  
-              <button
-              onClick={this.endSeriesForm}
-              className="btn btn-danger btn-sm">End Series
-              </button>
-           </div>           
+        
                       
          </div>
         </React.Fragment>
@@ -231,8 +250,9 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
 const mapStateToProps = state => ({
   series: state.series.series,
   seriesdetails: state.seriesdetails.seriesdetails,
+  matches: state.matches.matches,
   matchesdetails: state.matchesdetails.matchesdetails,
   scenes: state.scenes.scenes
 });
 
-export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatchesDetails, getScenes } )(CasterViewSeries);
+export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatches, getMatchesDetails, getScenes } )(CasterViewSeries);

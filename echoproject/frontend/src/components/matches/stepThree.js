@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getMatchesDetails } from "../../actions/matches";
+import { getMatches } from "../../actions/matches";
 
 export class StepThreeMatchForm extends Component {
   continue = e => {
@@ -15,11 +15,11 @@ export class StepThreeMatchForm extends Component {
   };
 
   static propTypes = {
-    getMatchesDetails: PropTypes.func.isRequired   
+    getMatches: PropTypes.array.isRequired   
   };
     
   componentDidMount() {
-    this.props.getMatchesDetails(this.props.valueProps.series);
+    this.props.getMatches(this.props.valueProps.series);
     console.log('prop series id :');
     console.log(this.props.valueProps.series);
   }
@@ -39,8 +39,8 @@ export class StepThreeMatchForm extends Component {
             <label>Select Match - series id:{valueProps.series}:</label>          
                <select required value={valueProps.match} name="series" className="form-control custom-select" onChange={handleChange('match')}>
                 <option>Select Match</option>
-               {this.props.matchesdetails.map(matchlist => ( 
-                  <option key={matchlist.id} value={matchlist.id}>Match {matchlist.match_order} for Series: {matchlist.series.name} </option>
+               {this.props.matches.map(matchlist => ( 
+                  <option key={matchlist.id} value={matchlist.id}>Match {matchlist.match_order} </option>
                ))}
               </select>
           </div>
@@ -68,8 +68,7 @@ export class StepThreeMatchForm extends Component {
   }
 }
 const mapStateToProps = state => ({
-  matchesdetails: state.matchesdetails.matchesdetails,
+  matches: state.matches.matches,
 });
 
-export default connect( mapStateToProps,{ getMatchesDetails } )(StepThreeMatchForm);
- 
+export default connect( mapStateToProps,{ getMatches } )(StepThreeMatchForm);

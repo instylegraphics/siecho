@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getMatch, updateMatch, getMatchesDetails } from "../../actions/matches";
+import { getMatch, updateMatch } from "../../actions/matches";
+import { updateSeriesEnd } from "../../actions/series";
+import { getSeriesDetails } from "../../actions/series";
 import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
 import { getGameFactions } from "../../actions/gamefactions";
-import { updateSeriesEnd } from "../../actions/series";
 
 export class ConfirmMatchForm extends Component {
 
@@ -24,19 +25,42 @@ export class ConfirmMatchForm extends Component {
     }   
   };
 
- 
+
+   static propTypes = {
+    updateMatch: PropTypes.func.isRequired,
+    updateSeriesEnd: PropTypes.func.isRequired,
+    getSeriesDetails: PropTypes.array.isRequired,
+    getTeams: PropTypes.func.isRequired,
+    getGameMaps: PropTypes.func.isRequired,
+    getGameModes: PropTypes.func.isRequired,
+    getMatches: PropTypes.func.isRequired,
+    getMatchesDetails: PropTypes.func.isRequired,    
+    getMatch: PropTypes.func.isRequired, 
+    match: PropTypes.array.isRequired,
+    matches: PropTypes.array.isRequired,
+    matchesdetails: PropTypes.array.isRequired,
+    teams: PropTypes.array.isRequired,
+    gamemaps: PropTypes.array.isRequired,
+    gamemodes: PropTypes.array.isRequired,
+    gamefactions: PropTypes.array.isRequired,
+  };
+  
+  
   componentDidMount() {
 
     console.log("componentDidMount matchid:" + this.props.valueProps.match);
-    this.props.getMatch(this.props.valueProps.match);
     console.log('componentDidMount this.props');
     console.log(this.props);
     console.log('componentDidMount this.props.match');    
-    console.log(this.props.match);
+    console.log(this.props.valueProps.match);
+    console.log('valueProps.tournament');
+    console.log(this.props.valueProps.tournament);
+    
+    this.props.getMatch(this.props.valueProps.match);
+    this.props.getSeriesDetails(this.props.valueProps.tournament);
     this.props.getTeams();
     this.props.getGameMaps();
     this.props.getGameModes();
-    this.props.getMatchesDetails(this.props.valueProps.series);
     this.props.getGameFactions();
         
     const { matchData } = this.state;
@@ -54,35 +78,44 @@ export class ConfirmMatchForm extends Component {
     
     //grab values to update series to activate, then go forward to edit page
     var f_jsonQuery = require('json-query');
-    var f_match_id = this.props.valueProps.match;
-
-    var f_series_active = f_jsonQuery('[id=' + f_match_id + '].series.active', { data: this.props.matchesdetails }).value;
     
-    var f_series_name = f_jsonQuery('[id=' + f_match_id + '].series.name', { data: this.props.matchesdetails }).value;
-    var f_match_team_one_name = f_jsonQuery('[id=' + f_match_id + '].team_one.id', { data: this.props.matchesdetails }).value;
-    var f_match_team_two_name = f_jsonQuery('[id=' + f_match_id + '].team_two.id', { data: this.props.matchesdetails }).value;
     var f_seriesid = this.props.valueProps.series;
+    console.log('seriesid:' + f_seriesid); 
+    
     var f_tournamentid = this.props.valueProps.tournament;
+    var f_series_name = f_jsonQuery('[id=' + f_seriesid + '].name', { data: this.props.seriesdetails }).value;
+    var f_match_team_one_id = f_jsonQuery('[id=' + f_seriesid + '].team_one.id', { data: this.props.seriesdetails }).value;
+    var f_match_team_two_id = f_jsonQuery('[id=' + f_seriesid + '].team_two.id', { data: this.props.seriesdetails }).value;
+    var f_series_active = f_jsonQuery('[id=' + f_seriesid + '].active', { data: this.props.seriesdetails }).value;
+
+/*
+    var f_series_name = f_jsonQuery('[id=' + f_seriesid + '].name', { data: this.props.series }).value;
+    var f_match_team_one_id = f_jsonQuery('[id=' + f_seriesid + '].team_one', { data: this.props.series }).value;
+    var f_match_team_two_id = f_jsonQuery('[id=' + f_seriesid + '].team_two', { data: this.props.series }).value;
+    var f_series_active = f_jsonQuery('[id=' + f_seriesid + '].active', { data: this.props.series }).value;
+*/
+
      const postObj = {
       id: f_seriesid,
       tournament: f_tournamentid,
       name: f_series_name,
-      team_one: f_match_team_one_name,
-      team_two: f_match_team_two_name,
+      team_one: f_match_team_one_id,
+      team_two: f_match_team_two_id,
       active: 'true',
       ended: 'false'
     } 
 
     console.log('POST');
-    console.log('f_series_active:' + f_series_active); 
+  
     console.log('seriesid:' + f_seriesid);  
     console.log('tournament:' + f_tournamentid); 
     console.log('name:' + f_series_name); 
-    console.log('team_one:' + f_match_team_one_name);  
-    console.log('team_two:' + f_match_team_two_name); 
+    console.log('team_one:' + f_match_team_one_id);  
+    console.log('team_two:' + f_match_team_two_id); 
+    console.log('f_series_active:' + f_series_active);
+       
     console.log('series update: postObj:');
     console.log(postObj);
-    
     
     if (f_series_active != true) {
       //post and update series
@@ -102,45 +135,47 @@ export class ConfirmMatchForm extends Component {
     this.props.prevStep();
   };
  
-   
-  
-  static propTypes = {
-    getMatch: PropTypes.func.isRequired,
-    updateMatch: PropTypes.func.isRequired,
-    getTeams: PropTypes.func.isRequired,
-    getGameMaps: PropTypes.func.isRequired,
-    getGameModes: PropTypes.func.isRequired,
-    getMatchesDetails: PropTypes.func.isRequired,
-    updateSeriesEnd: PropTypes.func.isRequired
-  };
   
  
-
-
   render() {
     const { valueProps, handleChange } = this.props;
      
-    console.log('step 5 Confirm Match Admin: valueProps.match:');
-    console.log(this.props.match);
+    console.log('step 5 Confirm Match Admin');
+
     
     //get values 
     var jsonQuery = require('json-query');
     var match_id = this.props.valueProps.match;
+    console.log('match_id:' + match_id );
+    var tournament_id = this.props.valueProps.tournament;
+    console.log('tournament_id:' + tournament_id );
+    var series_id = this.props.valueProps.series;
+    console.log('series_id:' + series_id );
+    
+ 
     // tournament info
-    var tournament_name_value = jsonQuery('[id=' + match_id + '].series.tournament.name', { data: this.props.matchesdetails }).value;
-    var tournament_scheduled_date = jsonQuery('[id=' + match_id + '].series.tournament.scheduled_date', { data: this.props.matchesdetails }).value;
+    var tournament_name_value = jsonQuery('[id=' + series_id + '].tournament.name', { data: this.props.seriesdetails }).value;
+    var tournament_scheduled_date = jsonQuery('[id=' + series_id + '].tournament.scheduled_date', { data: this.props.seriesdetails }).value;
     // series info
-    var series_name = jsonQuery('[id=' + match_id + '].series.name', { data: this.props.matchesdetails }).value;
-    var series_order = jsonQuery('[id=' + match_id + '].series.series_order', { data: this.props.matchesdetails }).value;
-    var series_best_of = jsonQuery('[id=' + match_id + '].series.best_of', { data: this.props.matchesdetails }).value;
-    var series_active = jsonQuery('[id=' + match_id + '].series.active', { data: this.props.matchesdetails }).value;    
-    var series_ended = jsonQuery('[id=' + match_id + '].series.ended', { data: this.props.matchesdetails }).value;
+    var series_name = jsonQuery('[id=' + series_id + '].name', { data: this.props.seriesdetails }).value;
+    var series_order = jsonQuery('[id=' + series_id + '].series_order', { data: this.props.seriesdetails }).value;
+    var series_best_of = jsonQuery('[id=' + series_id + '].best_of', { data: this.props.seriesdetails }).value;
+    var series_active = jsonQuery('[id=' + series_id + '].active', { data: this.props.seriesdetails }).value;    
+    var series_ended = jsonQuery('[id=' + series_id + '].ended', { data: this.props.seriesdetails }).value;
+
     // match info
-    var match_team_one_name = jsonQuery('[id=' + match_id + '].team_one.name', { data: this.props.matchesdetails }).value;
-    var match_team_two_name = jsonQuery('[id=' + match_id + '].team_two.name', { data: this.props.matchesdetails }).value;
-    var match_match_order = jsonQuery('[id=' + match_id + '].match_order', { data: this.props.matchesdetails }).value;
-    var match_active = jsonQuery('[id=' + match_id + '].active', { data: this.props.matchesdetails }).value;    
-    var match_ended = jsonQuery('[id=' + match_id + '].ended', { data: this.props.matchesdetails }).value;     
+    var match_team_one_name = jsonQuery('team_one.name', { data: this.props.match }).value;
+    var match_team_two_name = jsonQuery('team_two.name', { data: this.props.match }).value;
+    var match_match_order = jsonQuery('match_order', { data: this.props.match }).value;
+    var match_active = jsonQuery('active', { data: this.props.match }).value;    
+    var match_ended = jsonQuery('ended', { data: this.props.match }).value;     
+
+/*    var match_team_one_name = jsonQuery('[id=' + match_id + '].team_one.name', { data: this.props.match }).value;
+    var match_team_two_name = jsonQuery('[id=' + match_id + '].team_two.name', { data: this.props.match }).value;
+    var match_match_order = jsonQuery('[id=' + match_id + '].match_order', { data: this.props.match }).value;
+    var match_active = jsonQuery('[id=' + match_id + '].active', { data: this.props.match }).value;    
+    var match_ended = jsonQuery('[id=' + match_id + '].ended', { data: this.props.match }).value;     
+*/        
     
     var dateFormat = require('dateformat');
     tournament_scheduled_date = dateFormat(tournament_scheduled_date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
@@ -153,9 +188,9 @@ export class ConfirmMatchForm extends Component {
             <h1>Final Step: Confirmation</h1>
             <p>match id: { valueProps.match }</p>
             
-            <p>tournament_name_value: <strong>{ tournament_name_value }</strong></p>
+            <p>tournament_name_value: <strong>{ String(tournament_name_value) }</strong></p>
             
-            <p>tournament_scheduled_date: <strong>{ tournament_scheduled_date } </strong></p>
+            <p>tournament_scheduled_date: <strong>{ String(tournament_scheduled_date) } </strong></p>
             
             <p>series_name: <strong>{ series_name }</strong></p>
             <p>series_order: <strong>{ series_order }</strong></p>
@@ -192,11 +227,14 @@ export class ConfirmMatchForm extends Component {
 }
 const mapStateToProps = state => ({
   match: state.match.match,
+  matches: state.matches.matches,
+  matchesdetails: state.matchesdetails.matchesdetails,
+  seriesdetails: state.seriesdetails.seriesdetails,
   teams: state.teams.teams,
   gamemaps: state.gamemaps.gamemaps,
   gamemodes: state.gamemodes.gamemodes,
-  matchesdetails: state.matchesdetails.matchesdetails
+  gamefactions: state.gamefactions.gamefactions  
 });
 
-export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes, getMatchesDetails, getGameFactions, updateSeriesEnd } )(ConfirmMatchForm);
+export default connect( mapStateToProps,{ getMatch, updateMatch, updateSeriesEnd, getSeriesDetails, getTeams, getGameMaps, getGameModes, getGameFactions } )(ConfirmMatchForm);
  

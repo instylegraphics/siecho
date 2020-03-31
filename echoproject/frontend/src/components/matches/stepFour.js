@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getMatch, updateMatch } from "../../actions/matches";
+import { getMatch, getMatches, getMatchesDetails, updateMatch } from "../../actions/matches";
 import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
@@ -11,7 +11,7 @@ export class StepFourMatchAdminForm extends Component {
 
   state = {
     matchData: [], 
-    currentMatchData: { 
+    currentMatchData: {
       roomcode: "",
       gamemode: "",
       gamemap: "",
@@ -23,19 +23,40 @@ export class StepFourMatchAdminForm extends Component {
     }   
   };
 
- 
+  static propTypes = {
+    match: PropTypes.array.isRequired,
+    matches: PropTypes.array.isRequired,
+    matchesdetails: PropTypes.array.isRequired,
+    teams: PropTypes.array.isRequired,
+    gamemaps: PropTypes.array.isRequired,
+    gamemodes: PropTypes.array.isRequired,
+    gamefactions: PropTypes.array.isRequired,
+    getMatches: PropTypes.func.isRequired,
+    getMatchesDetails: PropTypes.func.isRequired,    
+    getMatch: PropTypes.func.isRequired,
+    updateMatch: PropTypes.func.isRequired,
+    getTeams: PropTypes.func.isRequired,
+    getGameMaps: PropTypes.func.isRequired,
+    getGameModes: PropTypes.func.isRequired,
+    getGameFactions: PropTypes.func.isRequired
+  };
+  
+  
   componentDidMount() {
-
     console.log("componentDidMount matchid:" + this.props.valueProps.match);
     this.props.getMatch(this.props.valueProps.match);
-    console.log('componentDidMount this.props');
-    console.log(this.props);
-    console.log('componentDidMount this.props.match');    
-    console.log(this.props.match);
+    this.props.getMatches(this.props.valueProps.series);
+    this.props.getMatchesDetails(this.props.valueProps.series);
     this.props.getTeams();
     this.props.getGameMaps();
     this.props.getGameModes();
     this.props.getGameFactions();
+        
+    console.log('componentDidMount this.props');
+    console.log(this.props);
+    console.log('componentDidMount this.props.match'); 
+    console.log(this.props.match);
+
     
     const { matchData } = this.state;
     this.setState({ 
@@ -76,6 +97,9 @@ export class StepFourMatchAdminForm extends Component {
         
     console.log('b4 submit');
    
+    //grab values to update series to activate, then go forward to edit page
+    var f_jsonQuery = require('json-query');
+    
     // getting the form values - roomcode
     var s_roomcode = this.state.currentMatchData.roomcode;  
     console.log('this.state.currentMatchData.roomcode:' + s_roomcode);
@@ -258,25 +282,61 @@ export class StepFourMatchAdminForm extends Component {
     
   };
   
-  static propTypes = {
-    teams: PropTypes.array.isRequired,  
-    match: PropTypes.array.isRequired,
-    gamemaps: PropTypes.array.isRequired,  
-    gamemodes: PropTypes.array.isRequired,    
-    getMatch: PropTypes.func.isRequired,
-    updateMatch: PropTypes.func.isRequired,
-    getTeams: PropTypes.func.isRequired,
-    getGameMaps: PropTypes.func.isRequired,
-    getGameModes: PropTypes.func.isRequired, 
-  };
-  
+
 
   render() {
     const { valueProps, handleChange } = this.props;
      
     console.log('step4 Match Admin: valueProps.match:');
     console.log(this.props.match);
+    
+    var jsonQuery = require('json-query');
+    
+    //form default values    
+    var default_gamemode;
+    if ( this.props.match.gamemode == null || this.props.match.gamemode.id == null ) {
+        default_gamemode = null;
+    } else {
+        default_gamemode = this.props.match.gamemode.id;
+    } 
+    console.log('default_gamemode:' + String(default_gamemode) );  
 
+    //gamemap   
+    var default_gamemap;
+    if ( this.props.match.gamemap == null || this.props.match.gamemap.id == null ) {
+        default_gamemap = null;
+    } else {
+        default_gamemap = this.props.match.gamemap.id;
+    } 
+    console.log('default_gamemap:' + String(default_gamemap) );  
+    
+    //this.props.match.team_one_faction.id
+    var default_team_one_faction;
+    if ( this.props.match.team_one_faction == null || this.props.match.team_one_faction.id == null ) {
+        default_team_one_faction = null;
+    } else {
+        default_team_one_faction = this.props.match.team_one_faction.id;
+    } 
+    console.log('default_team_one_faction:' + String(default_team_one_faction) );
+    
+    //this.props.match.team_one_faction.id
+    var default_team_two_faction;
+    if ( this.props.match.team_two_faction == null || this.props.match.team_two_faction.id == null ) {
+        default_team_two_faction = null;
+    } else {
+        default_team_two_faction = this.props.match.team_two_faction.id;
+    } 
+    console.log('default_team_two_faction:' + String(default_team_two_faction) );
+        
+    //this.props.match.winner.id
+    var default_winner;
+    if ( this.props.match.winner == null || this.props.match.winner.id == null ) {
+        default_winner = null;
+    } else {
+        default_winner = this.props.match.winner.id;
+    } 
+    console.log('default_winner:' + String(default_winner) );
+                        
     return (
         <React.Fragment>
        
@@ -314,7 +374,7 @@ export class StepFourMatchAdminForm extends Component {
               console.log("currentMatchData.gamemode:" + currentMatchData.gamemode );
               this.setState({ currentMatchData });          
               }}
-              defaultValue={ this.props.match.gamemode }
+              defaultValue={ default_gamemode }
                >
               <option value="">Select Game Mode</option>
                 {this.props.gamemodes.map(gmode => (
@@ -335,7 +395,7 @@ export class StepFourMatchAdminForm extends Component {
               console.log("currentMatchData.gamemap:" + currentMatchData.gamemap );
               this.setState({ currentMatchData });          
               }}
-              defaultValue={ this.props.match.gamemap }
+              defaultValue={ default_gamemap }
                >
               <option value="">Select Game Map</option>
                 {this.props.gamemaps.map(gmap => (
@@ -356,9 +416,9 @@ export class StepFourMatchAdminForm extends Component {
               console.log("currentMatchData.team_one_faction:" + currentMatchData.team_one_faction );
               this.setState({ currentMatchData });          
               }}
-              defaultValue={ this.props.match.team_one_faction }
+              defaultValue={ default_team_one_faction }
                >
-              <option value="">Select Game Map</option>
+              <option value="">Select Team One Faction</option>
                 {this.props.gamefactions.map(gfaction => (
                 <option key={gfaction.id} value={gfaction.id}>{gfaction.name}</option>
                ))}
@@ -398,9 +458,9 @@ export class StepFourMatchAdminForm extends Component {
               console.log("currentMatchData.team_two_faction:" + currentMatchData.team_two_faction );
               this.setState({ currentMatchData });          
               }}
-              defaultValue={ this.props.match.team_two_faction }
+              defaultValue={ default_team_two_faction }
                >
-              <option value="">Select Game Map</option>
+              <option value="">Select Team Two Faction</option>
                 {this.props.gamefactions.map(gfaction => (
                 <option key={gfaction.id} value={gfaction.id}>{gfaction.name}</option>
                ))}
@@ -441,7 +501,7 @@ export class StepFourMatchAdminForm extends Component {
               console.log("currentMatchData.winner:" + currentMatchData.winner );
               this.setState({ currentMatchData });          
               }}
-              defaultValue={ this.props.match.winner }
+              defaultValue={ default_winner }
                >
               <option value="">Select Winner</option>
                 {this.props.teams.map(team => (
@@ -461,9 +521,49 @@ export class StepFourMatchAdminForm extends Component {
               Update Match
             </button>
           </div>
-         
  
          </form>       
+
+              { this.props.valueProps.series ?
+                  <div class="empty">
+          <h2>Current Matches for This Series</h2>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Match Order</th>
+                  <th>Room Code</th>
+                  <th>Team One Score</th>
+                  <th>Team Two Score</th>
+                  <th>Match Winner</th>
+                  <th>Ended</th>
+                  <th>Active</th>
+                   
+                </tr>
+              </thead>
+              <tbody>
+                {this.props.matches.map(listmatch => (
+                  <tr key={listmatch.id} className={ this.props.valueProps.match == listmatch.id ? 'table-success' : '' }>
+                    <td>{listmatch.id}</td>
+                    <td>{listmatch.match_order}</td>
+                    <td>{listmatch.roomcode}</td>
+                    <td>{listmatch.team_one_score}</td>
+                    <td>{listmatch.team_two_score}</td>
+                    <td>{String(listmatch.winner)}:{ jsonQuery('[id=' + listmatch.winner + '].name', { data: this.props.teams }).value } </td>
+                    <td>{String(listmatch.ended)}</td>
+                    <td>{String(listmatch.active)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            </div>
+              : <div>
+              <h2>No Matches Created for this Series</h2>
+              </div>         
+             }
+             
+
+
          </div>
         
         </React.Fragment>
@@ -473,11 +573,13 @@ export class StepFourMatchAdminForm extends Component {
 }
 const mapStateToProps = state => ({
   match: state.match.match,
+  matches: state.matches.matches,
+  matchesdetails: state.matchesdetails.matchesdetails,  
   teams: state.teams.teams,
   gamemaps: state.gamemaps.gamemaps,
   gamemodes: state.gamemodes.gamemodes,
   gamefactions: state.gamefactions.gamefactions
 });
 
-export default connect( mapStateToProps,{ getMatch, updateMatch, getTeams, getGameMaps, getGameModes, getGameFactions } )(StepFourMatchAdminForm);
+export default connect( mapStateToProps,{ getMatch, getMatches, getMatchesDetails, updateMatch, getTeams, getGameMaps, getGameModes, getGameFactions } )(StepFourMatchAdminForm);
  

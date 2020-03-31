@@ -29,7 +29,7 @@ export class CasterView extends Component {
     
     return (
       <div className="card card-body mt-4 mb-4">
-        <h2>Caster View</h2>
+        <h2>Caster Live</h2>
   
       </div>
     );

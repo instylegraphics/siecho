@@ -2,7 +2,7 @@ import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
 
-import { GET_MATCHES_DETAILS, GET_MATCHES, GET_MATCH, UPDATE_MATCH } from "./types";
+import { GET_MATCHES_DETAILS, GET_MATCHES, GET_MATCH, UPDATE_MATCH, UPDATE_MATCHES } from "./types";
 
 // GET MATCHES with optional series ID param which returns only selected matches with series id passed
 export const getMatchesDetails = id => (dispatch, getState) => {
@@ -11,30 +11,30 @@ export const getMatchesDetails = id => (dispatch, getState) => {
     .then(res => {
     //console.log('get tid from series props');
     //console.log({id});
-    console.log("prop series id:" + id);
+    console.log("matchesDetails prop series id:" + id);
  
-    var dataSeries = JSON.stringify(res.data); 
-    dataSeries = JSON.parse(dataSeries);    
-    console.log("return all match records");
-    console.log(dataSeries);
+    var dataSeries2 = JSON.stringify(res.data); 
+    dataSeries2 = JSON.parse(dataSeries2);    
+    console.log("return all matches details records");
+    console.log(dataSeries2);
 
-    Array.prototype.removeVal = function(name, value){
-    var array = $.map(this, function(v,i){
+    Array.prototype.removeVal2 = function(name, value){
+    var array2 = $.map(this, function(v,i){
       return v[name].id !== value ? null : v;
     });
     this.length = 0; 
-    this.push.apply(this, array); //push all elements except the one we want to delete
+    this.push.apply(this, array2); //push all elements except the one we want to delete
     }
     //run exclusion
     if (id !== null) {    
-      dataSeries.removeVal('series', parseInt(id) );
+      dataSeries2.removeVal2('series', parseInt(id) );
     }
-    console.log("matches records results AFTER deletion");    
-    console.log(dataSeries);
+    console.log("matchesDetails records results AFTER deletion");    
+    console.log(dataSeries2);
  
       dispatch({
         type: GET_MATCHES_DETAILS,
-        payload: dataSeries
+        payload: dataSeries2
       });
     })
     .catch(err =>
@@ -50,16 +50,16 @@ export const getMatches = id => (dispatch, getState) => {
     .then(res => {
     //console.log('get tid from series props');
     //console.log({id});
-    console.log("prop series id:" + id);
+    console.log("matches prop series id:" + id);
  
     var dataSeries = JSON.stringify(res.data); 
     dataSeries = JSON.parse(dataSeries);    
-    console.log("return all match records");
+    console.log("return all matches records");
     console.log(dataSeries);
 
     Array.prototype.removeVal = function(name, value){
     var array = $.map(this, function(v,i){
-      return v[name].id !== value ? null : v;
+      return v[name] !== value ? null : v;
     });
     this.length = 0; 
     this.push.apply(this, array); //push all elements except the one we want to delete
@@ -84,7 +84,7 @@ export const getMatches = id => (dispatch, getState) => {
 // GEAT A MATCH 
 export const getMatch = id => (dispatch, getState) => {
   axios
-    .get("/si/match/" + id + "/", tokenConfig(getState))
+    .get("/si/matchget/" + id + "/", tokenConfig(getState))
     .then(res => {
       dispatch({
         type: GET_MATCH,
@@ -109,6 +109,11 @@ export const updateMatch = (match) => (dispatch, getState) => {
       dispatch(createMessage({ updateMatch: "Match Updated" }));
       dispatch({
         type: UPDATE_MATCH,
+        payload: res.data
+      });
+      //update matches list
+      dispatch({
+        type: UPDATE_MATCHES,
         payload: res.data
       });
     //alert("Match Updated.");

@@ -16,7 +16,7 @@ export class StepTwoSeriesForm extends Component {
   };
 
   static propTypes = {
-    getSeries: PropTypes.func.isRequired   
+    getSeries: PropTypes.array.isRequired   
   };
     
   componentDidMount() {

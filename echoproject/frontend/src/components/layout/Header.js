@@ -33,7 +33,7 @@ export class Header extends Component {
                 
          <li className="nav-item">
           <Link to="/caster" className="nav-link">
-            Caster View
+            Caster Live
           </Link>
         </li>
                <li className="nav-item">
