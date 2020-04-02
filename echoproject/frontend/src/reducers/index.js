@@ -14,6 +14,8 @@ import scenes from "./scenes";
 import errors from "./errors";
 import messages from "./messages";
 import auth from "./auth";
+import joke from "./saga";
+import pollingStats from "./saga";
 
 export default combineReducers({
   leads,
@@ -30,5 +32,7 @@ export default combineReducers({
   scenes, 
   errors,
   messages,
-  auth
+  auth,
+  joke,
+  pollingStats
 });

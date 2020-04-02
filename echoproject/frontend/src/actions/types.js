@@ -5,6 +5,11 @@ export const GET_MATCH = "GET_MATCH";
 export const UPDATE_MATCH = "UPDATE_MATCH";
 export const UPDATE_MATCHES = "UPDATE_MATCHES";
 
+export const UPDATE_JOKE = "UPDATE_JOKE";
+export const UPDATE_POLLING_STATS = "UPDATE_POLLING_STATS";
+export const POLL_START = "POLL_START";
+export const POLL_STOP = "POLL_STOP";
+
 export const GET_TEAMS = "GET_TEAMS";
 export const GET_GAMES = "GET_GAMES";
 export const GET_GAME_MAPS = "GET_GAME_MAPS";

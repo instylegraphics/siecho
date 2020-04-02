@@ -2,19 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
- 
-
 export class CasterView extends Component {
 
-  
   static propTypes = {
  
   };
     
- 
   componentDidMount() {
  
-
   }
     
   onChange = e => this.setState({ [e.target.name]: e.target.value });

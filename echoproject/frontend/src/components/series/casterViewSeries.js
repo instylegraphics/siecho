@@ -4,8 +4,15 @@ import PropTypes from "prop-types";
 import { getMatches, getMatchesDetails } from "../../actions/matches";
 import { getScenes } from "../../actions/scenes";
 import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/series";
+import { getTeams} from "../../actions/teams";
+import { getGameMaps } from "../../actions/gamemaps";
+import { getGameModes } from "../../actions/gamemodes";
+import { getGameFactions } from "../../actions/gamefactions";
 
- export class CasterViewSeries extends Component {
+import { setIntervalAsync } from 'set-interval-async/dynamic';
+import { clearIntervalAsync } from 'set-interval-async';
+
+export class CasterViewSeries extends Component {
 
   componentDidMount() {
     console.log("componentDidMount - casterViewSeries");
@@ -13,13 +20,32 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
     console.log(this.props.valueProps.seriesid);
     console.log('valueProps.tournament');
     console.log(this.props.valueProps.tournament);
-    this.props.getMatches(this.props.valueProps.seriesid);
+    //this.props.getMatches(this.props.valueProps.seriesid);
+    
+    //this.timer = setInterval(()=>  this.props.getMatches(this.props.valueProps.seriesid), 5000);
+
+    this.timer = setIntervalAsync( 
+      async () => {
+        console.log('fetch start');
+        await this.props.getMatches(this.props.valueProps.seriesid);
+        await this.props.getSeries(this.props.valueProps.tournament);
+      },3000
+    );
     this.props.getMatchesDetails(this.props.valueProps.seriesid);
-    this.props.getSeries(this.props.valueProps.tournament);
     this.props.getSeriesDetails(this.props.valueProps.tournament);
     this.props.getScenes();
+    this.props.getTeams();
+    this.props.getGameMaps();
+    this.props.getGameModes();
+    this.props.getGameFactions();
+        
   };
   
+  componentWillUnmount() {
+    clearIntervalAsync(this.timer);
+    this.timer = null;
+    console.log('fetch end');
+  };
   
   back = e => {
     e.preventDefault();
@@ -80,7 +106,11 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
     updateSeriesEnd: PropTypes.func.isRequired,
     getMatches: PropTypes.func.isRequired,
     getMatchesDetails: PropTypes.func.isRequired,
-    getScenes: PropTypes.func.isRequired
+    getScenes: PropTypes.func.isRequired,
+    getTeams: PropTypes.func.isRequired,
+    getGameMaps: PropTypes.func.isRequired,
+    getGameModes: PropTypes.func.isRequired,
+    getGameFactions: PropTypes.func.isRequired    
   };
 
 
@@ -88,21 +118,13 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
  
     const { valueProps } = this.props;
     console.log("render casterViewSeries caster view");
-    console.log('props');
-    console.log(this.props);
-    console.log('valueProps');
-    console.log(this.props.valueProps);
+    //console.log('props');
+    //console.log(this.props);
+    //console.log('valueProps');
+    //console.log(this.props.valueProps);
     //console.log("view:" + view);
-    
-    
-    function getTeamName( id, propsM ) {
-      //console.log('inside: getTeamName');
-      //console.log('matchesdetails:' + propsM );
-      var r_jsonQuery = require('json-query');
-      var txt_winner = r_jsonQuery('[id=' + id + '].winner.name', { data: propsM }).value;
-      return txt_winner;
-    }
-    
+    var jsonQuery = require('json-query');
+  
     return (
        
         <React.Fragment>
@@ -142,7 +164,7 @@ import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/seri
                     <td>{listmatch.roomcode}</td>
                     <td>{listmatch.team_one_score}</td>
                     <td>{listmatch.team_two_score}</td>
-                    <td>{String(listmatch.winner)}:{ getTeamName(listmatch.id, this.props.matchesdetails) } </td>
+                    <td>{String(listmatch.winner)}:{ jsonQuery('[id=' + listmatch.winner + '].name', { data: this.props.teams }).value } </td>
                     <td>{String(listmatch.ended)}</td>
                     <td>{String(listmatch.active)}</td>
                   </tr>
@@ -252,7 +274,11 @@ const mapStateToProps = state => ({
   seriesdetails: state.seriesdetails.seriesdetails,
   matches: state.matches.matches,
   matchesdetails: state.matchesdetails.matchesdetails,
-  scenes: state.scenes.scenes
+  scenes: state.scenes.scenes,
+  teams: state.teams.teams,
+  gamemaps: state.gamemaps.gamemaps,
+  gamemodes: state.gamemodes.gamemodes,
+  gamefactions: state.gamefactions.gamefactions  
 });
 
-export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatches, getMatchesDetails, getScenes } )(CasterViewSeries);
+export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatches, getMatchesDetails, getScenes, getTeams, getGameMaps, getGameModes, getGameFactions } )(CasterViewSeries);
