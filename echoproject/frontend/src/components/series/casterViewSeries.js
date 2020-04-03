@@ -20,8 +20,8 @@ export class CasterViewSeries extends Component {
     console.log(this.props.valueProps.seriesid);
     console.log('valueProps.tournament');
     console.log(this.props.valueProps.tournament);
-    //this.props.getMatches(this.props.valueProps.seriesid);
     
+    //this.props.getMatches(this.props.valueProps.seriesid);
     //this.timer = setInterval(()=>  this.props.getMatches(this.props.valueProps.seriesid), 5000);
 
     this.timer = setIntervalAsync( 
@@ -31,6 +31,7 @@ export class CasterViewSeries extends Component {
         await this.props.getSeries(this.props.valueProps.tournament);
       },3000
     );
+    
     this.props.getMatchesDetails(this.props.valueProps.seriesid);
     this.props.getSeriesDetails(this.props.valueProps.tournament);
     this.props.getScenes();
@@ -90,13 +91,7 @@ export class CasterViewSeries extends Component {
     this.props.updateSeriesEnd( postObj );
  
     // Force a render without state change...
-    
-    //setTimeout( this.props.getSeriesDetails( f_tournamentid ), 3000);
     //setTimeout( this.forceUpdate(), 4000);
-
-    // Force a render with a simulated state change
-//    this.setState({ state: this.state });
-    
   };
   
   
