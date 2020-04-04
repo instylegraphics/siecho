@@ -233,7 +233,8 @@ export class FormSeries extends Component {
                   <th>Name</th>
                   <th># of Matches(Best Of)</th>
                   <th>Ended</th>
-                  <th />
+                  <th>Delete</th>
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
@@ -251,6 +252,8 @@ export class FormSeries extends Component {
                   }}
                       className="btn btn-danger btn-sm">{" "} Delete
                       </button>
+                      </td>
+                      <td>
                       <button
                       onClick={(e) => {
                   console.log("listseries.id:" + listseries.id);
@@ -260,7 +263,7 @@ export class FormSeries extends Component {
                   seriesid = listseries.id;
                   this.setState({ view, seriesid });
                   }} 
-                      className="btn btn-success btn-sm">{" "} View
+                      className="btn btn-success btn-sm">View
                       </button>
                     </td>
                   </tr>

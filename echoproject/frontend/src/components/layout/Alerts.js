@@ -29,6 +29,8 @@ export class Alerts extends Component {
       if (message.deleteSeries) alert.success(message.deleteSeries);
       if (message.updateMatch) alert.success(message.updateMatch);
       if (message.updateSeriesEnd) alert.success(message.updateSeriesEnd);
+      if (message.updateSceneActivate) alert.success(message.updateSceneActivate);
+      if (message.updateSceneDeActivate) alert.success(message.updateSceneDeActivate);
     }
   }
 

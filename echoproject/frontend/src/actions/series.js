@@ -102,6 +102,7 @@ export const updateSeriesEnd = series => (dispatch, getState) => {
   console.log("id value");
   console.log(series.id);  
 
+      
   axios
     .put("/si/series/" + series.id + "/", series, tokenConfig(getState))
     .then(res => {

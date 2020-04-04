@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getMatches, getMatchesDetails } from "../../actions/matches";
-import { getScenes } from "../../actions/scenes";
+import { getScenes, updateSceneActivate, updateSceneDeActivate } from "../../actions/scenes";
 import { getSeries, getSeriesDetails, updateSeriesEnd } from "../../actions/series";
 import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
@@ -15,13 +15,15 @@ import { clearIntervalAsync } from 'set-interval-async';
 export class CasterViewSeries extends Component {
 
   componentDidMount() {
-    console.log("componentDidMount - casterViewSeries");
+    console.log("XXXXXXXXXX componentDidMount - casterViewSeries");
     console.log('valueProps.seriesid');
     console.log(this.props.valueProps.seriesid);
     console.log('valueProps.tournament');
     console.log(this.props.valueProps.tournament);
     
-    //this.props.getMatches(this.props.valueProps.seriesid);
+    
+    this.props.getMatches(this.props.valueProps.seriesid);
+    this.props.getSeries(this.props.valueProps.tournament);
     //this.timer = setInterval(()=>  this.props.getMatches(this.props.valueProps.seriesid), 5000);
 
     this.timer = setIntervalAsync( 
@@ -61,29 +63,55 @@ export class CasterViewSeries extends Component {
     var f_jsonQuery = require('json-query');
     var f_seriesid = this.props.valueProps.seriesid;
     var f_series_name = f_jsonQuery('[id=' + f_seriesid + '].name', { data: this.props.series }).value;
-//    var f_match_team_one_name = f_jsonQuery('[id=' + f_seriesid + '].team_one.id', { data: this.props.series }).value;
-//    var f_match_team_two_name = f_jsonQuery('[id=' + f_seriesid + '].team_two.id', { data: this.props.series }).value;
-    var f_match_team_one_name = f_jsonQuery('[id=' + f_seriesid + '].team_one', { data: this.props.series }).value;
-    var f_match_team_two_name = f_jsonQuery('[id=' + f_seriesid + '].team_two', { data: this.props.series }).value;
-
+//    var f_match_team_one_id = f_jsonQuery('[id=' + f_seriesid + '].team_one.id', { data: this.props.series }).value;
+//    var f_match_team_two_id = f_jsonQuery('[id=' + f_seriesid + '].team_two.id', { data: this.props.series }).value;
+    var f_match_team_one_id = f_jsonQuery('[id=' + f_seriesid + '].team_one', { data: this.props.series }).value;
+    var f_match_team_two_id = f_jsonQuery('[id=' + f_seriesid + '].team_two', { data: this.props.series }).value;
     var f_tournamentid = this.props.valueProps.tournament;
-    
+
+    var f_team_one_score = 0;
+    var f_team_two_score = 0;
+    var f_winner = null;
+    for (let [key, value] of Object.entries( this.props.matches )) {
+      console.log(key + ' = ' + JSON.stringify(value) );
+      console.log('id = ' + value.id );
+      console.log('winner = ' + value.winner );
+      if ( f_match_team_one_id == value.winner ) {
+        f_team_one_score = f_team_one_score + 1;  
+      };
+      if ( f_match_team_two_id == value.winner ) {
+        f_team_two_score = f_team_two_score + 1;  
+      };
+    }// for loop
+    console.log('f_team_one_score:' + f_team_one_score);  
+    console.log('f_team_two_score:' + f_team_two_score);   
+    if ( f_team_one_score > f_team_two_score ) {
+      f_winner = f_match_team_one_id;
+    } else {
+      f_winner = f_team_two_score;
+    }
+    console.log('f_winner:' + f_winner); 
+        
      const postObj = {
       id: f_seriesid,
       tournament: f_tournamentid,
       name: f_series_name,
-      team_one: f_match_team_one_name,
-      team_two: f_match_team_two_name,
+      team_one: f_match_team_one_id,
+      team_one_score: f_team_one_score,
+      team_two: f_match_team_two_id,
+      team_two_score: f_team_two_score,
+      winner: f_winner,
       active: 'false',
       ended: 'true'
     } 
 
     console.log('POST');       
-    console.log('seriesid:' + f_seriesid);  
+/*    console.log('seriesid:' + f_seriesid);  
     console.log('tournament:' + f_tournamentid); 
     console.log('name:' + f_series_name); 
-    console.log('team_one:' + f_match_team_one_name);  
-    console.log('team_two:' + f_match_team_two_name);
+    console.log('team_one:' + f_match_team_one_id);  
+    console.log('team_two:' + f_match_team_two_id);
+*/
     console.log('series update: postObj:');
     console.log(postObj);
     
@@ -105,7 +133,9 @@ export class CasterViewSeries extends Component {
     getTeams: PropTypes.func.isRequired,
     getGameMaps: PropTypes.func.isRequired,
     getGameModes: PropTypes.func.isRequired,
-    getGameFactions: PropTypes.func.isRequired    
+    getGameFactions: PropTypes.func.isRequired,
+    updateSceneActivate: PropTypes.func.isRequired, 
+    updateSceneDeActivate: PropTypes.func.isRequired
   };
 
 
@@ -128,7 +158,7 @@ export class CasterViewSeries extends Component {
  
             <div className="form-group">  
               <button
-              onClick={this.endSeriesForm}
+              onClick={ this.endSeriesForm }
               className="btn btn-danger btn-sm">End Series
               </button>
            </div>   
@@ -224,8 +254,9 @@ export class CasterViewSeries extends Component {
                   <th>Scene Name</th>
                   <th>Title</th>
                   <th>Desc 1</th>
-                  <th>Enabled</th>
-                   
+                  <th>Live</th>
+                  <th>Activate</th>
+                  <th>Deactivate</th>                   
                 </tr>
               </thead>
               <tbody>
@@ -235,7 +266,26 @@ export class CasterViewSeries extends Component {
                     <td>{listscenes.name}</td>
                     <td>{listscenes.title}</td>                    
                     <td>{listscenes.desc1}</td>
-                    <td>{String(listscenes.enabled)}</td>
+                    <td>{String(listscenes.active)}</td>
+                    <td>
+                      <button
+                      onClick={(e) => {
+                      console.log("Activate listscenes.id:" + listscenes.id);
+                      this.props.updateSceneActivate( listscenes, this.props.scenes );
+                      }}
+                      className="btn btn-success btn-sm">{" "} Activate
+                      </button>
+                      </td>
+                      <td>
+                      <button
+                      onClick={(e) => {
+                      console.log("Deactivate listscenes.id:" + listscenes.id);
+                      this.props.updateSceneDeActivate( listscenes );
+                      }}
+                      className="btn btn-danger btn-sm">Deactivate
+                      </button>
+                    </td>
+                    
                   </tr>
                 ))}
               </tbody>
@@ -246,10 +296,6 @@ export class CasterViewSeries extends Component {
               </div>         
              }
              
-             
-             
-             
-                                     
           <div className="form-group">
             <button type="button" className="btn btn-primary" onClick={this.back}>
               Back
@@ -276,4 +322,4 @@ const mapStateToProps = state => ({
   gamefactions: state.gamefactions.gamefactions  
 });
 
-export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatches, getMatchesDetails, getScenes, getTeams, getGameMaps, getGameModes, getGameFactions } )(CasterViewSeries);
+export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatches, getMatchesDetails, getScenes, getTeams, getGameMaps, getGameModes, getGameFactions, updateSceneActivate, updateSceneDeActivate } )(CasterViewSeries);
