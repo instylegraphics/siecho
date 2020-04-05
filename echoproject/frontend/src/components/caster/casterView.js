@@ -36,7 +36,4 @@ const mapStateToProps = state => ({
 //  teams: state.teams.teams
 });
 
-export default connect( 
-  mapStateToProps,
-    {  } 
-)(CasterView);
+export default connect( mapStateToProps,{  } )(CasterView);

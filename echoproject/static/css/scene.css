@@ -1,0 +1,45 @@
+.scene {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  min-height: 25rem;
+  overflow: hidden;
+  background: #000;
+}
+
+.scene .container {
+  position: ;
+  z-index: 2;
+}
+
+.scene--video {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  z-index: 100;
+  top: 0;
+  left: 0;
+}
+
+.scene--image {
+  img {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+}
+
+.scene .scene--content {
+  position: absolute;
+  top: 500px;
+  left: 400px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  /*width: 100%;*/
+  padding: 0px;
+  /*border: 3px solid #73AD21;*/
+  z-index: 3;
+}
