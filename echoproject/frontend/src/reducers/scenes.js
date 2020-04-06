@@ -36,12 +36,15 @@ export default function (state = initialState, action) {
               return {
               id: action.payload.id,
               name: action.payload.name,
+              img_default_url: action.payload.img_default_url,  
               img: action.payload.img,
+              video_default_url: action.payload.video_default_url,
               video: action.payload.video,
-              title: action.payload.title,
+              scene_type: action.payload.scene_type,
               desc1: action.payload.desc1,
               desc2: action.payload.desc2,
-              desc3: action.payload.desc3,
+              option1: action.payload.option1,
+              option2: action.payload.option2,
               active: action.payload.active,
               enabled: action.payload.enabled,      
                };
@@ -67,14 +70,17 @@ export default function (state = initialState, action) {
               return {
               id: action.payload.id,
               name: action.payload.name,
+              img_default_url: action.payload.img_default_url,  
               img: action.payload.img,
+              video_default_url: action.payload.video_default_url,
               video: action.payload.video,
-              title: action.payload.title,
+              scene_type: action.payload.scene_type,
               desc1: action.payload.desc1,
               desc2: action.payload.desc2,
-              desc3: action.payload.desc3,
+              option1: action.payload.option1,
+              option2: action.payload.option2,
               active: action.payload.active,
-              enabled: action.payload.enabled,      
+              enabled: action.payload.enabled,    
                };
           } else {
               console.log("else inside UPDATE_SCENE_DEACTIVATE");

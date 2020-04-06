@@ -5,7 +5,7 @@ from django.conf import settings
 class Game(models.Model):
 
     name = models.CharField(max_length=50)
-    img = models.ImageField(blank=True, null=True)
+    img = models.ImageField(upload_to='game/image/', blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
     def __str__(self):
@@ -16,7 +16,7 @@ class GameMode(models.Model):
 
     name = models.CharField(max_length=50)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    img = models.ImageField(blank=True, null=True)
+    img = models.ImageField(upload_to='gamemode/image/',blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
     def __str__(self):
@@ -38,7 +38,7 @@ class GameMap(models.Model):
 
     name = models.CharField(max_length=50)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(upload_to='gamemap/image/',blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -55,7 +55,7 @@ class Tournament(models.Model):
     coproducer_two = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='tournament_coproducer_two', blank=True, null=True)
     scheduled_date = models.DateTimeField()
-    img = models.ImageField(blank=True, null=True)
+    img = models.ImageField(upload_to='tournament/image/', blank=True, null=True)
     enabled = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
 
@@ -69,12 +69,15 @@ class Tournament(models.Model):
 class Scene(models.Model):
 
     name = models.CharField(max_length=255)
-    img = models.ImageField(blank=True, null=True)
-    video = models.CharField(max_length=255, blank=True, null=True)
-    title = models.CharField(max_length=255, blank=True, null=True)
-    desc1 = models.CharField(max_length=500, blank=True, null=True)
-    desc2 = models.CharField(max_length=500, blank=True, null=True)
-    desc3 = models.CharField(max_length=500, blank=True, null=True)
+    img_default_url = models.CharField(max_length=255,blank=True, null=True)
+    img = models.ImageField(upload_to='scene/image/',blank=True, null=True)
+    video_default_url = models.CharField(max_length=255, blank=True, null=True)
+    video = models.FileField(upload_to='scene/video/', blank=True, null=True)
+    scene_type = models.CharField(max_length=100, blank=True, null=True)
+    desc1 = models.CharField(max_length=255, blank=True, null=True)
+    desc2 = models.CharField(max_length=255, blank=True, null=True)
+    option1 = models.CharField(max_length=100, blank=True, null=True)
+    option2 = models.CharField(max_length=100, blank=True, null=True)
     active = models.BooleanField(default=False)
     enabled = models.BooleanField(default=True)
     
@@ -87,7 +90,7 @@ class Team(models.Model):
 
     name = models.CharField(max_length=50)
     short_name = models.CharField(max_length=15)
-    logo = models.ImageField(blank=True, null=True)
+    logo = models.ImageField(upload_to='team/image/', blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
     def __str__(self):

@@ -40,8 +40,8 @@ class App extends Component {
                 <Switch>
                   <PrivateRoute exact path="/leads" component={Dashboard} />
                   <PrivateRoute exact path="/matches" component={MatchesPage} />
-                  <PrivateRoute exact path="/caster" component={CasterPage} />
                   <PrivateRoute exact path="/" component={SeriesPage} />
+                  <PrivateRoute exact path="/caster" target="_blank" component={CasterPage} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                 </Switch>

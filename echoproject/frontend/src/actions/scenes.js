@@ -36,18 +36,21 @@ export const updateSceneActivate = ( scene, scenes ) => (dispatch, getState) => 
   const objScene = {
     id: scene.id,
     name: scene.name, 
+    img_default_url: scene.img_default_url,
     img: scene.img,
-    video: scene.video, 
-    title: scene.title,
+    video_default_url: scene.video_default_url,
+    video: scene.video,
+    scene_type: scene.scene_type,
     desc1: scene.desc1, 
     desc2: scene.desc2,
-    desc3: scene.desc3, 
+    option1: scene.option1, 
+    option2: scene.option2, 
     active: 'true',
-    enabled: scene.enabled
+    enabled: String(scene.enabled)
   };
   
-  //var dataScene2 = JSON.stringify( objScene ); 
-  //console.log("objScene:" + dataScene2);
+  var dataScene2 = JSON.stringify( objScene ); 
+  console.log("objScene:" + dataScene2);
           
   axios
     .put("/si/scene/" + scene.id + "/", objScene, tokenConfig(getState))
@@ -75,15 +78,18 @@ export const updateSceneActivate = ( scene, scenes ) => (dispatch, getState) => 
         // POST
         const objScene = {
           id: value.id,
-          name: value.name, 
+          name: value.name,
+          img_default_url: value.img_default_url,          
           img: value.img,
+          video_default_url: value.video_default_url,          
           video: value.video, 
-          title: value.title,
+          scene_type: value.scene_type,
           desc1: value.desc1, 
           desc2: value.desc2,
-          desc3: value.desc3, 
+          option1: value.option1, 
+          option2: value.option2,  
           active: 'false',
-          enabled: value.enabled
+          enabled: String(value.enabled)
         };
         
         axios
@@ -124,14 +130,17 @@ export const updateSceneDeActivate = ( scene ) => (dispatch, getState) => {
   const objScene = {
     id: scene.id,
     name: scene.name, 
+    img_default_url: scene.img_default_url,
     img: scene.img,
-    video: scene.video, 
-    title: scene.title,
+    video_default_url: scene.video_default_url,
+    video: scene.video,
+    scene_type: scene.scene_type,    
     desc1: scene.desc1, 
     desc2: scene.desc2,
-    desc3: scene.desc3, 
+    option1: scene.option1, 
+    option2: scene.option2, 
     active: 'false',
-    enabled: scene.enabled
+    enabled: String(scene.enabled)
   };
   
   var dataScene2 = JSON.stringify( objScene ); 

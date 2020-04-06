@@ -1,5 +1,7 @@
 .scene {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 1920px;
   height: 1080px;
   min-height: 25rem;
