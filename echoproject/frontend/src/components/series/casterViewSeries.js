@@ -8,7 +8,6 @@ import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
 import { getGameFactions } from "../../actions/gamefactions";
-
 import { setIntervalAsync } from 'set-interval-async/dynamic';
 import { clearIntervalAsync } from 'set-interval-async';
 
@@ -24,6 +23,7 @@ export class CasterViewSeries extends Component {
     
     this.props.getMatches(this.props.valueProps.seriesid);
     this.props.getSeries(this.props.valueProps.tournament);
+/*
     //this.timer = setInterval(()=>  this.props.getMatches(this.props.valueProps.seriesid), 5000);
 
     this.timer = setIntervalAsync( 
@@ -33,7 +33,7 @@ export class CasterViewSeries extends Component {
         await this.props.getSeries(this.props.valueProps.tournament);
       },3000
     );
-    
+*/    
     this.props.getMatchesDetails(this.props.valueProps.seriesid);
     this.props.getSeriesDetails(this.props.valueProps.tournament);
     this.props.getScenes();
@@ -272,6 +272,7 @@ export class CasterViewSeries extends Component {
                       onClick={(e) => {
                       console.log("Activate listscenes.id:" + listscenes.id);
                       this.props.updateSceneActivate( listscenes, this.props.scenes );
+                      Object.assign(document.createElement('a'), { target: '_scenetab', href: '/#/caster/' + listscenes.id }).click();
                       }}
                       className="btn btn-success btn-sm">{" "} Activate
                       </button>

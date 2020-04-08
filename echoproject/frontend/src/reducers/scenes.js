@@ -1,29 +1,22 @@
-import { GET_SCENES, UPDATE_SCENE_ACTIVATE, UPDATE_SCENE_DEACTIVATE } from "../actions/types.js";
+import { GET_SCENE, GET_SCENES, UPDATE_SCENE_ACTIVATE, UPDATE_SCENE_DEACTIVATE } from "../actions/types.js";
 
 const initialState = {
-  scenes: []
+  scenes: [],
+  scene: []
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case GET_SCENE:
+      return {
+        ...state,
+        scene: action.payload
+      };
     case GET_SCENES:
       return {
         ...state,
         scenes: action.payload
-      };
-/*
-    case UPDATE_SCENE_ACTIVATE:
-      return {
-        ...state,
-        scene: action.payload
-      };
-       
-    case UPDATE_SCENE_DEACTIVATE:
-      return {
-        ...state,
-        scene: action.payload
-      };
-*/ 
+      }; 
     case UPDATE_SCENE_ACTIVATE: {
       const scenes = state.scenes.map(slist => {
           if (slist.id === action.payload.id) {
@@ -96,6 +89,3 @@ export default function (state = initialState, action) {
       return state;
   }
 }
-
-
-      

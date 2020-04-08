@@ -2,7 +2,24 @@ import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
 
-import { GET_SCENES, UPDATE_SCENE_ACTIVATE, UPDATE_SCENE_DEACTIVATE } from "./types";
+import { GET_SCENE, GET_SCENES, UPDATE_SCENE_ACTIVATE, UPDATE_SCENE_DEACTIVATE } from "./types";
+
+
+// GEAT A SCENE 
+export const getScene = id => (dispatch, getState) => {
+  axios
+    .get("/si/scene/" + id + "/", tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: GET_SCENE,
+        payload: res.data
+      });
+ 
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
 
 // GET SCENES
 export const getScenes = () => (dispatch, getState) => {
@@ -109,8 +126,22 @@ export const updateSceneActivate = ( scene, scenes ) => (dispatch, getState) => 
         }//if 
 
       }// for loop
-    
-   
+
+/*
+      console.log("axios form post");
+      axios
+        .get('/#/caster',{
+          scene: 'Scene 1',
+          type: 'type1'
+      })
+      .then(function (response) {
+          console.log('response success:' + response);
+      })
+      .catch(function (error) {
+          console.log('response error:' + error);
+      });
+      console.log("axios form post after");
+*/       
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
