@@ -23,7 +23,7 @@ export class CasterViewSeries extends Component {
     
     this.props.getMatches(this.props.valueProps.seriesid);
     this.props.getSeries(this.props.valueProps.tournament);
-/*
+
     //this.timer = setInterval(()=>  this.props.getMatches(this.props.valueProps.seriesid), 5000);
 
     this.timer = setIntervalAsync( 
@@ -33,7 +33,7 @@ export class CasterViewSeries extends Component {
         await this.props.getSeries(this.props.valueProps.tournament);
       },3000
     );
-*/    
+   
     this.props.getMatchesDetails(this.props.valueProps.seriesid);
     this.props.getSeriesDetails(this.props.valueProps.tournament);
     this.props.getScenes();
@@ -252,20 +252,19 @@ export class CasterViewSeries extends Component {
                 <tr>
                   <th>ID</th>
                   <th>Scene Name</th>
-                  <th>Title</th>
                   <th>Desc 1</th>
+                  <th>Desc 2</th>
                   <th>Live</th>
-                  <th>Activate</th>
-                  <th>Deactivate</th>                   
+                  <th>Activate</th>  
                 </tr>
               </thead>
               <tbody>
                 {this.props.scenes.map(listscenes => (
-                  <tr key={listscenes.id}>
+                  <tr key={listscenes.id} className={ listscenes.active ? 'table-success' : '' } >
                     <td>{listscenes.id}</td>
                     <td>{listscenes.name}</td>
-                    <td>{listscenes.title}</td>                    
-                    <td>{listscenes.desc1}</td>
+                    <td>{listscenes.desc1}</td>                    
+                    <td>{listscenes.desc2}</td>
                     <td>{String(listscenes.active)}</td>
                     <td>
                       <button
@@ -277,16 +276,6 @@ export class CasterViewSeries extends Component {
                       className="btn btn-success btn-sm">{" "} Activate
                       </button>
                       </td>
-                      <td>
-                      <button
-                      onClick={(e) => {
-                      console.log("Deactivate listscenes.id:" + listscenes.id);
-                      this.props.updateSceneDeActivate( listscenes );
-                      }}
-                      className="btn btn-danger btn-sm">Deactivate
-                      </button>
-                    </td>
-                    
                   </tr>
                 ))}
               </tbody>

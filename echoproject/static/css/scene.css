@@ -63,3 +63,40 @@
   padding: 0px;
   z-index: 3;
 }
+
+#showMe {
+    opacity: 0;
+    -moz-animation: cssAnimation 3s;
+    /* Firefox */
+    -webkit-animation: cssAnimation 3s;
+    /* Safari and Chrome */
+    -o-animation: cssAnimation 3s;
+    /* Opera */
+    animation: cssAnimation 3s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+    99% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    99% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.hide{
+	display:none;
+}
+.show{
+	display:block;
+
+}
+

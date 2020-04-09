@@ -90,7 +90,7 @@ export const updateSceneActivate = ( scene, scenes ) => (dispatch, getState) => 
       console.log('name = ' + value.name );
       
       //&& value.active == 'true'
-      if ( value.id != res.data.id  ) { 
+      if ( value.id != res.data.id && value.active == true ) { 
         console.log('inside = ' + value.name );
         // POST
         const objScene = {
