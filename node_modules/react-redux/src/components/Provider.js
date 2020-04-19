@@ -1,84 +1,48 @@
-import React, { Component } from 'react'
+import React, { useMemo, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { ReactReduxContext } from './Context'
+import Subscription from '../utils/Subscription'
 
-class Provider extends Component {
-  constructor(props) {
-    super(props)
-
-    const { store } = props
-
-    this.state = {
-      storeState: store.getState(),
-      store
+function Provider({ store, context, children }) {
+  const contextValue = useMemo(() => {
+    const subscription = new Subscription(store)
+    subscription.onStateChange = subscription.notifyNestedSubs
+    return {
+      store,
+      subscription
     }
-  }
+  }, [store])
 
-  componentDidMount() {
-    this._isMounted = true
-    this.subscribe()
-  }
+  const previousState = useMemo(() => store.getState(), [store])
 
-  componentWillUnmount() {
-    if (this.unsubscribe) this.unsubscribe()
+  useEffect(() => {
+    const { subscription } = contextValue
+    subscription.trySubscribe()
 
-    this._isMounted = false
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.store !== prevProps.store) {
-      if (this.unsubscribe) this.unsubscribe()
-
-      this.subscribe()
+    if (previousState !== store.getState()) {
+      subscription.notifyNestedSubs()
     }
-  }
-
-  subscribe() {
-    const { store } = this.props
-
-    this.unsubscribe = store.subscribe(() => {
-      const newStoreState = store.getState()
-
-      if (!this._isMounted) {
-        return
-      }
-
-      this.setState(providerState => {
-        // If the value is the same, skip the unnecessary state update.
-        if (providerState.storeState === newStoreState) {
-          return null
-        }
-
-        return { storeState: newStoreState }
-      })
-    })
-
-    // Actions might have been dispatched between render and mount - handle those
-    const postMountStoreState = store.getState()
-    if (postMountStoreState !== this.state.storeState) {
-      this.setState({ storeState: postMountStoreState })
+    return () => {
+      subscription.tryUnsubscribe()
+      subscription.onStateChange = null
     }
-  }
+  }, [contextValue, previousState])
 
-  render() {
-    const Context = this.props.context || ReactReduxContext
+  const Context = context || ReactReduxContext
 
-    return (
-      <Context.Provider value={this.state}>
-        {this.props.children}
-      </Context.Provider>
-    )
-  }
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>
 }
 
-Provider.propTypes = {
-  store: PropTypes.shape({
-    subscribe: PropTypes.func.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    getState: PropTypes.func.isRequired
-  }),
-  context: PropTypes.object,
-  children: PropTypes.any
+if (process.env.NODE_ENV !== 'production') {
+  Provider.propTypes = {
+    store: PropTypes.shape({
+      subscribe: PropTypes.func.isRequired,
+      dispatch: PropTypes.func.isRequired,
+      getState: PropTypes.func.isRequired
+    }),
+    context: PropTypes.object,
+    children: PropTypes.any
+  }
 }
 
 export default Provider

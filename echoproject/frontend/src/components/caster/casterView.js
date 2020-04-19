@@ -7,18 +7,20 @@ import { clearIntervalAsync } from 'set-interval-async';
 import { withRouter } from 'react-router-dom'
 import { getScene } from "../../actions/scenes";
 import FadeAnimation  from "react-fade-animation";
+import socketIOClient from "socket.io-client";
 
 export class CasterView extends Component {
 
   constructor(props) {
     super(props);
     this.state = {showImage: false};
-    this.state = {sceneID: this.props.match.params.id};
+//    this.state = {sceneid: this.props.match.params.id};
     this.videoRef = React.createRef(); // create react ref
     this.contentRef = React.createRef(); // create react ref
     this.timer = null;
+    this.state= { sceneid: null};
   }
-  
+   
   showBackgroundImage = () => {
     this.setState({showImage: true});
   };
@@ -33,14 +35,29 @@ export class CasterView extends Component {
   };
     
   componentDidMount() {
-    this.props.getScene(this.props.match.params.id);
-    //this.hideBackgroundImage;
+    //this.props.getScene(this.props.match.params.id);
+     
+    console.log("componentDidMount LOAD" );
     
+    if ( this.videoRef.current ) {
+        console.log('componentDidUpdate reload video');
+        this.videoRef.current.play();
+    }
+    
+    const socket = socketIOClient("http://192.241.146.171:4001");
+    socket.on('change scene', (scene) => {
+        this.setState({sceneid: scene});
+        this.props.getScene( scene );
+        console.log("socket: change scene:" + scene );
+        
+        this.hideBackgroundImage;
         if ( this.videoRef.current ) {
         console.log('componentDidUpdate reload video');
         this.videoRef.current.play();
         }
-    
+    })
+      
+        
 //    console.log("this.props:" + JSON.stringify(this.props) );
 //    console.log("this.props.match.params.id:" + this.props.match.params.id ); 
 //    console.log("this.videoRef LOAD"  );
@@ -56,6 +73,7 @@ export class CasterView extends Component {
         );
 */
   }
+
  
   componentDidUpdate(prevProps, prevState) {
 
@@ -64,13 +82,13 @@ export class CasterView extends Component {
     console.log("prevState:" + JSON.stringify( prevState ) );
 
     console.log("prevProps.match.params.id:" + prevProps.match.params.id );   
-    console.log("prevState.sceneID:" + prevState.sceneID );      
+    console.log("prevState.sceneid:" + prevState.sceneid );      
 */   
 
 //    console.log("componentDidUpdate LOAD" );
-
-    if (prevProps.match.params.id !== prevState.sceneID) {
-        this.setState({sceneID: this.props.match.params.id} );
+/*
+    if (prevProps.match.params.id !== prevState.sceneid) {
+        this.setState({sceneid: this.props.match.params.id} );
         this.props.getScene(this.props.match.params.id);
  //       console.log("componentDidUpdate RUNNNNN" );
         
@@ -84,8 +102,10 @@ export class CasterView extends Component {
         
         
     }
-    
+*/    
   }
+
+
      
   componentWillUnmount() {
 //   console.log("componentWillUnmount LOAD" );
@@ -104,7 +124,7 @@ export class CasterView extends Component {
        
   render() {
     const showImage = this.state.showImage;
-    const sceneID = this.state.sceneID;
+    const sceneid = this.state.sceneid;
     const scene_type = this.props.scene.scene_type;    
     const url_vid = this.props.scene.video_default_url;
     const url_img = this.props.scene.img_default_url;
@@ -113,9 +133,9 @@ export class CasterView extends Component {
     const scene_desc2 = this.props.scene.desc2;
     const scene_option1 = this.props.scene.option1;
     const scene_option2 = this.props.scene.option2;
-
+    
 /*         
-    console.log("sceneID:" + sceneID );       
+    console.log("sceneid:" + sceneid );       
     console.log("showImage:" + showImage );  
     console.log("url_vid:" + url_vid );       
     console.log("url_img:" + url_img );  
@@ -154,7 +174,7 @@ export class CasterView extends Component {
         
         return (
         <div className="scene">  
-          <video id={sceneID} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" preload="auto" playsinline="playsinline" autoplay="true" ></video>
+          <video id={sceneid} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" preload="auto" playsinline="playsinline" autoplay="true" ></video>
            
 
           <div id="showMex" ref={this.contentRef} >
@@ -186,7 +206,7 @@ export class CasterView extends Component {
         this.timer=setTimeout( this.showBackgroundImage, 3000);
         return (
         <div className="scene">  
-          <video id={sceneID} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" preload="auto" playsinline="playsinline" autoplay="true" ></video>
+          <video id={sceneid} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" preload="auto" playsinline="playsinline" autoplay="true" ></video>
           
           <div id="showMex" ref={this.contentRef} >
             <img id="imgview" className={ showImage ? 'scene--image d-block' : 'scene--image d-none'} src={ url_img } alt={ scene_name }></img>
@@ -212,7 +232,7 @@ export class CasterView extends Component {
         this.timer=setTimeout( this.showBackgroundImage, 3000);
         return (
         <div className="scene">  
-          <video id={sceneID} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" preload="auto" playsinline="playsinline" autoplay="true" ></video>
+          <video id={sceneid} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" preload="auto" playsinline="playsinline" autoplay="true" ></video>
           
           <div id="showMex" ref={this.contentRef} >
             <img id="imgview" className={ showImage ? 'scene--image d-block' : 'scene--image d-none'} src={ url_img } alt={ scene_name }></img>

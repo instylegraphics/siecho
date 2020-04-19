@@ -10,9 +10,11 @@ import { getGameModes } from "../../actions/gamemodes";
 import { getGameFactions } from "../../actions/gamefactions";
 import { setIntervalAsync } from 'set-interval-async/dynamic';
 import { clearIntervalAsync } from 'set-interval-async';
+import socketIOClient from "socket.io-client";
 
 export class CasterViewSeries extends Component {
 
+ 
   componentDidMount() {
     console.log("XXXXXXXXXX componentDidMount - casterViewSeries");
     console.log('valueProps.seriesid');
@@ -149,7 +151,8 @@ export class CasterViewSeries extends Component {
     //console.log(this.props.valueProps);
     //console.log("view:" + view);
     var jsonQuery = require('json-query');
-  
+   
+    
     return (
        
         <React.Fragment>
@@ -271,7 +274,9 @@ export class CasterViewSeries extends Component {
                       onClick={(e) => {
                       console.log("Activate listscenes.id:" + listscenes.id);
                       this.props.updateSceneActivate( listscenes, this.props.scenes );
-                      Object.assign(document.createElement('a'), { target: '_scenetab', href: '/#/caster/' + listscenes.id }).click();
+                      //Object.assign(document.createElement('a'), { target: '_scenetab', href: '/#/caster/' + listscenes.id }).click();
+                      const socket = socketIOClient("http://192.241.146.171:4001");
+                      socket.emit('change scene', listscenes.id) // change scene by passing id to socket
                       }}
                       className="btn btn-success btn-sm">{" "} Activate
                       </button>
