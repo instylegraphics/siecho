@@ -155,7 +155,10 @@ export class CasterViewSeries extends Component {
     
     return (
        
-        <React.Fragment>
+    <React.Fragment>
+    <main className="page-content">
+      <div className="container-fluid">  
+        
          <div className="card card-body mt-4 mb-4">
             <h1>Caster View</h1>
  
@@ -204,10 +207,7 @@ export class CasterViewSeries extends Component {
               <h2>No Matches Created for this Series</h2>
               </div>         
              }
-             
-             
-             
-       
+
              
              {this.props.valueProps.tournament ?
                   <div class="empty">
@@ -296,9 +296,12 @@ export class CasterViewSeries extends Component {
               Back
             </button>
           </div>
-        
-                      
+      
          </div>
+        
+          </div>
+        </main>
+         
         </React.Fragment>
 
     );

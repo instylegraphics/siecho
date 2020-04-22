@@ -530,7 +530,9 @@ export class StepFourMatchAdminForm extends Component {
                         
     return (
         <React.Fragment>
-       
+        <main className="page-content">
+          <div className="container-fluid">
+                 
          <div className="card card-body mt-4 mb-4">
           <form onSubmit={this.onSubmit.bind(this)}>
             <h1>Match Editor</h1>
@@ -759,12 +761,13 @@ export class StepFourMatchAdminForm extends Component {
               <h2>No Matches Created for this Series</h2>
               </div>         
              }
-             
-
+ 
+         </div>
 
          </div>
-        
-        </React.Fragment>
+       </main>
+               
+       </React.Fragment>
 
     );
   }

@@ -49,6 +49,9 @@ export class FormMatchSelect extends Component {
   render() {
     const { tournament, series, match } = this.state;
     return (
+    <main className="page-content">
+        <div className="container-fluid">
+        
       <div className="card card-body mt-4 mb-4">
         <p>props: { console.log(this.props) }</p>
         <h2>Select Match</h2>
@@ -105,6 +108,10 @@ export class FormMatchSelect extends Component {
         </form>
         
       </div>
+      
+        </div>
+      </main>
+      
     );
   }
 }

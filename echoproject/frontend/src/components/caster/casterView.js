@@ -174,12 +174,12 @@ export class CasterView extends Component {
         
         return (
         <div className="scene">  
-          <video id={sceneid} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" preload="auto" playsinline="playsinline" autoplay="true" ></video>
+          <video id={sceneid} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" muted preload="auto" playsinline="playsinline" autoplay="true" ></video>
            
 
           <div id="showMex" ref={this.contentRef} >
           
-          <img id="imgview" className={ showImage ? 'scene--image d-block' : 'scene--image d-none'} src={ url_img } alt={ scene_name }></img>
+          <img id="imgview" className={ showImage ? 'scene--image d-block' : 'scene--image d-none'} src={ url_img } alt={ scene_name } />
           
           <FadeAnimation from={"top"} selectAll={true} duration={3} startDistance={200}>
           <div className="container h-100" >
@@ -206,10 +206,10 @@ export class CasterView extends Component {
         this.timer=setTimeout( this.showBackgroundImage, 3000);
         return (
         <div className="scene">  
-          <video id={sceneid} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" preload="auto" playsinline="playsinline" autoplay="true" ></video>
+          <video id={sceneid} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" muted preload="auto" playsinline="playsinline" autoplay="true" ></video>
           
           <div id="showMex" ref={this.contentRef} >
-            <img id="imgview" className={ showImage ? 'scene--image d-block' : 'scene--image d-none'} src={ url_img } alt={ scene_name }></img>
+            <img id="imgview" className={ showImage ? 'scene--image d-block' : 'scene--image d-none'} src={ url_img } alt={ scene_name } />
             
             <FadeAnimation from={"bottom"} selectAll={true} duration={ 3 } startDistance={200}>
             <div className="container h-100" >
@@ -232,10 +232,10 @@ export class CasterView extends Component {
         this.timer=setTimeout( this.showBackgroundImage, 3000);
         return (
         <div className="scene">  
-          <video id={sceneid} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" preload="auto" playsinline="playsinline" autoplay="true" ></video>
+          <video id={sceneid} ref={this.videoRef} src={ url_vid } type="video/webm" className="scene--video" muted preload="auto" playsinline="playsinline" autoplay="true" ></video>
           
           <div id="showMex" ref={this.contentRef} >
-            <img id="imgview" className={ showImage ? 'scene--image d-block' : 'scene--image d-none'} src={ url_img } alt={ scene_name }></img>
+            <img id="imgview" className={ showImage ? 'scene--image d-block' : 'scene--image d-none'} src={ url_img } alt={ scene_name } />
           </div>
     
         </div>
@@ -248,8 +248,28 @@ export class CasterView extends Component {
               
       default:
         this.hideBackgroundImage;
+        this.timer=setTimeout( this.showBackgroundImage, 3000);
         return (
-         <div><h1>default case</h1></div>
+        <div className="scene">  
+          <video id="1" ref={this.videoRef} src="./static/videos/TFLArmajet_Transition.webm" type="video/webm" className="scene--video" muted preload="auto" playsinline="playsinline" autoplay="true" ></video>
+          
+          <div id="showMex" ref={this.contentRef} >
+            <img id="imgview" className={ showImage ? 'scene--image d-block' : 'scene--image d-none'} src="./static/img/scenes/starting.jpg" alt="SI" />
+            
+            <FadeAnimation from={"bottom"} selectAll={true} duration={ 3 } startDistance={ 0 }>
+            <div className="container h-100" >
+              <div className="d-flex h-100 text-center align-items-center">
+                <div id="text" className="scene--content__defaultText">
+                     <h1>Welcome to Stream Interactive</h1>
+                     <p>We Stream You Scream for Broadcasting!</p>
+                </div>
+              </div>
+            </div>
+            </FadeAnimation>
+            
+          </div>
+
+        </div>
         );
     }
     

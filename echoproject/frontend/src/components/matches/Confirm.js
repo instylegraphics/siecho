@@ -19,6 +19,9 @@ export class Confirm extends Component {
     return (
      
         <React.Fragment>
+      <main className="page-content">
+        <div className="container-fluid">
+        
          <div className="card card-body mt-4 mb-4">
           <h1>Confirm User Data</h1>
           <p><strong>firstName:</strong> {firstName}</p>
@@ -41,8 +44,10 @@ export class Confirm extends Component {
             </button>
           </div>
           
-  
         </div>
+         
+         </div>
+       </main>
         </React.Fragment>
     
     );

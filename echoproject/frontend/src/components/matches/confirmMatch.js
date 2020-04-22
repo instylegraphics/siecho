@@ -182,7 +182,9 @@ export class ConfirmMatchForm extends Component {
     
     return (
         <React.Fragment>
-       
+        <main className="page-content">
+          <div className="container-fluid">
+                 
          <div className="card card-body mt-4 mb-4">
           
             <h1>Final Step: Confirmation</h1>
@@ -215,11 +217,12 @@ export class ConfirmMatchForm extends Component {
               Edit This Match Now
             </button>
           </div>
-         
- 
                
          </div>
-        
+
+         </div>
+       </main>
+               
         </React.Fragment>
 
     );

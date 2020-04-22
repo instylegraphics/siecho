@@ -131,6 +131,8 @@ export class FormSeries extends Component {
         );
       default:
         return (
+      <main className="page-content">
+        <div className="container-fluid">        
           <div className="card card-body mt-4 mb-4">
             { console.log(this.props) }
             <h2>Create a Series</h2>
@@ -275,9 +277,11 @@ export class FormSeries extends Component {
               <h2>No Series Created for this Tournament</h2>
               </div>         
              }
-             
-     
           </div>
+          
+          
+        </div>
+        </main>
         );
     
     

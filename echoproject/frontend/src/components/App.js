@@ -34,11 +34,12 @@ class App extends Component {
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
             <Fragment>
+              
+              <div className="page-wrapper chiller-theme toggled">
+                <a id="show-sidebar" className="btn btn-sm btn-dark" ><i className="fas fa-bars"></i></a>
               <Header />
               <Alerts />
-              <div className="container">
                 <Switch>
-                  <PrivateRoute exact path="/leads" component={Dashboard} />
                   <PrivateRoute exact path="/matches" component={MatchesPage} />
                   <PrivateRoute exact path="/" component={SeriesPage} />
                   <Route path="/caster/:id" component={CasterPage} />

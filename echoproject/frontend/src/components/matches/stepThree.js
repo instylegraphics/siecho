@@ -32,6 +32,9 @@ export class StepThreeMatchForm extends Component {
     return (
      
         <React.Fragment>
+        <main className="page-content">
+          <div className="container-fluid">
+        
          <div className="card card-body mt-4 mb-4">
             <h1>Step 3: Pick a Match</h1>
 
@@ -62,6 +65,10 @@ export class StepThreeMatchForm extends Component {
          
          
          </div>
+        
+         </div>
+       </main>
+        
         </React.Fragment>
 
     );

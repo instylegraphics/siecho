@@ -1,6 +1,6 @@
 .scene {
   position: fixed;
-  top: 60px;
+  top: 0px;
   left: 0;
   width: 1920px;
   height: 1080px;
@@ -64,6 +64,16 @@
   z-index: 3;
 }
 
+.scene .scene--content__defaultText {
+    position: absolute;
+    top: 820px;
+    left: 690px;
+    color: #fff;
+    padding: 0px;
+    z-index: 3;
+    font-weight: bold;
+}
+    
 #showMe {
     opacity: 0;
     -moz-animation: cssAnimation 3s;

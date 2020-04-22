@@ -21,8 +21,10 @@ export class StepOneTournamentForm extends Component {
     const { valueProps, handleChange } = this.props;
     console.log(this.props);
     return (
-       
-        <React.Fragment>
+      <React.Fragment>
+      <main className="page-content">
+        <div className="container-fluid">  
+                
         <div className="card card-body mt-4 mb-4">
                     <h1>Step 1: Pick Tournament</h1>
                               
@@ -43,10 +45,13 @@ export class StepOneTournamentForm extends Component {
             <button type="button" className="btn btn-primary" onClick={this.continue}>
               Continue
             </button>
-          </div>
-            
+          </div>    
          </div>
-        </React.Fragment>
+
+        </div>
+      </main>
+                 
+      </React.Fragment>
        
     );
   }
