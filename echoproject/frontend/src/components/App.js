@@ -4,7 +4,7 @@ import { HashRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import Header from "./layout/Header";
-import Dashboard from "./leads/Dashboard";
+import WelcomePage from "./home/PageWelcome";
 import SeriesPage from "./series/PageSeries";
 import MatchesPage from "./matches/PageMatchSelect";
 import CasterPage from "./caster/PageCaster";
@@ -40,10 +40,11 @@ class App extends Component {
               <Header />
               <Alerts />
                 <Switch>
-                  <PrivateRoute exact path="/matches" component={MatchesPage} />
-                  <PrivateRoute exact path="/" component={SeriesPage} />
-                  <Route path="/caster/:id" component={CasterPage} />
-                  <Redirect exact from="/caster" to="/caster/1" />
+                  <PrivateRoute exact path="/match" component={MatchesPage} />
+                  <PrivateRoute exact path="/series" component={SeriesPage} />
+                  <Route exact path="/" component={WelcomePage} />                  
+                  <Route path="/livescene/:id" component={CasterPage} />
+                  <Redirect exact from="/livescene" to="/livescene/1" />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                 </Switch>

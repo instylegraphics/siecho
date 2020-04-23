@@ -1,3 +1,213 @@
+/* homepage styles */
+
+main {
+  background-image: url('../img/background-homepage.jpg');
+  background-color: #101010;
+  border-top: 30px solid #493c96; 
+  border-bottom: 15px solid #493c96;"
+}
+.alpha-access {
+    display:block; 
+    color:white; 
+    font-family:'Raleway'; 
+    background-color:#493c96; 
+    border-left:2px solid white; 
+    border-right:2px solid white; 
+    padding:5px; 
+    width:400px; 
+    margin:0 auto; 
+    text-transform: Uppercase;
+    text-decoration: none;
+}
+
+.alpha-access:hover {
+    display:block; 
+    color: #493c96; 
+    font-family:'Raleway'; 
+    background-color:#101010; 
+    border-left:2px solid #493c96; 
+    border-right:2px solid #493c96; 
+    padding:5px; 
+    width:400px; 
+    margin:0 auto; 
+    text-transform: Uppercase;
+    text-decoration: none;
+}
+main {
+  background-position: center center;
+  background-size: cover;
+  height: auto;
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  top: 0;
+  width: auto;
+}
+@media (max-width: 991px) {
+  main {
+    padding: 20px;
+  }
+}
+main .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  z-index: 1;
+}
+main .container {
+  position: relative;
+  z-index: 2;
+}
+main #video-background {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 1;
+  overflow: hidden;
+  background-image: url('../img/video-bg.jpg');
+  background-position: center center;
+  background-size: cover;
+}
+main p.social {
+  text-align: right;
+  margin-top: 20px;
+}
+main p.social a {
+  margin: 0 10px 0 0;
+  color: #fff;
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  line-height: 26px;
+  font-size: 15px;
+  text-align: center;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  vertical-align: bottom;
+}
+main p.social a i {
+  vertical-align: bottom;
+  line-height: 26px;
+}
+main p.social a.facebook {
+  background-color: #4460ae;
+}
+main p.social a.gplus {
+  background-color: #c21f25;
+}
+main p.social a.twitter {
+  background-color: #3cf;
+}
+main p.social a.instagram {
+  background-color: #cd4378;
+}
+main p.social a.email {
+  background-color: #4a7f45;
+}
+@media (max-width: 991px) {
+  main p.social {
+    text-align: center;
+  }
+}
+main .cursive {
+  margin-top: 200px;
+  font-family: 'Raleway', cursive;
+  font-size: 60px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  margin-bottom: 40px;
+}
+@media (max-width: 1199px) {
+  main .cursive {
+    margin-top: 100px;
+  }
+}
+main .sub {
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+main .mailing-list {
+  margin-top: 125px;
+  text-align: center;
+}
+main .mailing-list .mailing-list-heading {
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  font-size: 30px;
+  color: #493c96;
+  font-weight: bold;
+}
+@media (min-width: 768px) {
+  main .mailing-list input {
+    width: 200px;
+  }
+}
+@media (min-width: 992px) {
+  main .mailing-list input {
+    width: 300px;
+  }
+}
+@media (min-width: 1600px) {
+  main .mailing-list {
+    margin-top: 200px;
+  }
+}
+main .transparent {
+  background: rgba(255, 255, 255, 0.3);
+  border: solid 1px #fff;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+main .footer {
+  position: relative;
+  bottom: 20px;
+  right: 0px;
+  width: 100%;
+  z-index: 4;
+  margin-top: 50px;
+  color: #eee;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+main .footer a {
+  color: #fff;
+}
+main .footer a:hover,
+main .footer a:focus {
+  text-decoration: underline;
+}
+main .footer p.credit {
+  text-align: right;
+}
+@media (max-width: 991px) {
+  main .footer {
+    text-align: center;
+  }
+  main .footer p.credit {
+    text-align: center;
+  }
+}
+@media (min-width: 992px) {
+  main .footer {
+    position: fixed;
+    bottom: 20px;
+  }
+}
+/* .homepage styles */
+
 @keyframes swing {
   0% {
     transform: rotate(0deg);
@@ -39,7 +249,7 @@
   }
 }
 body {
-  font-size: 0.9rem;
+  /* font-size: 0.9rem;*/
 }
 .page-wrapper .sidebar-wrapper,
 .sidebar-wrapper .sidebar-brand > a,
@@ -432,12 +642,17 @@ body {
     color: #818896;
 }
 
+.chiller-theme .sidebar-wrapper .sidebar-header .user-info {
+    color: #ffffff;
+}
 .chiller-theme .sidebar-wrapper .sidebar-menu ul li:hover>a,
 .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active>a,
-.chiller-theme .sidebar-wrapper .sidebar-header .user-info,
 .chiller-theme .sidebar-wrapper .sidebar-brand>a:hover,
 .chiller-theme .sidebar-footer>a:hover i {
-    color: #b8bfce;
+    color: #ffffff;
+    text-decoration: underline;
+    text-underline-position: under;
+    text-decoration-color: #816eef;
 }
 
 .page-wrapper.chiller-theme.toggled #close-sidebar {
@@ -452,8 +667,8 @@ body {
 .chiller-theme .sidebar-wrapper .sidebar-dropdown .sidebar-submenu li a:hover:before,
 .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu:focus+span,
 .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active a i {
-    color: #16c7ff;
-    text-shadow:0px 0px 10px rgba(22, 199, 255, 0.5);
+    color: #816eef;
+    /*text-shadow:0px 0px 10px rgba(22, 199, 255, 0.5);*/
 }
 
 .chiller-theme .sidebar-wrapper .sidebar-menu ul li a i,

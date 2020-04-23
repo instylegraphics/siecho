@@ -20,23 +20,23 @@ export class Header extends Component {
                 </li>
       
                 <li>
-                <Link to="/">
-                    <i className="fa fa-book"></i>
-                    <span>Create Series & Matches</span>
+                <Link to="/series">
+                    <i className="fas fa-trophy"></i>
+                    <span>Create Series</span>
                 </Link>
                 </li>
       
                 <li>
-                <Link to="/matches">
-                    <i className="fa fa-gem"></i>
+                <Link to="/match">
+                    <i className="fas fa-gamepad"></i>
                     <span>Edit a Match</span>
                 </Link>
                 </li>
       
                 <li>
-                <Link to="/caster">
-                    <i className="fa fa-folder"></i>
-                    <span>Caster Live</span>
+                <Link to="/livescene">
+                    <i className="fas fa-headset"></i>
+                    <span>Live Scene</span>
                 </Link>
                 </li>
                 
@@ -46,7 +46,7 @@ export class Header extends Component {
                                  
                 <li>
                     <a href="#" onClick={this.props.logout}>
-                    <i className="fa fa-folder"></i>
+                    <i className="fa fa-power-off"></i>
                     <span>Logout</span>
                     </a>
                 </li>
@@ -60,7 +60,7 @@ export class Header extends Component {
                 </li>        
                 <li>
                 <Link to="/login">
-                    <i className="fa fa-folder"></i>
+                    <i className="fa fa-cog"></i>
                     <span>Login</span>
                 </Link>
                 </li>
@@ -78,7 +78,7 @@ export class Header extends Component {
   <nav id="sidebar" className="sidebar-wrapper">
     <div className="sidebar-content">
       <div className="sidebar-brand">
-        <a href="/">Welcome to SI Echo</a>
+        <a>Welcome to SI Echo</a>
         <div id="close-sidebar">
           <i className="fas fa-times"></i>
         </div>
@@ -89,13 +89,21 @@ export class Header extends Component {
         </div>
         <div className="user-info">
           <span className="user-name">
-            <strong>{user ? `${user.username}` : "Anonymous"}</strong>
+            <strong>{user ? `${user.username}` : "Anonymous User"}</strong>
           </span>
           <span className="user-role">{user ? `${user.email}` : "You must login!"}</span>
+          {user ?  
           <span className="user-status">
             <i className="fa fa-circle"></i>
-            <span>{user ? "Online" : "Offline"}</span>
+            <span>Online</span>
           </span>
+          : 
+          <span className="user-status">
+            <i className="fa fa-circle text-danger"></i>
+            <span>Offline</span>
+          </span>          
+          }
+          
         </div>
       </div>
  
@@ -107,29 +115,57 @@ export class Header extends Component {
          <li className="header-menu">
             <span>Information</span>
           </li>
+
+
+
           <li className="sidebar-dropdown" >
             <a href="#">
-              <i className="fa fa-tachometer-alt"></i>
-              <span>About Us</span>
+              <i className="fas fa-dice"></i>
+              <span>About Echo</span>
             </a>
             <div className="sidebar-submenu">
               <ul>
               
                 <li>
-                  <a href="#" onClick={this.props.logout}>Documentation</a>
+                  <a href="#">Tutorial</a>
                 </li>
 
                 <li>
-                  <a href="#" onClick={this.props.logout}>FAQ's</a>
+                  <a href="#">Documentation</a>
                 </li>
 
                 <li>
-                  <a href="#" onClick={this.props.logout}>Contact Us</a>
+                  <a href="#">FAQ's</a>
                 </li>
               </ul>
             </div>
           </li>
-                   
+          
+
+          <li className="sidebar-dropdown" >
+            <a href="#">
+              <i className="fa fa-tachometer-alt"></i>
+              <span>About SI</span>
+            </a>
+            <div className="sidebar-submenu">
+              <ul>
+              
+                <li>
+                  <a href="#">SI Overview</a>
+                </li>
+
+                <li>
+                  <a href="#">Team</a>
+                </li>
+
+                <li>
+                  <a href="#">Contact Us</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          
+                                       
         </ul>
       </div>
 
@@ -137,17 +173,24 @@ export class Header extends Component {
 
     <div className="sidebar-footer">
       <a href="#">
-        <i className="fa fa-bell"></i>
+        <i className="fab fa-instagram"></i>
       </a>
       <a href="#">
-        <i className="fa fa-envelope"></i>
+        <i className="fab fa-discord"></i>
       </a>
       <a href="#">
-        <i className="fa fa-cog"></i>
+        <i className="fab fa-twitch"></i>
       </a>
-      <a href="#">
+      {user ? 
+      <a href="#" alt="Logout" onClick={this.props.logout}>
         <i className="fa fa-power-off"></i>
       </a>
+      :
+      <Link to="/login">
+          <i className="fa fa-power-off"></i>
+      </Link>
+      }        
+                
     </div>
   </nav>
       
