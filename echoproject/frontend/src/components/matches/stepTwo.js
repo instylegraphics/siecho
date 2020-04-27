@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getSeries } from "../../actions/series";
+import { createMessage } from "../../actions/messages";
 
 export class StepTwoSeriesForm extends Component {
+
+/* old method
   continue = e => {
     e.preventDefault();
     this.props.nextStep();
     
   };
-
+*/
   back = e => {
     e.preventDefault();
     this.props.prevStep();
@@ -17,6 +20,19 @@ export class StepTwoSeriesForm extends Component {
 
   static propTypes = {
     getSeries: PropTypes.array.isRequired   
+  };
+
+  onSubmit = e => {
+    console.log("step2 form submit");
+    console.log("this.props.valueProps.series:" + this.props.valueProps.series);
+    e.preventDefault();
+    if ( this.props.valueProps.series == "" || typeof this.props.valueProps.series == "undefined" ) {
+      this.props.createMessage({ seriesNull: "Select a Series" });
+    } else {
+      console.log("success step1 -> next step");
+      console.log("this.props.valueProps.series:" + this.props.valueProps.series);
+      this.props.nextStep();
+    }
   };
     
   componentDidMount() {
@@ -33,8 +49,10 @@ export class StepTwoSeriesForm extends Component {
     return (
       <React.Fragment>
       <main className="page-content">
-        <form>
+        <form onSubmit={this.onSubmit}>
         <div className="container-fluid">
+        <div class="col-md-8 m-auto">
+        
         <div className="card card-body mt-4 mb-4">
                      
         <div className="md-stepper-horizontal">
@@ -81,12 +99,12 @@ export class StepTwoSeriesForm extends Component {
               Back
             </button>
  
-            <button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light float-right" onClick={this.continue}>
+            <button type="submit" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light float-right">
               Continue
             </button>
         </div>
          
-         
+        </div> 
         </div>
         </div>
       </form>  
@@ -99,5 +117,4 @@ const mapStateToProps = state => ({
   series: state.series.series,
 });
 
-export default connect( mapStateToProps,{ getSeries } )(StepTwoSeriesForm);
- 
+export default connect( mapStateToProps,{ getSeries, createMessage } )(StepTwoSeriesForm);

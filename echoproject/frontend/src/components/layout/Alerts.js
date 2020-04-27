@@ -25,12 +25,15 @@ export class Alerts extends Component {
       if (message.deleteLead) alert.success(message.deleteLead);
       if (message.addLead) alert.success(message.addLead);
       if (message.passwordNotMatch) alert.error(message.passwordNotMatch);
+      if (message.tournamentNull) alert.error(message.tournamentNull);
+      if (message.seriesNull) alert.error(message.seriesNull);
+      if (message.matchNull) alert.error(message.matchNull);
       if (message.addSeries) alert.success(message.addSeries);
       if (message.deleteSeries) alert.success(message.deleteSeries);
       if (message.updateMatch) alert.success(message.updateMatch);
       if (message.updateSeriesEnd) alert.success(message.updateSeriesEnd);
       if (message.updateSceneActivate) alert.success(message.updateSceneActivate);
-      if (message.updateSceneDeActivate) alert.success(message.updateSceneDeActivate);
+      if (message.updateSceneDeActivate) alert.show(message.updateSceneDeActivate);
     }
   }
 

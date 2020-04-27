@@ -113,9 +113,9 @@ export const updateSceneActivate = ( scene, scenes ) => (dispatch, getState) => 
           .put("/si/scene/" + value.id + "/", objScene, tokenConfig(getState))
           .then(res => {
                 // post scene
-                dispatch(createMessage({ updateSceneActivate: "Other Scenes Deactivated" }));
+                dispatch(createMessage({ updateSceneDeActivate: "Other Scenes Deactivated" }));
                 dispatch({
-                type: UPDATE_SCENE_ACTIVATE,
+                type: UPDATE_SCENE_DEACTIVATE,
                 payload: res.data
                 });
                 console.log("success scene update" + value.id);
@@ -149,7 +149,7 @@ export const updateSceneActivate = ( scene, scenes ) => (dispatch, getState) => 
    
 };
 
-// UPDATE_SCENE_DEACTIVATE
+// UPDATE_SCENE_DEACTIVATE  use when deactivate button for one scene, not used anyomore
 export const updateSceneDeActivate = ( scene ) => (dispatch, getState) => {
 
   console.log("inside updateSceneDeActivate func");

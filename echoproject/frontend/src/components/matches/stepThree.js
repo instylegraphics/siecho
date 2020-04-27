@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getMatches } from "../../actions/matches";
+import { createMessage } from "../../actions/messages";
 
 export class StepThreeMatchForm extends Component {
+/* old method
   continue = e => {
     e.preventDefault();
     this.props.nextStep();
+    
   };
+*/
 
   back = e => {
     e.preventDefault();
@@ -17,7 +21,20 @@ export class StepThreeMatchForm extends Component {
   static propTypes = {
     getMatches: PropTypes.array.isRequired   
   };
-    
+
+  onSubmit = e => {
+    console.log("step3 form submit");
+    console.log("this.props.valueProps.match:" + this.props.valueProps.match);
+    e.preventDefault();
+    if ( this.props.valueProps.match == "" || typeof this.props.valueProps.match == "undefined" ) {
+      this.props.createMessage({ matchNull: "Select a Match" });
+    } else {
+      console.log("success step1 -> next step");
+      console.log("this.props.valueProps.match:" + this.props.valueProps.match);
+      this.props.nextStep();
+    }
+  };
+      
   componentDidMount() {
     this.props.getMatches(this.props.valueProps.series);
     console.log('prop series id :');
@@ -32,8 +49,10 @@ export class StepThreeMatchForm extends Component {
     return (
       <React.Fragment>
       <main className="page-content">
-        <form>
+        <form onSubmit={this.onSubmit}>
         <div className="container-fluid">
+        <div class="col-md-8 m-auto">
+        
         <div className="card card-body mt-4 mb-4">
 
         <div className="md-stepper-horizontal">
@@ -80,11 +99,12 @@ export class StepThreeMatchForm extends Component {
               Back
             </button>
  
-            <button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light float-right" onClick={this.continue}>
+            <button type="submit" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light float-right">
               Continue
             </button>
           </div>
-         
+        
+        </div> 
         </div>
         </div>
       </form>  
@@ -98,4 +118,4 @@ const mapStateToProps = state => ({
   matches: state.matches.matches,
 });
 
-export default connect( mapStateToProps,{ getMatches } )(StepThreeMatchForm);
+export default connect( mapStateToProps,{ getMatches, createMessage } )(StepThreeMatchForm);

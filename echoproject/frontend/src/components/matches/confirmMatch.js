@@ -185,6 +185,8 @@ export class ConfirmMatchForm extends Component {
       <main className="page-content">
         <form>
         <div className="container-fluid">
+        <div class="col-md-8 m-auto">
+        
         <div className="card card-body mt-4 mb-4">
 
          <div className="md-stepper-horizontal">
@@ -243,7 +245,7 @@ export class ConfirmMatchForm extends Component {
             </button>
           </div>
  
-               
+        </div>       
         </div>
         </div>
       </form>  
