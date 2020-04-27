@@ -181,13 +181,40 @@ export class ConfirmMatchForm extends Component {
     tournament_scheduled_date = dateFormat(tournament_scheduled_date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
     
     return (
-        <React.Fragment>
-        <main className="page-content">
-          <div className="container-fluid">
-                 
-         <div className="card card-body mt-4 mb-4">
-          
-            <h1>Final Step: Confirmation</h1>
+      <React.Fragment>
+      <main className="page-content">
+        <form>
+        <div className="container-fluid">
+        <div className="card card-body mt-4 mb-4">
+
+         <div className="md-stepper-horizontal">
+            <div className="md-step done">
+              <div className="md-step-circle"><span>1</span></div>
+              <div className="md-step-title">Tournament</div>
+              <div className="md-step-bar-left"></div>
+              <div className="md-step-bar-right"></div>
+            </div>
+            <div className="md-step">
+              <div className="md-step-circle"><span>2</span></div>
+              <div className="md-step-title">Series</div>
+              <div className="md-step-bar-left"></div>
+              <div className="md-step-bar-right"></div>
+            </div>
+            <div className="md-step done">
+              <div className="md-step-circle"><span>3</span></div>
+              <div className="md-step-title">Match</div>
+              <div className="md-step-bar-left"></div>
+              <div className="md-step-bar-right"></div>
+            </div>
+            <div className="md-step active editable">
+              <div className="md-step-circle"><span>4</span></div>
+              <div className="md-step-title">Review</div>
+              <div className="md-step-bar-left"></div>
+              <div className="md-step-bar-right"></div>
+            </div>
+          </div>
+                    
+           <div className="mt-4">
             <p>match id: { valueProps.match }</p>
             
             <p>tournament_name_value: <strong>{ String(tournament_name_value) }</strong></p>
@@ -205,25 +232,23 @@ export class ConfirmMatchForm extends Component {
             <p>match_match_order: <strong>{ match_match_order }</strong></p>
             <p>match_active: <strong>{ String(match_active) }</strong></p>
             <p>match_ended: <strong>{ String(match_ended) }</strong></p>           
-            
-          <div className="form-group">
-            <button type="button" className="btn btn-primary" onClick={this.back}>
+           </div> 
+          <div className="form-group mt-2">
+            <button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light" onClick={this.back}>
               Back
+            </button>
+ 
+            <button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light float-right" onClick={this.continue}>
+              Edit This Match
             </button>
           </div>
  
-           <div className="form-group">
-            <button type="button" className="btn btn-primary" onClick={this.continue}>
-              Edit This Match Now
-            </button>
-          </div>
                
-         </div>
-
-         </div>
-       </main>
-               
-        </React.Fragment>
+        </div>
+        </div>
+      </form>  
+      </main>
+      </React.Fragment>
 
     );
   }

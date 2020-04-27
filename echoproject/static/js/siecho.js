@@ -1,6 +1,6 @@
 jQuery(function ($) {
 
-    $(".sidebar-dropdown > a").click(function() {
+  $(".sidebar-dropdown > a").click(function() {
   $(".sidebar-submenu").slideUp(200);
   if (
     $(this)
@@ -30,6 +30,6 @@ $("#show-sidebar").click(function() {
 });
 
 
-   
-   
+
+  
 });

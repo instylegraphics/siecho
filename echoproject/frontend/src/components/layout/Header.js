@@ -60,7 +60,7 @@ export class Header extends Component {
                 </li>        
                 <li>
                 <Link to="/login">
-                    <i className="fa fa-cog"></i>
+                    <i className="fa fa-power-off"></i>
                     <span>Login</span>
                 </Link>
                 </li>

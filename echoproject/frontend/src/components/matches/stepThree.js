@@ -30,46 +30,66 @@ export class StepThreeMatchForm extends Component {
     console.log(this.props);
  
     return (
-     
-        <React.Fragment>
-        <main className="page-content">
-          <div className="container-fluid">
-        
-         <div className="card card-body mt-4 mb-4">
-            <h1>Step 3: Pick a Match</h1>
+      <React.Fragment>
+      <main className="page-content">
+        <form>
+        <div className="container-fluid">
+        <div className="card card-body mt-4 mb-4">
 
-           <div className="form-group">
-            <label>Select Match - series id:{valueProps.series}:</label>          
-               <select required value={valueProps.match} name="series" className="form-control custom-select" onChange={handleChange('match')}>
-                <option>Select Match</option>
+        <div className="md-stepper-horizontal">
+            <div className="md-step done">
+              <div className="md-step-circle"><span>1</span></div>
+              <div className="md-step-title">Tournament</div>
+              <div className="md-step-bar-left"></div>
+              <div className="md-step-bar-right"></div>
+            </div>
+            <div className="md-step done">
+              <div className="md-step-circle"><span>2</span></div>
+              <div className="md-step-title">Series</div>
+              <div className="md-step-bar-left"></div>
+              <div className="md-step-bar-right"></div>
+            </div>
+            <div className="md-step active editable">
+              <div className="md-step-circle"><span>3</span></div>
+              <div className="md-step-title">Match</div>
+              <div className="md-step-bar-left"></div>
+              <div className="md-step-bar-right"></div>
+            </div>
+            <div className="md-step">
+              <div className="md-step-circle"><span>4</span></div>
+              <div className="md-step-title">Review</div>
+              <div className="md-step-bar-left"></div>
+              <div className="md-step-bar-right"></div>
+            </div>
+          </div>
+          
+
+           <div className="form-group mt-4">
+            <label>Select Match - sid:{valueProps.series}:</label>          
+               
+               <select required value={valueProps.match} name="series" className="form-control custom-select-lg card--body__formSelect" onChange={handleChange('match')}>
+               <option>List of Matches</option>
                {this.props.matches.map(matchlist => ( 
                   <option key={matchlist.id} value={matchlist.id}>Match {matchlist.match_order} </option>
                ))}
               </select>
           </div>
-          
-            <br />
-            
-          
-          <div className="form-group">
-            <button type="button" className="btn btn-primary" onClick={this.back}>
+ 
+          <div className="form-group mt-2">
+            <button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light" onClick={this.back}>
               Back
             </button>
-          </div>
  
-           <div className="form-group">
-            <button type="button" className="btn btn-primary" onClick={this.continue}>
+            <button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light float-right" onClick={this.continue}>
               Continue
             </button>
           </div>
          
-         
-         </div>
-        
-         </div>
-       </main>
-        
-        </React.Fragment>
+        </div>
+        </div>
+      </form>  
+      </main>
+      </React.Fragment>
 
     );
   }
