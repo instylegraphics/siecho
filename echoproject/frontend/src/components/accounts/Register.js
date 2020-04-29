@@ -43,7 +43,7 @@ export class Register extends Component {
     return (
     
       <main className="page-content">
-        <div className="container-fluid"> 
+        <div className="container"> 
             
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">

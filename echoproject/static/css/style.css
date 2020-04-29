@@ -233,6 +233,23 @@ main .footer p.credit {
   border-radius: 16px;
   margin: 10px 0px;
 }
+
+.table-dark,.table-dark>td,.table-dark>th {
+    background-color: #515456;
+}
+
+.table-dark tbody+tbody,.table-dark td,.table-dark th,.table-dark thead th {
+    border-color: #515456
+}
+
+.table-hover .table-dark:hover {
+    background-color: #909194
+}
+
+.table-hover .table-dark:hover>td,.table-hover .table-dark:hover>th {
+    background-color: #909194
+}
+
 .card {
   background-color: #161616;
   font-family: Montserrat, sans-serif;

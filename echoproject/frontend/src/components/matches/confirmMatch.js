@@ -156,6 +156,9 @@ export class ConfirmMatchForm extends Component {
     // tournament info
     var tournament_name_value = jsonQuery('[id=' + series_id + '].tournament.name', { data: this.props.seriesdetails }).value;
     var tournament_scheduled_date = jsonQuery('[id=' + series_id + '].tournament.scheduled_date', { data: this.props.seriesdetails }).value;
+    var dateFormat = require('dateformat');
+    tournament_scheduled_date = dateFormat(tournament_scheduled_date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+    
     // series info
     var series_name = jsonQuery('[id=' + series_id + '].name', { data: this.props.seriesdetails }).value;
     var series_order = jsonQuery('[id=' + series_id + '].series_order', { data: this.props.seriesdetails }).value;
@@ -177,14 +180,13 @@ export class ConfirmMatchForm extends Component {
     var match_ended = jsonQuery('[id=' + match_id + '].ended', { data: this.props.match }).value;     
 */        
     
-    var dateFormat = require('dateformat');
-    tournament_scheduled_date = dateFormat(tournament_scheduled_date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+
     
     return (
       <React.Fragment>
       <main className="page-content">
         <form>
-        <div className="container-fluid">
+        <div className="container">
         <div class="col-md-8 m-auto">
         
         <div className="card card-body mt-4 mb-4">

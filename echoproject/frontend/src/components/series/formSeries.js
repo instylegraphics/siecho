@@ -132,7 +132,7 @@ export class FormSeries extends Component {
       default:
         return (
       <main className="page-content">
-        <div className="container-fluid">
+        <div className="container">
         
           <div className="card card-body mt-4 mb-4">
             { console.log(this.props) }

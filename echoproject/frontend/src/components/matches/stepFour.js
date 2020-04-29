@@ -6,7 +6,6 @@ import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
 import { getGameFactions } from "../../actions/gamefactions";
-//import inputSpinner from "bootstrap-input-spinner";
 
 export class StepFourMatchAdminForm extends Component {
 
@@ -63,10 +62,7 @@ export class StepFourMatchAdminForm extends Component {
     this.setState({ 
       matchData: this.props.match      
    });
-   
-   //activate bs spinner
-    //this.$el = $(this.el);
-    //this.$el.("input[type='number']").inputSpinner();
+ 
     
   }  
 
@@ -529,251 +525,297 @@ export class StepFourMatchAdminForm extends Component {
         default_winner = this.props.match.winner.id;
     } 
     console.log('default_winner:' + String(default_winner) );
-                        
+
+
+    // tournament info
+    var tournament_name_value = jsonQuery('series.tournament.name', { data: this.props.match }).value;
+    var tournament_scheduled_date = jsonQuery('series.tournament.scheduled_date', { data: this.props.match }).value;
+    var dateFormat = require('dateformat');
+    tournament_scheduled_date = dateFormat(tournament_scheduled_date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+    
+    // series info
+    var series_name = jsonQuery('series.name', { data: this.props.match }).value;
+    var series_order = jsonQuery('series.series_order', { data: this.props.match }).value;
+    var series_best_of = jsonQuery('series.best_of', { data: this.props.match }).value;
+    var series_active = jsonQuery('series.active', { data: this.props.match }).value;   
+    var series_ended = jsonQuery('series.ended', { data: this.props.match }).value;
+
+    // match info
+    var match_match_order = jsonQuery('match_order', { data: this.props.match }).value;
+    var match_active = jsonQuery('active', { data: this.props.match }).value;    
+    var match_ended = jsonQuery('ended', { data: this.props.match }).value;     
+    //match info that updates
+    var match_team_one_faction_id = jsonQuery('[id=' + this.props.valueProps.match + '].team_one_faction', { data: this.props.matches }).value;
+    var match_team_two_faction_id = jsonQuery('[id=' + this.props.valueProps.match + '].team_two_faction', { data: this.props.matches }).value;
+    var match_team_one_faction_htmlcolor = jsonQuery('[id=' + match_team_one_faction_id + '].htmlcolorvalue', { data: this.props.gamefactions }).value;
+    var match_team_two_faction_htmlcolor = jsonQuery('[id=' + match_team_two_faction_id + '].htmlcolorvalue', { data: this.props.gamefactions }).value;
+   
+    var match_team_one_id = jsonQuery('[id=' + this.props.valueProps.match + '].team_one', { data: this.props.matches }).value; 
+    var match_team_one_name = jsonQuery('[id=' + match_team_one_id + '].short_name', { data: this.props.teams }).value;
+    var match_team_one_image = jsonQuery('[id=' + match_team_one_id + '].logo', { data: this.props.teams }).value;
+    var match_team_two_id = jsonQuery('[id=' + this.props.valueProps.match + '].team_two', { data: this.props.matches }).value; 
+    var match_team_two_name = jsonQuery('[id=' + match_team_two_id + '].short_name', { data: this.props.teams }).value;
+    var match_team_two_image = jsonQuery('[id=' + match_team_two_id + '].logo', { data: this.props.teams }).value;
+ 
     return (
     <React.Fragment>
         
 		<main className="page-content">
-			<div className="container-fluid">
+			<div className="container">
 
-				<div className="col-md-10 m-auto card card-body mt-4 mb-4 ">
-					<form onSubmit={this.onSubmit.bind(this)}>
-						<div className="row">
-							<div className="col-md-8">
-                <h1>Match Editor</h1>
-                <p>Match ID: { valueProps.match }</p>                  
-							</div>
-							<div className="col-md-4 text-right">
-								<button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light mx-0 my-0" onClick={this.back}>Back</button>                              
-							</div>
-						</div>
-
-						<div className="row">	
-							<div className="col-md-6">
-								<div className="form-group">
-									<label className="col-form-label col-form-label-lg">Room Code</label>
-								   <input
-                      id="roomcode"
-                      className="form-control"
-                      type="text"
-                      name="roomcode"
-                      onChange={(e) => {
+  				<div className="col-md-10 m-auto card card-body mt-4 mb-4 ">
+  					<form onSubmit={this.onSubmit.bind(this)}>
+  						<div className="row">
+  							<div className="col-md-8">
+                  <h1>Match Editor</h1>
+                  <p>Match # { match_match_order } of {series_name} Series</p>                  
+  							</div>
+  							<div className="col-md-4 text-right">
+  								<button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light mx-0 my-0" onClick={this.back}>Back</button>                              
+  							</div>
+  						</div>
+  
+  						<div className="row">	
+  							<div className="col-md-12">
+  								<div className="form-group">
+  									<label className="col-form-label col-form-label-lg">Room Code</label>
+  								   <input
+                        id="roomcode"
+                        className="form-control"
+                        type="text"
+                        name="roomcode"
+                        onChange={(e) => {
+                        let { currentMatchData } = this.state;
+                        currentMatchData.roomcode = e.target.value;
+                        console.log("e.target.value:" + e.target.value);
+                        console.log("currentMatchData.roomcode:" + currentMatchData.roomcode );
+                        this.setState({ currentMatchData });
+                        }}
+                        defaultValue={ this.props.match.roomcode }
+                      />
+  								</div>
+  							</div>
+  						</div>
+  
+  						<div className="row">	
+  							<div className="col-md-6">
+  								<div className="form-group">
+  									<label className="col-form-label col-form-label-lg">Game Mode</label>
+     								 <select id="gamemode" name="gamemode" className="form-control custom-select" 
+                       onChange={(e) => {
                       let { currentMatchData } = this.state;
-                      currentMatchData.roomcode = e.target.value;
+                      currentMatchData.winner = e.target.value;
                       console.log("e.target.value:" + e.target.value);
-                      console.log("currentMatchData.roomcode:" + currentMatchData.roomcode );
-                      this.setState({ currentMatchData });
+                      console.log("currentMatchData.gamemode:" + currentMatchData.gamemode );
+                      this.setState({ currentMatchData });          
                       }}
-                      defaultValue={ this.props.match.roomcode }
-                    />
-								</div>
-							</div>
-						</div>
-
-						<div className="row">	
-							<div className="col-md-6">
-								<div className="form-group">
-									<label className="col-form-label col-form-label-lg">Game Mode</label>
-   								 <select id="gamemode" name="gamemode" className="form-control custom-select" 
+                      defaultValue={ default_gamemode }
+                       >
+                      <option value="">Select Game Mode</option>
+                        {this.props.gamemodes.map(gmode => (
+                        <option key={gmode.id} value={gmode.id}>{gmode.name}</option>
+                       ))}
+                      </select>
+  								</div>
+  							</div>
+  							<div className="col-md-6">
+  								<div className="form-group">
+  									<label className="col-form-label col-form-label-lg">Game Map</label>
+                     <select id="gamemap" name="gamemap" className="form-control custom-select" 
+                       onChange={(e) => {
+                      let { currentMatchData } = this.state;
+                      currentMatchData.winner = e.target.value;
+                      console.log("e.target.value:" + e.target.value);
+                      console.log("currentMatchData.gamemap:" + currentMatchData.gamemap );
+                      this.setState({ currentMatchData });          
+                      }}
+                      defaultValue={ default_gamemap }
+                       >
+                      <option value="">Select Game Map</option>
+                        {this.props.gamemaps.map(gmap => (
+                        <option key={gmap.id} value={gmap.id}>{gmap.name}</option>
+                       ))}
+                     </select>
+  								</div>
+  							</div>
+  						</div>
+  						 
+  						<div className="row">	
+                <div className={`${'col-md-5 match-editor-border'} ${match_team_one_faction_htmlcolor}`}>
+                	<div className="text-center mt-3">
+                  <h4>{ match_team_one_name }</h4>
+                  <img class="card--body__img card-img-top pb-2" src={match_team_one_image} alt={ match_team_one_name } aria-label={ match_team_one_name } />
+                  </div>
+                  <div className="form-group">
+  									<label className="col-form-label col-form-label-lg">Team One Faction</label>
+                    <select id="team_one_faction" name="team_one_faction" className="form-control custom-select" 
                      onChange={(e) => {
                     let { currentMatchData } = this.state;
-                    currentMatchData.winner = e.target.value;
+                    currentMatchData.team_one_faction = e.target.value;
                     console.log("e.target.value:" + e.target.value);
-                    console.log("currentMatchData.gamemode:" + currentMatchData.gamemode );
+                    console.log("currentMatchData.team_one_faction:" + currentMatchData.team_one_faction );
                     this.setState({ currentMatchData });          
                     }}
-                    defaultValue={ default_gamemode }
+                    defaultValue={ default_team_one_faction }
                      >
-                    <option value="">Select Game Mode</option>
-                      {this.props.gamemodes.map(gmode => (
-                      <option key={gmode.id} value={gmode.id}>{gmode.name}</option>
+                    <option value="">Select Team One Faction</option>
+                      {this.props.gamefactions.map(gfaction => (
+                      <option key={gfaction.id} value={gfaction.id}>{gfaction.name}</option>
                      ))}
                     </select>
-								</div>
-							</div>
-							<div className="col-md-6">
-								<div className="form-group">
-									<label className="col-form-label col-form-label-lg">Game Map</label>
-                   <select id="gamemap" name="gamemap" className="form-control custom-select" 
+  								</div>
+  								<div className="form-group">
+  									<label className="col-form-label col-form-label-lg">Team One Score</label>
+  									<input
+                      id="team_one_score" 
+                      className="form-control"
+                      type="number"
+                      min="0" 
+                      max="1000" 
+                      step="1"
+                      name="team_one_score"
+                      onChange={(e) => {
+                      let { currentMatchData } = this.state;
+                      currentMatchData.team_one_score = e.target.value;
+                      console.log("e.target.value:" + e.target.value);
+                      console.log("currentMatchData.team_one_score:" + currentMatchData.team_one_score );
+                      this.setState({ currentMatchData });          
+                      }}
+                      defaultValue={ this.props.match.team_one_score }              
+                    /> 
+                  </div>                                                   
+  							</div>
+  							<div className="col-md-2 vertical-align-ultimate text-center">
+  							<i className="fas fa-times fa-7x"></i>
+  							</div>
+                <div className={`${'col-md-5 match-editor-border'} ${match_team_two_faction_htmlcolor}`}>                                             
+  								<div className="text-center mt-3">
+                    <h4>{ match_team_two_name }</h4>
+                    <img class="card--body__img card-img-top pb-2" src={match_team_two_image} alt={ match_team_two_name } aria-label={ match_team_two_name } />
+                  </div>
+                  <div className="form-group">
+  									<label className="col-form-label col-form-label-lg">Team Two Faction</label>
+                    <select id="team_two_faction" name="team_two_faction" className="form-control custom-select" 
                      onChange={(e) => {
                     let { currentMatchData } = this.state;
-                    currentMatchData.winner = e.target.value;
+                    currentMatchData.team_two_faction = e.target.value;
                     console.log("e.target.value:" + e.target.value);
-                    console.log("currentMatchData.gamemap:" + currentMatchData.gamemap );
+                    console.log("currentMatchData.team_two_faction:" + currentMatchData.team_two_faction );
                     this.setState({ currentMatchData });          
                     }}
-                    defaultValue={ default_gamemap }
+                    defaultValue={ default_team_two_faction }
                      >
-                    <option value="">Select Game Map</option>
-                      {this.props.gamemaps.map(gmap => (
-                      <option key={gmap.id} value={gmap.id}>{gmap.name}</option>
+                    <option value="">Select Team Two Faction</option>
+                      {this.props.gamefactions.map(gfaction => (
+                      <option key={gfaction.id} value={gfaction.id}>{gfaction.name}</option>
                      ))}
-                   </select>
-								</div>
-							</div>
-						</div>
-						 
-						<div className="row match-editor-border">	
-							<div className="col-md-5">
-								<div className="form-group">
-									<label className="col-form-label col-form-label-lg">Team One Faction</label>
-                  <select id="team_one_faction" name="team_one_faction" className="form-control custom-select" 
-                   onChange={(e) => {
-                  let { currentMatchData } = this.state;
-                  currentMatchData.team_one_faction = e.target.value;
-                  console.log("e.target.value:" + e.target.value);
-                  console.log("currentMatchData.team_one_faction:" + currentMatchData.team_one_faction );
-                  this.setState({ currentMatchData });          
-                  }}
-                  defaultValue={ default_team_one_faction }
-                   >
-                  <option value="">Select Team One Faction</option>
-                    {this.props.gamefactions.map(gfaction => (
-                    <option key={gfaction.id} value={gfaction.id}>{gfaction.name}</option>
-                   ))}
-                  </select>
-								</div>
-								<div className="form-group">
-									<label className="col-form-label col-form-label-lg">Team One Score</label>
-									<input
-                    id="team_one_score" 
+                    </select>
+  								</div>
+  								<div className="form-group">
+  									<label className="col-form-label col-form-label-lg">Team Two Score</label>
+  									<input
+                    id="team_two_score" 
                     className="form-control"
                     type="number"
                     min="0" 
                     max="1000" 
                     step="1"
-                    name="team_one_score"
+                    name="team_two_score"
                     onChange={(e) => {
                     let { currentMatchData } = this.state;
-                    currentMatchData.team_one_score = e.target.value;
+                    currentMatchData.team_two_score = e.target.value;
                     console.log("e.target.value:" + e.target.value);
-                    console.log("currentMatchData.team_one_score:" + currentMatchData.team_one_score );
+                    console.log("currentMatchData.team_two_score:" + currentMatchData.team_two_score );
                     this.setState({ currentMatchData });          
                     }}
-                    defaultValue={ this.props.match.team_one_score }              
-                  /> 
-								</div>
-							</div>
-							<div className="col-md-2 vertical-align-ultimate text-center">
-							<i className="fas fa-times fa-8x"></i>
-							</div>
-							<div className="col-md-5">
-								<div className="form-group">
-									<label className="col-form-label col-form-label-lg">Team Two Faction</label>
-                  <select id="team_two_faction" name="team_two_faction" className="form-control custom-select" 
-                   onChange={(e) => {
-                  let { currentMatchData } = this.state;
-                  currentMatchData.team_two_faction = e.target.value;
-                  console.log("e.target.value:" + e.target.value);
-                  console.log("currentMatchData.team_two_faction:" + currentMatchData.team_two_faction );
-                  this.setState({ currentMatchData });          
-                  }}
-                  defaultValue={ default_team_two_faction }
-                   >
-                  <option value="">Select Team Two Faction</option>
-                    {this.props.gamefactions.map(gfaction => (
-                    <option key={gfaction.id} value={gfaction.id}>{gfaction.name}</option>
-                   ))}
+                    defaultValue={ this.props.match.team_two_score }              
+                    />
+                  </div>                                                 
+  							</div>
+  						</div>
+  						 
+  
+  						<div className="row">	
+  							<div className="col-md-12">
+  								<div className="form-group">
+  									<label className="col-form-label col-form-label-lg">Match Winner</label>
+                    <select 
+                     id="winner" name="winner" className="form-control custom-select"
+                     datainitval={ this.props.match.winner }
+                     onChange={(e) => {
+                     let { currentMatchData } = this.state;
+                     currentMatchData.winner = e.target.value;
+                     console.log("e.target.value:" + e.target.value);
+                     console.log("currentMatchData.winner:" + currentMatchData.winner );
+                     this.setState({ currentMatchData });          
+                     }}
+                     defaultValue={ default_winner }
+                     >
+                     <option value="">Select Match Winner</option>
+                      {this.props.teams.map(team => (
+                      <option key={team.id} value={team.id}>{team.name}</option>
+                     ))}
                   </select>
-								</div>
-								<div className="form-group">
-									<label className="col-form-label col-form-label-lg">Team Two Score</label>
-									<input
-                  id="team_two_score" 
-                  className="form-control"
-                  type="number"
-                  min="0" 
-                  max="1000" 
-                  step="1"
-                  name="team_two_score"
-                  onChange={(e) => {
-                  let { currentMatchData } = this.state;
-                  currentMatchData.team_two_score = e.target.value;
-                  console.log("e.target.value:" + e.target.value);
-                  console.log("currentMatchData.team_two_score:" + currentMatchData.team_two_score );
-                  this.setState({ currentMatchData });          
-                  }}
-                  defaultValue={ this.props.match.team_two_score }              
-                  />
-								</div>
-							</div>
-						</div>
-						 
+  								</div>
+  							</div>
+  						</div> 
+  						<div className="row mt-3">								
+  							<div className="col-md-6">
+  								<button type="submit" className="btn btn-primary btn-lg btn btn-dark-green waves-effect waves-light btn-block mx-0 my-0">Update Match</button>
+  							</div>
+  							<div className="col-md-6">
+  								<button className="btn btn-primary btn-lg btn btn-danger waves-effect waves-light btn-block mx-0 my-0" onClick={this.endMatchForm}>End Match</button>		
+  							</div>
+  						</div>
+  					</form>
+  				</div>
+        </div>
 
-						<div className="row">	
-							<div className="col-md-6">
-								<div className="form-group">
-									<label className="col-form-label col-form-label-lg">Match Winner</label>
-                  <select 
-                   id="winner" name="winner" className="form-control custom-select"
-                   datainitval={ this.props.match.winner }
-                   onChange={(e) => {
-                   let { currentMatchData } = this.state;
-                   currentMatchData.winner = e.target.value;
-                   console.log("e.target.value:" + e.target.value);
-                   console.log("currentMatchData.winner:" + currentMatchData.winner );
-                   this.setState({ currentMatchData });          
-                   }}
-                   defaultValue={ default_winner }
-                   >
-                   <option value="">Select Winner</option>
-                    {this.props.teams.map(team => (
-                    <option key={team.id} value={team.id}>{team.name}</option>
-                   ))}
-                </select>
-								</div>
-							</div>
-						</div> 
-						<div className="row mt-3">								
-							<div className="col-md-6">
-								<button type="submit" className="btn btn-primary btn-lg btn btn-dark-green waves-effect waves-light btn-block mx-0 my-0">Update Match</button>
-							</div>
-							<div className="col-md-6">
-								<button className="btn btn-primary btn-lg btn btn-danger waves-effect waves-light btn-block mx-0 my-0" onClick={this.endMatchForm}>End Match</button>		
-							</div>
-						</div>
-					</form>
-				</div>
-				<hr/>
 				{ this.props.valueProps.series ?
-        <div className="col-md-10 m-auto card card-body mt-4 mb-4 ">
-					<h2>Current Matches for This Series</h2>
-					<table className="table table-striped">
-						<thead>
-							<tr>
-								<th className="text-center">ID</th>
-								<th className="text-center">Match #</th>
-								<th>Room Code</th>
-								<th className="text-center">Team One Score</th>
-								<th className="text-center">Team Two Score</th>
-								<th>Match Winner</th>
-								<th className="text-center">Ended</th>
-								<th className="text-center">Active</th>
-							</tr>
-						</thead>
-            <tbody>
-            {this.props.matches.map(listmatch => (
-              <tr key={listmatch.id} className={ this.props.valueProps.match == listmatch.id ? 'bg-warning' : '' }>
-                <td className="text-center">{listmatch.id}</td>
-                <td className="text-center">{listmatch.match_order}</td>
-                <td>{listmatch.roomcode}</td>
-                <td className="text-center">{listmatch.team_one_score}</td>
-                <td className="text-center">{listmatch.team_two_score}</td>
-                <td>{String(listmatch.winner)}:{ jsonQuery('[id=' + listmatch.winner + '].name', { data: this.props.teams }).value } </td>
-                <td className="text-center">{ String(listmatch.ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }</td>
-                <td className="text-center">{ String(listmatch.active) == 'true' ? <i className="fa fa-circle fa-lg green-text"></i> : <i className="fa fa-circle fa-lg red-text"></i> }</td>
-              </tr>
-            ))}
-            </tbody>
-					</table>
-				</div>
+        <div className="container-fluid">
+          <div className="col-md-12 m-auto card card-body mt-4 mb-4 ">
+  					<h2>Best of { series_best_of } Matches for { series_name } Series </h2>
+  					<table className="table table-striped">
+  						<thead>
+  							<tr>
+  								<th className="text-center">ID</th>
+  								<th className="text-center">Match #</th>
+  								<th>Match Winner</th>
+  								<th className="text-center">{ match_team_one_name } Score</th>
+  								<th className="text-center">{ match_team_two_name } Score</th>
+  								<th>Game Mode</th>
+  								<th>Game Map</th>
+                  <th>Room Code</th>
+                  <th className="text-center">Ended</th>
+  								<th className="text-center">Active</th>
+  							  
+                </tr>
+  						</thead>
+              <tbody>
+              {this.props.matches.map(listmatch => (
+                <tr key={listmatch.id} className={ this.props.valueProps.match == listmatch.id ? 'table-dark' : '' }>
+                  <td className="text-center">{listmatch.id}</td>
+                  <td className="text-center">{listmatch.match_order}</td>
+                  <td>{ jsonQuery('[id=' + listmatch.winner + '].short_name', { data: this.props.teams }).value }</td>
+                  <td className={`${'text-center'} ${ jsonQuery('[id=' + listmatch.team_one_faction + '].htmlcolorvalue', { data: this.props.gamefactions }).value }`} >{ listmatch.team_one_score }</td>  
+                  <td className={`${'text-center'} ${ jsonQuery('[id=' + listmatch.team_two_faction + '].htmlcolorvalue', { data: this.props.gamefactions }).value }`} >{ listmatch.team_two_score }</td>  
+                  <td>{ jsonQuery('[id=' + listmatch.gamemode + '].name', { data: this.props.gamemodes }).value } </td>
+                  <td>{ jsonQuery('[id=' + listmatch.gamemap + '].name', { data: this.props.gamemaps }).value } </td>   
+                  <td>{listmatch.roomcode}</td>
+                  <td className="text-center">{ String(listmatch.ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }</td>
+                  <td className="text-center">{ String(listmatch.active) == 'true' ? <i className="fa fa-circle fa-lg green-text"></i> : <i className="fa fa-circle fa-lg red-text"></i> }</td>
+                </tr>
+              ))}
+              </tbody>
+  					</table>
+  				</div>
+        </div>
         : 
         <div>
             <h2>No Matches Created for this Series</h2>
         </div>         
         }
         
-			</div>
 		</main>
      
     </React.Fragment>

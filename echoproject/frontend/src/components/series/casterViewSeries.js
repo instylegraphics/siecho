@@ -157,7 +157,7 @@ export class CasterViewSeries extends Component {
        
     <React.Fragment>
     <main className="page-content">
-      <div className="container-fluid">  
+      <div className="container">  
         
          <div className="card card-body mt-4 mb-4">
             <h1>Caster View</h1>

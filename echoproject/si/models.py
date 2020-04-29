@@ -4,7 +4,7 @@ from django.conf import settings
 
 class Game(models.Model):
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     img = models.ImageField(upload_to='game/image/', blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
@@ -14,7 +14,7 @@ class Game(models.Model):
 
 class GameMode(models.Model):
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     img = models.ImageField(upload_to='gamemode/image/',blank=True, null=True)
     enabled = models.BooleanField(default=True)
@@ -25,9 +25,9 @@ class GameMode(models.Model):
 
 class GameFaction(models.Model):
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    htmlcolorvalue = models.CharField(max_length=12, blank=True, null=True)
+    htmlcolorvalue = models.CharField(max_length=100, blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
     def __str__(self):
@@ -36,7 +36,7 @@ class GameFaction(models.Model):
 
 class GameMap(models.Model):
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='gamemap/image/',blank=True, null=True)
 
@@ -69,6 +69,7 @@ class Tournament(models.Model):
 class Scene(models.Model):
 
     name = models.CharField(max_length=255)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, blank=True, null=True)
     img_default_url = models.CharField(max_length=255,blank=True, null=True)
     img = models.ImageField(upload_to='scene/image/',blank=True, null=True)
     video_default_url = models.CharField(max_length=255, blank=True, null=True)
@@ -88,8 +89,8 @@ class Scene(models.Model):
 
 class Team(models.Model):
 
-    name = models.CharField(max_length=50)
-    short_name = models.CharField(max_length=15)
+    name = models.CharField(max_length=100)
+    short_name = models.CharField(max_length=20)
     logo = models.ImageField(upload_to='team/image/', blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
@@ -99,9 +100,9 @@ class Team(models.Model):
 
 class Player(models.Model):
 
-    username = models.CharField(max_length=50)
-    firstname = models.CharField(max_length=50, blank=True, null=True)
-    lastname = models.CharField(max_length=50, blank=True, null=True)
+    username = models.CharField(max_length=100)
+    firstname = models.CharField(max_length=100, blank=True, null=True)
+    lastname = models.CharField(max_length=100, blank=True, null=True)
     team = models.ForeignKey(
         Team, on_delete=models.DO_NOTHING, related_name='player_team')
     is_captain = models.BooleanField(default=False, blank=True, null=True)
@@ -145,7 +146,7 @@ class Match(models.Model):
     gamemode = models.ForeignKey(
         GameMode, on_delete=models.DO_NOTHING, blank=True, null=True)
     match_order = models.PositiveIntegerField(default=1)
-    roomcode = models.CharField(max_length=50, blank=True, null=True)
+    roomcode = models.CharField(max_length=100, blank=True, null=True)
     team_one = models.ForeignKey(
         Team, on_delete=models.DO_NOTHING, related_name='match_team_one', blank=True, null=True)
     team_one_score = models.PositiveIntegerField(default=0, blank=True, null=True)

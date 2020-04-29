@@ -42,7 +42,8 @@ export class StepOneTournamentForm extends Component {
       <React.Fragment>
       <main className="page-content">
         <form onSubmit={this.onSubmit}>
-        <div className="container-fluid">
+        <div className="container">
+        
         <div class="col-md-8 m-auto">
         <div className="card card-body mt-4 mb-4">
                      
