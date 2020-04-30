@@ -76,7 +76,7 @@ export class StepOneTournamentForm extends Component {
 
 
         <div className="form-group mt-4">
-              <label>Select Tournament</label>       
+              <label><h2>Select Tournament</h2></label>       
                  <select required value={valueProps.tournament} name="tournament" className="form-control custom-select-lg card--body__formSelect" onChange={ handleChange('tournament') }  >
                  <option>List of Tournaments</option>
                  {this.props.tournaments.map(tournament => (

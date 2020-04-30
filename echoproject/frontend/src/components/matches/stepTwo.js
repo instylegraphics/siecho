@@ -84,8 +84,7 @@ export class StepTwoSeriesForm extends Component {
  
 
         <div className="form-group mt-4">
-            <label>Select Series - tid:{valueProps.tournament}:</label>          
-               
+            <label><h2>Select Series</h2></label>          
                <select required value={valueProps.series} name="series" className="form-control custom-select-lg card--body__formSelect" onChange={handleChange('series')}>
                <option>List of Series</option>
                {this.props.series.map(series => (            

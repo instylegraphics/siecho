@@ -84,8 +84,7 @@ export class StepThreeMatchForm extends Component {
           
 
            <div className="form-group mt-4">
-            <label>Select Match - sid:{valueProps.series}:</label>          
-               
+            <label><h2>Select Match</h2></label>          
                <select required value={valueProps.match} name="series" className="form-control custom-select-lg card--body__formSelect" onChange={handleChange('match')}>
                <option>List of Matches</option>
                {this.props.matches.map(matchlist => ( 

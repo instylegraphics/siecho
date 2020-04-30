@@ -167,11 +167,14 @@ export class ConfirmMatchForm extends Component {
     var series_ended = jsonQuery('[id=' + series_id + '].ended', { data: this.props.seriesdetails }).value;
 
     // match info
-    var match_team_one_name = jsonQuery('team_one.name', { data: this.props.match }).value;
-    var match_team_two_name = jsonQuery('team_two.name', { data: this.props.match }).value;
+    var match_team_one_name = jsonQuery('team_one.short_name', { data: this.props.match }).value;
+    var match_team_two_name = jsonQuery('team_two.short_name', { data: this.props.match }).value;
     var match_match_order = jsonQuery('match_order', { data: this.props.match }).value;
     var match_active = jsonQuery('active', { data: this.props.match }).value;    
-    var match_ended = jsonQuery('ended', { data: this.props.match }).value;     
+    var match_ended = jsonQuery('ended', { data: this.props.match }).value;
+    
+    var match_team_one_image = jsonQuery('team_one.logo', { data: this.props.match }).value;
+    var match_team_two_image = jsonQuery('team_two.logo', { data: this.props.match }).value;      
 
 /*    var match_team_one_name = jsonQuery('[id=' + match_id + '].team_one.name', { data: this.props.match }).value;
     var match_team_two_name = jsonQuery('[id=' + match_id + '].team_two.name', { data: this.props.match }).value;
@@ -183,76 +186,152 @@ export class ConfirmMatchForm extends Component {
 
     
     return (
-      <React.Fragment>
-      <main className="page-content">
-        <form>
-        <div className="container">
-        <div class="col-md-8 m-auto">
+<React.Fragment>
+<main className="page-content">
+  <form>
+    <div className="container">
+      <div className="col-md-8 m-auto">
         
         <div className="card card-body mt-4 mb-4">
 
-         <div className="md-stepper-horizontal">
-            <div className="md-step done">
-              <div className="md-step-circle"><span>1</span></div>
-              <div className="md-step-title">Tournament</div>
-              <div className="md-step-bar-left"></div>
-              <div className="md-step-bar-right"></div>
-            </div>
-            <div className="md-step">
-              <div className="md-step-circle"><span>2</span></div>
-              <div className="md-step-title">Series</div>
-              <div className="md-step-bar-left"></div>
-              <div className="md-step-bar-right"></div>
-            </div>
-            <div className="md-step done">
-              <div className="md-step-circle"><span>3</span></div>
-              <div className="md-step-title">Match</div>
-              <div className="md-step-bar-left"></div>
-              <div className="md-step-bar-right"></div>
-            </div>
-            <div className="md-step active editable">
-              <div className="md-step-circle"><span>4</span></div>
-              <div className="md-step-title">Review</div>
-              <div className="md-step-bar-left"></div>
-              <div className="md-step-bar-right"></div>
-            </div>
+          <div className="md-stepper-horizontal">
+              <div className="md-step done">
+                <div className="md-step-circle"><span>1</span></div>
+                <div className="md-step-title">Tournament</div>
+                <div className="md-step-bar-left"></div>
+                <div className="md-step-bar-right"></div>
+              </div>
+              <div className="md-step">
+                <div className="md-step-circle"><span>2</span></div>
+                <div className="md-step-title">Series</div>
+                <div className="md-step-bar-left"></div>
+                <div className="md-step-bar-right"></div>
+              </div>
+              <div className="md-step done">
+                <div className="md-step-circle"><span>3</span></div>
+                <div className="md-step-title">Match</div>
+                <div className="md-step-bar-left"></div>
+                <div className="md-step-bar-right"></div>
+              </div>
+              <div className="md-step active editable">
+                <div className="md-step-circle"><span>4</span></div>
+                <div className="md-step-title">Review</div>
+                <div className="md-step-bar-left"></div>
+                <div className="md-step-bar-right"></div>
+              </div>
           </div>
                     
-           <div className="mt-4">
-            <p>match id: { valueProps.match }</p>
-            
-            <p>tournament_name_value: <strong>{ String(tournament_name_value) }</strong></p>
-            
-            <p>tournament_scheduled_date: <strong>{ String(tournament_scheduled_date) } </strong></p>
-            
-            <p>series_name: <strong>{ series_name }</strong></p>
-            <p>series_order: <strong>{ series_order }</strong></p>
-            <p>series_best_of: <strong>{ series_best_of }</strong></p>
-            <p>series_active: <strong>{ String(series_active) }</strong></p>
-            <p>series_ended: <strong>{ String(series_ended) }</strong></p>
-            
-            <p>match_team_one_name: <strong>{ match_team_one_name }</strong></p>
-            <p>match_team_two_name: <strong>{ match_team_two_name }</strong></p>
-            <p>match_match_order: <strong>{ match_match_order }</strong></p>
-            <p>match_active: <strong>{ String(match_active) }</strong></p>
-            <p>match_ended: <strong>{ String(match_ended) }</strong></p>           
-           </div> 
-          <div className="form-group mt-2">
-            <button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light" onClick={this.back}>
-              Back
-            </button>
+				<div className="mt-4">
+					<label><h2>Review Match Details</h2></label> 
+					<div className="row">
+						<div className="col-md-3 col-sm-12">
+							<h5>Tournament:</h5>
+						</div>
+						<div className="col-md-9 col-sm-12">
+							<p className="text-warning font-weight-bold">{ tournament_name_value }</p>
+						</div>
+
+						<div className="col-md-3 col-sm-12">
+							<h5>Date & Time:</h5>
+						</div>
+						<div className="col-md-9 col-sm-12">
+							<p className="text-warning font-weight-bold">{ String(tournament_scheduled_date) }</p>
+						</div>
+						
+						<div className="col-md-3 col-sm-12">
+							<h5>Series:</h5>
+						</div>
+						<div className="col-md-9 col-sm-12">
+							<p className="text-warning font-weight-bold">{ series_name }</p>
+						</div>
+						
+						<div className="col-md-3 col-sm-6">
+							<h5>Series Order:</h5>
+						</div>
+						
+						<div className="col-md-9 col-sm-6">
+							<p className="text-warning font-weight-bold">{ series_order }</p>
+						</div>
+
+						<div className="col-md-3 col-sm-6">
+							<h5>Series Ended:</h5>
+						</div>
+						
+						<div className="col-md-3 col-sm-6">
+              { String(series_ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }
+						</div>
+                                     
+						<div className="col-md-3 col-sm-6">
+							<h5>Series Active:</h5>
+						</div>
+
+						<div className="col-md-3 col-sm-6">
+              { String(series_active) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }                           
+						</div>
+						 
+					</div>
+
+
+					
+					<div className="row d-flex justify-content-center mt-2">
+						<div className="col-md-5 match-editor-border">
+							<div className="text-center mt-3 mb-2">
+								<h6>Team One</h6>
+								<h4 className="text-warning font-weight-bold">{ match_team_one_name }</h4>
+                <img className="card--body__img card-img-top pb-2" src={match_team_one_image} alt={ match_team_one_name } aria-label={ match_team_one_name } />
+							</div>
+						</div>
+						<div className="col-md-2 vertical-align-ultimate text-center">
+							<i className="fas fa-times fa-7x"></i>
+						</div>
+						<div className="col-md-5 match-editor-border">
+							<div className="text-center mt-3 mb-2">
+								<h6>Team Two</h6>
+								<h4 className="text-warning font-weight-bold">{ match_team_two_name }</h4>
+								<img className="card--body__img card-img-top pb-2" src={match_team_two_image} alt={ match_team_one_name } aria-label={ match_team_one_name } />
+							</div>
+						</div>
+					</div>
+
+					<div className="row mt-3">
+						<div className="col-md-3 col-sm-6">						
+							<h5>Match Ended:</h5>
+						</div>
+						<div className="col-md-3 col-sm-6">
+              { String(match_ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }                                         
+						</div>
+
+						<div className="col-md-3 col-sm-6">
+							<h5>Match Active:</h5>
+						</div>
+						<div className="col-md-3 col-sm-6">
+              { String(match_active) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }                                          
+						</div>
  
-            <button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light float-right" onClick={this.continue}>
-              Edit This Match
-            </button>
-          </div>
+ 						<div className="col-md-12 col-sm-12 mt-2 mb-4">
+							<h5>Edit Match Number  <span className="text-warning font-weight-bold">{ match_match_order }</span> out of <span className="text-warning font-weight-bold">{ series_best_of }</span> Matches?</h5>
+						</div>
+					</div>
+
+
+				</div>
+        
+  
+        <div className="form-group mt-2">
+          <button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light" onClick={this.back}>
+            Back
+          </button>
+          <button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light float-right" onClick={this.continue}>
+            Edit This Match
+          </button>
+        </div>
  
-        </div>       
-        </div>
-        </div>
-      </form>  
-      </main>
-      </React.Fragment>
+       </div>
+      </div>
+    </div>
+  </form>  
+</main>
+</React.Fragment>
 
     );
   }

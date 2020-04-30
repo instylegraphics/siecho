@@ -567,8 +567,8 @@ export class StepFourMatchAdminForm extends Component {
   					<form onSubmit={this.onSubmit.bind(this)}>
   						<div className="row">
   							<div className="col-md-8">
-                  <h1>Match Editor</h1>
-                  <p>Match # { match_match_order } of {series_name} Series</p>                  
+                  <h2>Match Editor</h2>
+                  <p>Match Number <span className="text-warning font-weight-bold">{ match_match_order }</span> of <span className="text-warning font-weight-bold">{ series_name }</span> Series</p>                  
   							</div>
   							<div className="col-md-4 text-right">
   								<button type="button" className="btn btn-primary btn-lg btn btn-deep-purple waves-effect waves-light mx-0 my-0" onClick={this.back}>Back</button>                              
@@ -640,11 +640,11 @@ export class StepFourMatchAdminForm extends Component {
   							</div>
   						</div>
   						 
-  						<div className="row">	
-                <div className={`${'col-md-5 match-editor-border'} ${match_team_one_faction_htmlcolor}`}>
+  						<div className="row d-flex justify-content-center">	
+                <div className={`${'col-md-4 match-editor-border'} ${match_team_one_faction_htmlcolor}`}>
                 	<div className="text-center mt-3">
-                  <h4>{ match_team_one_name }</h4>
-                  <img class="card--body__img card-img-top pb-2" src={match_team_one_image} alt={ match_team_one_name } aria-label={ match_team_one_name } />
+                  <h4 className="font-weight-bold">{ match_team_one_name }</h4>
+                  <img className="card--body__img card-img-top pb-2" src={match_team_one_image} alt={ match_team_one_name } aria-label={ match_team_one_name } />
                   </div>
                   <div className="form-group">
   									<label className="col-form-label col-form-label-lg">Team One Faction</label>
@@ -688,10 +688,10 @@ export class StepFourMatchAdminForm extends Component {
   							<div className="col-md-2 vertical-align-ultimate text-center">
   							<i className="fas fa-times fa-7x"></i>
   							</div>
-                <div className={`${'col-md-5 match-editor-border'} ${match_team_two_faction_htmlcolor}`}>                                             
+                <div className={`${'col-md-4 match-editor-border'} ${match_team_two_faction_htmlcolor}`}>                                             
   								<div className="text-center mt-3">
-                    <h4>{ match_team_two_name }</h4>
-                    <img class="card--body__img card-img-top pb-2" src={match_team_two_image} alt={ match_team_two_name } aria-label={ match_team_two_name } />
+                    <h4 className="font-weight-bold">{ match_team_two_name }</h4>
+                    <img className="card--body__img card-img-top pb-2" src={match_team_two_image} alt={ match_team_two_name } aria-label={ match_team_two_name } />
                   </div>
                   <div className="form-group">
   									<label className="col-form-label col-form-label-lg">Team Two Faction</label>
@@ -774,8 +774,9 @@ export class StepFourMatchAdminForm extends Component {
 				{ this.props.valueProps.series ?
         <div className="container-fluid">
           <div className="col-md-12 m-auto card card-body mt-4 mb-4 ">
-  					<h2>Best of { series_best_of } Matches for { series_name } Series </h2>
-  					<table className="table table-striped">
+  					<h3>Best of <span className="text-warning font-weight-bold">{ series_best_of }</span> Matches for <span className="text-warning font-weight-bold">{ series_name }</span> Series</h3>
+  					<div className="table-responsive">
+            <table className="table table-striped">
   						<thead>
   							<tr>
   								<th className="text-center">ID</th>
@@ -808,6 +809,7 @@ export class StepFourMatchAdminForm extends Component {
               ))}
               </tbody>
   					</table>
+            </div>
   				</div>
         </div>
         : 
