@@ -14,13 +14,12 @@ import socketIOClient from "socket.io-client";
 
 export class CasterViewSeries extends Component {
 
- 
   componentDidMount() {
-    console.log("XXXXXXXXXX componentDidMount - casterViewSeries");
-    console.log('valueProps.seriesid');
-    console.log(this.props.valueProps.seriesid);
-    console.log('valueProps.tournament');
-    console.log(this.props.valueProps.tournament);
+//    console.log("XXXXXXXXXX componentDidMount - casterViewSeries");
+//    console.log('valueProps.seriesid');
+//    console.log(this.props.valueProps.seriesid);
+//    console.log('valueProps.tournament');
+//    console.log(this.props.valueProps.tournament);
     
     
     this.props.getMatches(this.props.valueProps.seriesid);
@@ -144,14 +143,42 @@ export class CasterViewSeries extends Component {
   render() {
  
     const { valueProps } = this.props;
-    console.log("render casterViewSeries caster view");
+    //console.log("render casterViewSeries caster view");
     //console.log('props');
     //console.log(this.props);
     //console.log('valueProps');
     //console.log(this.props.valueProps);
     //console.log("view:" + view);
     var jsonQuery = require('json-query');
-   
+ 
+   //get active match info 
+    var match_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].id', { data: this.props.matches }).value;
+    var match_roomcode = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].roomcode', { data: this.props.matches }).value;   
+    var match_team_one_score = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_one_score', { data: this.props.matches }).value;
+    var match_team_two_score = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_two_score', { data: this.props.matches }).value;
+    var match_match_order = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].match_order', { data: this.props.matches }).value; 
+    var match_active = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].active', { data: this.props.matches }).value;   
+    var match_ended = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].ended', { data: this.props.matches }).value;     
+    var match_team_one_faction_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_one_faction', { data: this.props.matches }).value; 
+    var match_team_two_faction_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_two_faction', { data: this.props.matches }).value; 
+    var match_team_one_faction_htmlcolor = jsonQuery('[id=' + match_team_one_faction_id + '].htmlcolorvalue', { data: this.props.gamefactions }).value;
+    var match_team_two_faction_htmlcolor = jsonQuery('[id=' + match_team_two_faction_id + '].htmlcolorvalue', { data: this.props.gamefactions }).value;
+    var match_team_one_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_one', { data: this.props.matches }).value; 
+    var match_team_one_name = jsonQuery('[id=' + match_team_one_id + '].short_name', { data: this.props.teams }).value;
+    var match_team_one_image = jsonQuery('[id=' + match_team_one_id + '].logo', { data: this.props.teams }).value;
+    var match_team_two_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_two', { data: this.props.matches }).value; 
+    var match_team_two_name = jsonQuery('[id=' + match_team_two_id + '].short_name', { data: this.props.teams }).value;
+    var match_team_two_image = jsonQuery('[id=' + match_team_two_id + '].logo', { data: this.props.teams }).value;
+    var match_winner_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].winner', { data: this.props.matches }).value;
+    var match_winner_name = jsonQuery('[id=' + match_winner_id + '].short_name', { data: this.props.teams }).value;
+
+    var match_gamemap_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].gamemap', { data: this.props.matches }).value;
+    var match_gamemap_name = jsonQuery('[id=' + match_gamemap_id + '].name', { data: this.props.gamemaps }).value; 
+    var match_gamemode_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].gamemode', { data: this.props.matches }).value;
+    var match_gamemode_name = jsonQuery('[id=' + match_gamemode_id + '].name', { data: this.props.gamemodes }).value; 
+    
+   //if all matches in series ended return null to show END SERIES button
+    var matches_still_not_ended = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][*ended=false].id', { data: this.props.matches }).value;
     
     return (
        
@@ -161,15 +188,44 @@ export class CasterViewSeries extends Component {
         
          <div className="card card-body mt-4 mb-4">
             <h1>Caster View</h1>
+<p>match_id: { match_id }</p>
+<p>match_roomcode: { match_roomcode }</p>
+<p>match_match_order: { match_match_order }</p>
+<p>match_active: { String(match_active) }</p>
+<p>match_ended: { String(match_ended) }</p>
+<p>match_gamemap_name: { String(match_gamemap_name) }</p>
+<p>match_gamemode_name: { String(match_gamemode_name) }</p>
  
-            <div className="form-group">  
+<p>match_team_one_name: { match_team_one_name }</p>
+<p>match_team_one_score: { match_team_one_score }</p>
+<p>match_team_one_faction_htmlcolor: { match_team_one_faction_htmlcolor }</p>
+<p>match_team_one_image: { match_team_one_image }</p>
+ 
+<p>match_team_two_name: { match_team_two_name }</p>
+<p>match_team_two_score: { match_team_two_score }</p>
+<p>match_team_two_faction_htmlcolor: { match_team_two_faction_htmlcolor }</p>
+<p>match_team_two_image: { match_team_two_image }</p>
+
+ <p>match_winner_name: { match_winner_name }</p>
+ <p>matches_still_not_ended: { matches_still_not_ended }</p>
+ 
+           { matches_still_not_ended ?
+           <div className="form-group">
+              <button
+              onClick={ this.endSeriesForm }
+              className="btn btn-danger btn-sm disabled">End Series
+              </button>
+              <p>*All matche(s) in Series has not ended.</p> 
+           </div>
+           :
+           <div className="form-group">  
               <button
               onClick={ this.endSeriesForm }
               className="btn btn-danger btn-sm">End Series
               </button>
-           </div>   
-           
-                       
+           </div>
+           }
+
               {this.props.valueProps.seriesid ?
                   <div class="empty">
           <h2>Current Matches for This Series</h2>
@@ -189,7 +245,7 @@ export class CasterViewSeries extends Component {
               </thead>
               <tbody>
                 {this.props.matches.map(listmatch => (
-                  <tr key={listmatch.id}>
+                  <tr key={listmatch.id} className={ match_id == listmatch.id ? 'table-success' : '' } >
                     <td>{listmatch.id}</td>
                     <td>{listmatch.match_order}</td>
                     <td>{listmatch.roomcode}</td>

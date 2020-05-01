@@ -268,7 +268,21 @@ export class ConfirmMatchForm extends Component {
 						<div className="col-md-3 col-sm-6">
               { String(series_active) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }                           
 						</div>
-						 
+
+				  	<div className="col-md-3 col-sm-6">						
+							<h5>Match Ended:</h5>
+						</div>
+						<div className="col-md-3 col-sm-6">
+              { String(match_ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }                                         
+						</div>
+
+						<div className="col-md-3 col-sm-6">
+							<h5>Match Active:</h5>
+						</div>
+						<div className="col-md-3 col-sm-6">
+              { String(match_active) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }                        
+						</div>
+            						 
 					</div>
 
 
@@ -294,19 +308,6 @@ export class ConfirmMatchForm extends Component {
 					</div>
 
 					<div className="row mt-3">
-						<div className="col-md-3 col-sm-6">						
-							<h5>Match Ended:</h5>
-						</div>
-						<div className="col-md-3 col-sm-6">
-              { String(match_ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }                                         
-						</div>
-
-						<div className="col-md-3 col-sm-6">
-							<h5>Match Active:</h5>
-						</div>
-						<div className="col-md-3 col-sm-6">
-              { String(match_active) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }                                          
-						</div>
  
  						<div className="col-md-12 col-sm-12 mt-2 mb-4">
 							<h5>Edit Match Number  <span className="text-warning font-weight-bold">{ match_match_order }</span> out of <span className="text-warning font-weight-bold">{ series_best_of }</span> Matches?</h5>

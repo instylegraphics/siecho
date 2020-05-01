@@ -526,7 +526,6 @@ export class StepFourMatchAdminForm extends Component {
     } 
     console.log('default_winner:' + String(default_winner) );
 
-
     // tournament info
     var tournament_name_value = jsonQuery('series.tournament.name', { data: this.props.match }).value;
     var tournament_scheduled_date = jsonQuery('series.tournament.scheduled_date', { data: this.props.match }).value;
@@ -534,11 +533,11 @@ export class StepFourMatchAdminForm extends Component {
     tournament_scheduled_date = dateFormat(tournament_scheduled_date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
     
     // series info
-    var series_name = jsonQuery('series.name', { data: this.props.match }).value;
-    var series_order = jsonQuery('series.series_order', { data: this.props.match }).value;
-    var series_best_of = jsonQuery('series.best_of', { data: this.props.match }).value;
-    var series_active = jsonQuery('series.active', { data: this.props.match }).value;   
-    var series_ended = jsonQuery('series.ended', { data: this.props.match }).value;
+    var series_name = jsonQuery('[id=' + this.props.valueProps.match + '].series.name', { data: this.props.matchesdetails }).value;
+    var series_order = jsonQuery('[id=' + this.props.valueProps.match + '].series.series_order', { data: this.props.matchesdetails }).value;
+    var series_best_of = jsonQuery('[id=' + this.props.valueProps.match + '].series.best_of', { data: this.props.matchesdetails }).value;
+    var series_active = jsonQuery('[id=' + this.props.valueProps.match + '].series.active', { data: this.props.matchesdetails }).value;  
+    var series_ended = jsonQuery('[id=' + this.props.valueProps.match + '].series.ended', { data: this.props.matchesdetails }).value;
 
     // match info
     var match_match_order = jsonQuery('match_order', { data: this.props.match }).value;
@@ -563,7 +562,7 @@ export class StepFourMatchAdminForm extends Component {
 		<main className="page-content">
 			<div className="container">
 
-  				<div className="col-md-10 m-auto card card-body mt-4 mb-4 ">
+  				<div className="col-md-8 m-auto card card-body mt-4 mb-4 ">
   					<form onSubmit={this.onSubmit.bind(this)}>
   						<div className="row">
   							<div className="col-md-8">
