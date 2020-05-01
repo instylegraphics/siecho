@@ -178,7 +178,7 @@ export class CasterViewSeries extends Component {
     var match_gamemode_name = jsonQuery('[id=' + match_gamemode_id + '].name', { data: this.props.gamemodes }).value; 
     
    //if all matches in series ended return null to show END SERIES button
-    var matches_still_not_ended = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][*ended=false].id', { data: this.props.matches }).value;
+    var match_still_not_ended = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][*ended=false].id', { data: this.props.matches }).value;
     
     return (
        
@@ -207,23 +207,12 @@ export class CasterViewSeries extends Component {
 <p>match_team_two_image: { match_team_two_image }</p>
 
  <p>match_winner_name: { match_winner_name }</p>
- <p>matches_still_not_ended: { matches_still_not_ended }</p>
- 
-           { matches_still_not_ended ?
-           <div className="form-group">
-              <button
-              onClick={ this.endSeriesForm }
-              className="btn btn-danger btn-sm disabled">End Series
-              </button>
-              <p>*All matche(s) in Series has not ended.</p> 
-           </div>
-           :
-           <div className="form-group">  
-              <button
-              onClick={ this.endSeriesForm }
-              className="btn btn-danger btn-sm">End Series
-              </button>
-           </div>
+ <p>match_still_not_ended: { match_still_not_ended }</p>
+ <p>match_still_not_ended str:{ String(match_still_not_ended) }:</p>
+           
+           { String(match_still_not_ended) == '' ? 
+           <button onClick={ this.endSeriesForm } className="btn btn-danger btn-sm">End Series</button>
+           : <button className="btn btn-danger btn-sm disabled">End Series</button>
            }
 
               {this.props.valueProps.seriesid ?
