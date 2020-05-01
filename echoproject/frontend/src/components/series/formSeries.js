@@ -80,8 +80,8 @@ export class FormSeries extends Component {
     const { tournament, name, series_order, team_one, team_two, best_of } = this.state;
     const series = { tournament, name, series_order, team_one, team_two, best_of };
     this.props.addSeries(series);
-    console.log(series);
-    console.log("best of:" + series.best_of);
+    //console.log(series);
+    //console.log("best of:" + series.best_of);
     
 /*   reset state value after submit
     this.setState({
@@ -102,29 +102,29 @@ export class FormSeries extends Component {
     var jsonQuery = require('json-query');
         
     let isTournamentHasID = false;
-    console.log("reder props output:");
-    console.log(this.props);
-    console.log("reder this.props.series:");
-    console.log(this.props.series);    
+    //console.log("reder props output:");
+    //console.log(this.props);
+    //console.log("reder this.props.series:");
+    //console.log(this.props.series);    
  
      //check if tournament has avaialble series already created , also check if tournament id exist 
-     console.log("tournament:" + tournament)
+     //console.log("tournament:" + tournament)
     if (!Array.isArray(this.props.series) || !this.props.series.length || !tournament ) {
       // array does not exist, is not an array, or is empty
       // ? do not attempt to process array
-      console.log("array is null:");
-      console.log(this.props.series);
+      //console.log("array is null:");
+      //console.log(this.props.series);
       isTournamentHasID = false; 
     }else{
-      console.log("array is NOT null:");
-      console.log(this.props.series);
+      //console.log("array is NOT null:");
+      //console.log(this.props.series);
       isTournamentHasID = true; 
     }
-    console.log("isTournamentHasID:" + isTournamentHasID);
-    console.log("view:" + view)
+    //console.log("isTournamentHasID:" + isTournamentHasID);
+    //console.log("view:" + view)
      switch (view) {
       case "caster":
-        console.log("switch caster view");
+        //console.log("switch caster view");
         return (
           <CasterViewSeries
             prevStep={this.prevStep}
@@ -144,7 +144,7 @@ export class FormSeries extends Component {
     									<label class="col-form-label col-form-label-lg">Tournament</label>
                         <select name="tournament" className="form-control custom-select" 
                          onChange={(e) => {
-                        console.log("tournament:" + e.target.value);
+                        //console.log("tournament:" + e.target.value);
                         this.setState({ tournament: e.target.value });
                         this.props.getSeries(e.target.value);
                         this.props.getSeriesDetails(e.target.value);
@@ -274,7 +274,7 @@ export class FormSeries extends Component {
                       <td className="text-center">
                         <button
                         onClick={(e) => {
-                        console.log("listseries.id:" + listseries.id);
+                        //console.log("listseries.id:" + listseries.id);
                         this.props.deleteSeries(listseries.id);
                         }}
                         className="btn btn-danger btn-sm btn-danger waves-effect waves-light">{" "} Delete
@@ -283,8 +283,7 @@ export class FormSeries extends Component {
                       <td className="text-center">
                         <button
                         onClick={(e) => {
-                        console.log("listseries.id:" + listseries.id);
-                        //alert("listseries.id:" + listseries.id);
+                        //console.log("listseries.id:" + listseries.id);
                         let { view, seriesid } = this.state;
                         view = "caster";
                         seriesid = listseries.id;

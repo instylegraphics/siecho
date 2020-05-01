@@ -39,16 +39,16 @@ export const getScenes = () => (dispatch, getState) => {
 // UPDATE_SCENE_ACTIVATE
 export const updateSceneActivate = ( scene, scenes ) => (dispatch, getState) => {
 
-  console.log("inside updateSceneActivate func");
-  console.log("scene id:" + scene.id );
-  console.log("scene active:" + scene.active );
+  //console.log("inside updateSceneActivate func");
+  //console.log("scene id:" + scene.id );
+  //console.log("scene active:" + scene.active );
   var dataScene = JSON.stringify( scene ); 
-  console.log("scene:" + dataScene);
+  //console.log("scene:" + dataScene);
   var dataScenes = JSON.stringify( scenes ); 
-  console.log("scenes:" + dataScenes);
+  //console.log("scenes:" + dataScenes);
   // Using Object.keys() method to get length 
    var objectLenght = Object.keys(scenes).length;
-   console.log("objectLenght:" + objectLenght);
+   //console.log("objectLenght:" + objectLenght);
             
   const objScene = {
     id: scene.id,
@@ -80,18 +80,18 @@ export const updateSceneActivate = ( scene, scenes ) => (dispatch, getState) => 
     console.log("Scene Activated");
 
       // UPDATE REST OF SCENES, SET TO ACTIVE TO FALSE
-      console.log("UPDATE SCENES SET ACTIVE");
-      console.log("res.data:" + JSON.stringify( res.data ));
-      console.log("res.data.ID:" + res.data.id);
+      //console.log("UPDATE SCENES SET ACTIVE");
+      //console.log("res.data:" + JSON.stringify( res.data ));
+      //console.log("res.data.ID:" + res.data.id);
 
     for (let [key, value] of Object.entries(scenes)) {
-      console.log(key + ' = ' + JSON.stringify(value) );
-      console.log('id = ' + value.id );
-      console.log('name = ' + value.name );
+      //console.log(key + ' = ' + JSON.stringify(value) );
+      //console.log('id = ' + value.id );
+      //console.log('name = ' + value.name );
       
       //&& value.active == 'true'
       if ( value.id != res.data.id && value.active == true ) { 
-        console.log('inside = ' + value.name );
+        //console.log('inside = ' + value.name );
         // POST
         const objScene = {
           id: value.id,
@@ -118,30 +118,15 @@ export const updateSceneActivate = ( scene, scenes ) => (dispatch, getState) => 
                 type: UPDATE_SCENE_DEACTIVATE,
                 payload: res.data
                 });
-                console.log("success scene update" + value.id);
-                console.log("res.data:" + JSON.stringify( res.data ));                
+                //console.log("success scene update" + value.id);
+                //console.log("res.data:" + JSON.stringify( res.data ));                
           })
           .catch(err => console.log(err));
           
         }//if 
 
       }// for loop
-
-/*
-      console.log("axios form post");
-      axios
-        .get('/#/caster',{
-          scene: 'Scene 1',
-          type: 'type1'
-      })
-      .then(function (response) {
-          console.log('response success:' + response);
-      })
-      .catch(function (error) {
-          console.log('response error:' + error);
-      });
-      console.log("axios form post after");
-*/       
+     
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
@@ -152,11 +137,11 @@ export const updateSceneActivate = ( scene, scenes ) => (dispatch, getState) => 
 // UPDATE_SCENE_DEACTIVATE  use when deactivate button for one scene, not used anyomore
 export const updateSceneDeActivate = ( scene ) => (dispatch, getState) => {
 
-  console.log("inside updateSceneDeActivate func");
-  console.log("scene id:" + scene.id );
-  console.log("scene active:" + scene.active );
+  //console.log("inside updateSceneDeActivate func");
+  //console.log("scene id:" + scene.id );
+  //console.log("scene active:" + scene.active );
   var dataScene = JSON.stringify( scene ); 
-  console.log("scene:" + dataScene);
+  //console.log("scene:" + dataScene);
   
   const objScene = {
     id: scene.id,
@@ -175,7 +160,7 @@ export const updateSceneDeActivate = ( scene ) => (dispatch, getState) => {
   };
   
   var dataScene2 = JSON.stringify( objScene ); 
-  console.log("objScene:" + dataScene2 );
+  //console.log("objScene:" + dataScene2 );
   
   axios
     .put("/si/scene/" + scene.id + "/", objScene, tokenConfig(getState))
@@ -185,7 +170,7 @@ export const updateSceneDeActivate = ( scene ) => (dispatch, getState) => {
         type: UPDATE_SCENE_DEACTIVATE,
         payload: res.data
       });
-    console.log("Scene Deactivated");
+    //console.log("Scene Deactivated");
     })
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))

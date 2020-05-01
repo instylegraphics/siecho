@@ -11,12 +11,12 @@ export const getSeries = id => (dispatch, getState) => {
     .then(res => {
     //console.log('get tid from series props');
     //console.log({id});
-    console.log("prop tournament id:"+ id);
+    //console.log("prop tournament id:"+ id);
  
     var dataSeries = JSON.stringify(res.data); 
     dataSeries = JSON.parse(dataSeries);    
-    console.log("return all series records");
-    console.log(dataSeries);
+    //console.log("return all series records");
+    //console.log(dataSeries);
 
     Array.prototype.removeVal = function(name, value){
     var array = $.map(this, function(v,i){
@@ -29,8 +29,8 @@ export const getSeries = id => (dispatch, getState) => {
     if (id !== null) {    
       dataSeries.removeVal('tournament', parseInt(id) );
     }
-    console.log("series records results AFTER deletion");    
-    console.log(dataSeries);
+    //console.log("series records results AFTER deletion");    
+    //console.log(dataSeries);
     
       dispatch({
         type: GET_SERIES,
@@ -49,12 +49,12 @@ export const getSeriesDetails = id => (dispatch, getState) => {
     .then(res => {
     //console.log('get tid from series props');
     //console.log({id});
-    console.log("prop tournament id:"+ id);
+    //console.log("prop tournament id:"+ id);
  
     var dataSeries = JSON.stringify(res.data); 
     dataSeries = JSON.parse(dataSeries);    
-    console.log("return all series records");
-    console.log(dataSeries);
+    //console.log("return all series records");
+    //console.log(dataSeries);
 
     Array.prototype.removeVal = function(name, value){
     var array = $.map(this, function(v,i){
@@ -67,8 +67,8 @@ export const getSeriesDetails = id => (dispatch, getState) => {
     if (id !== null) {    
       dataSeries.removeVal('tournament', parseInt(id) );
     }
-    console.log("series records results AFTER deletion");    
-    console.log(dataSeries);
+    //console.log("series records results AFTER deletion");    
+    //console.log(dataSeries);
     
       dispatch({
         type: GET_SERIES_DETAILS,
@@ -96,13 +96,12 @@ export const deleteSeries = id => (dispatch, getState) => {
 
 // UDPATE SERIES END
 export const updateSeriesEnd = series => (dispatch, getState) => {
-  console.log("inside updateSeriesEnd func");
-  console.log("series values");
-  console.log(series);
-  console.log("id value");
-  console.log(series.id);  
+  //console.log("inside updateSeriesEnd func");
+  //console.log("series values");
+  //console.log(series);
+  //console.log("id value");
+  //console.log(series.id);  
 
-      
   axios
     .put("/si/series/" + series.id + "/", series, tokenConfig(getState))
     .then(res => {
@@ -128,15 +127,15 @@ export const addSeries = series => (dispatch, getState) => {
         payload: res.data
       });
       // ADD MATCHES Base on Best Of
-      console.log(res.data);
-      console.log(res.data.best_of);
-      console.log(res.data.id);
+      //console.log(res.data);
+      //console.log(res.data.best_of);
+      //console.log(res.data.id);
       for (var i = 1; i <= res.data.best_of; i++){
-        console.log("loop - best of:" + i);
-        console.log("series id:" + res.data.id);
-        console.log("match_order:" + i);
-        console.log("team_one id:" + res.data.team_one);
-        console.log("team_two:" + res.data.team_two);
+        //console.log("loop - best of:" + i);
+        //console.log("series id:" + res.data.id);
+        //console.log("match_order:" + i);
+        //console.log("team_one id:" + res.data.team_one);
+        //console.log("team_two:" + res.data.team_two);
 
         // POST
         const matchData = {

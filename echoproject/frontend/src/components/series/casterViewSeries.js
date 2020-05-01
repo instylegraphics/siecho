@@ -29,7 +29,7 @@ export class CasterViewSeries extends Component {
 
     this.timer = setIntervalAsync( 
       async () => {
-        console.log('fetch start');
+        //console.log('fetch start');
         await this.props.getMatches(this.props.valueProps.seriesid);
         await this.props.getSeries(this.props.valueProps.tournament);
       },3000
@@ -48,7 +48,7 @@ export class CasterViewSeries extends Component {
   componentWillUnmount() {
     clearIntervalAsync(this.timer);
     this.timer = null;
-    console.log('fetch end');
+    //console.log('fetch end');
   };
   
   back = e => {
@@ -74,9 +74,9 @@ export class CasterViewSeries extends Component {
     var f_team_two_score = 0;
     var f_winner = null;
     for (let [key, value] of Object.entries( this.props.matches )) {
-      console.log(key + ' = ' + JSON.stringify(value) );
-      console.log('id = ' + value.id );
-      console.log('winner = ' + value.winner );
+      //console.log(key + ' = ' + JSON.stringify(value) );
+      //console.log('id = ' + value.id );
+      //console.log('winner = ' + value.winner );
       if ( f_match_team_one_id == value.winner ) {
         f_team_one_score = f_team_one_score + 1;  
       };
@@ -84,14 +84,14 @@ export class CasterViewSeries extends Component {
         f_team_two_score = f_team_two_score + 1;  
       };
     }// for loop
-    console.log('f_team_one_score:' + f_team_one_score);  
-    console.log('f_team_two_score:' + f_team_two_score);   
+    //console.log('f_team_one_score:' + f_team_one_score);  
+    //console.log('f_team_two_score:' + f_team_two_score);   
     if ( f_team_one_score > f_team_two_score ) {
       f_winner = f_match_team_one_id;
     } else {
       f_winner = f_team_two_score;
     }
-    console.log('f_winner:' + f_winner); 
+    //console.log('f_winner:' + f_winner); 
         
      const postObj = {
       id: f_seriesid,
@@ -106,15 +106,15 @@ export class CasterViewSeries extends Component {
       ended: 'true'
     } 
 
-    console.log('POST');       
+    //console.log('POST');       
 /*    console.log('seriesid:' + f_seriesid);  
     console.log('tournament:' + f_tournamentid); 
     console.log('name:' + f_series_name); 
     console.log('team_one:' + f_match_team_one_id);  
     console.log('team_two:' + f_match_team_two_id);
 */
-    console.log('series update: postObj:');
-    console.log(postObj);
+    //console.log('series update: postObj:');
+    //console.log(postObj);
     
     //post and update series
     this.props.updateSeriesEnd( postObj );
@@ -317,7 +317,7 @@ export class CasterViewSeries extends Component {
                     <td>
                       <button
                       onClick={(e) => {
-                      console.log("Activate listscenes.id:" + listscenes.id);
+                      //console.log("Activate listscenes.id:" + listscenes.id);
                       this.props.updateSceneActivate( listscenes, this.props.scenes );
                       //Object.assign(document.createElement('a'), { target: '_scenetab', href: '/#/caster/' + listscenes.id }).click();
                       const socket = socketIOClient("http://192.241.146.171:4001");

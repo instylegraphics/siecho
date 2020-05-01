@@ -11,12 +11,12 @@ export const getMatchesDetails = id => (dispatch, getState) => {
     .then(res => {
     //console.log('get tid from series props');
     //console.log({id});
-    console.log("matchesDetails prop series id:" + id);
+    //console.log("matchesDetails prop series id:" + id);
  
     var dataSeries2 = JSON.stringify(res.data); 
     dataSeries2 = JSON.parse(dataSeries2);    
-    console.log("return all matches details records");
-    console.log(dataSeries2);
+    //console.log("return all matches details records");
+    //console.log(dataSeries2);
 
     Array.prototype.removeVal2 = function(name, value){
     var array2 = $.map(this, function(v,i){
@@ -29,8 +29,8 @@ export const getMatchesDetails = id => (dispatch, getState) => {
     if (id !== null) {    
       dataSeries2.removeVal2('series', parseInt(id) );
     }
-    console.log("matchesDetails records results AFTER deletion");    
-    console.log(dataSeries2);
+    //console.log("matchesDetails records results AFTER deletion");    
+    //console.log(dataSeries2);
  
       dispatch({
         type: GET_MATCHES_DETAILS,
@@ -50,12 +50,12 @@ export const getMatches = id => (dispatch, getState) => {
     .then(res => {
     //console.log('get tid from series props');
     //console.log({id});
-    console.log("matches prop series id:" + id);
+    //console.log("matches prop series id:" + id);
  
     var dataSeries = JSON.stringify(res.data); 
     dataSeries = JSON.parse(dataSeries);    
-    console.log("return all matches records");
-    console.log(dataSeries);
+    //console.log("return all matches records");
+    //console.log(dataSeries);
 
     Array.prototype.removeVal = function(name, value){
     var array = $.map(this, function(v,i){
@@ -68,8 +68,8 @@ export const getMatches = id => (dispatch, getState) => {
     if (id !== null) {    
       dataSeries.removeVal('series', parseInt(id) );
     }
-    console.log("matches records results AFTER deletion");    
-    console.log(dataSeries);
+    //console.log("matches records results AFTER deletion");    
+    //console.log(dataSeries);
  
       dispatch({
         type: GET_MATCHES,
@@ -100,9 +100,9 @@ export const getMatch = id => (dispatch, getState) => {
 // UPDATE MATCH 
 export const updateMatch = (match) => (dispatch, getState) => {
 
-  console.log("inside updateMatch func");
-  console.log("match values");
-  console.log(match);
+  //console.log("inside updateMatch func");
+  //console.log("match values");
+  //console.log(match);
   axios
     .put("/si/match/" + match.matchid + "/", match, tokenConfig(getState))
     .then(res => {
