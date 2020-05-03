@@ -340,10 +340,10 @@ export class CasterViewSeries extends Component {
                                               </thead>
                                               <tbody>
                                               {this.props.matches.map(listmatch => (
-                                                <tr key={listmatch.id} className={ match_id == listmatch.id ? 'table-darks' : '' } >
+                                                <tr key={listmatch.id} className={ match_id == listmatch.id ? 'table-dark' : '' } >
                                                   <td className="text-center">{listmatch.id}</td>
                                                   <td className="text-center">{listmatch.match_order}</td>
-                                                  <td>{ jsonQuery('[id=' + listmatch.winner + '].name', { data: this.props.teams }).value }</td>
+                                                  <td>{ jsonQuery('[id=' + listmatch.winner + '].short_name', { data: this.props.teams }).value }</td>
                                                   <td className="text-center">{listmatch.team_one_score}</td>
                                                   <td className="text-center">{listmatch.team_two_score}</td>
                                                   <td>{ jsonQuery('[id=' + listmatch.gamemode + '].name', { data: this.props.gamemodes }).value }</td>
@@ -389,14 +389,14 @@ export class CasterViewSeries extends Component {
                                               </thead>
                                               <tbody>
                                               {this.props.series.map(listseries => (
-                                                <tr key={listseries.id} className={ this.props.valueProps.seriesid == listseries.id ? 'table-darks' : '' } >
+                                                <tr key={listseries.id} className={ this.props.valueProps.seriesid == listseries.id ? 'table-dark' : '' } >
                                                   <td className="text-center">{listseries.series_order}</td>
                                                   <td>{listseries.name}</td>
-                                                  <td>{listseries.winner}</td>                                            
+                                                  <td>{ jsonQuery('[id=' + listseries.winner + '].short_name', { data: this.props.teams }).value }</td>                                            
                                                   <td className="text-center">{listseries.best_of}</td>
-                                                  <td>{listseries.team_one}</td>
+                                                  <td>{ jsonQuery('[id=' + listseries.team_one + '].short_name', { data: this.props.teams }).value }</td> 
                                                   <td className="text-center">{listseries.team_one_score}</td>      
-                                                  <td>{listseries.team_two}</td>
+                                                  <td>{ jsonQuery('[id=' + listseries.team_two + '].short_name', { data: this.props.teams }).value }</td> 
                                                   <td className="text-center">{listseries.team_two_score}</td>                                                         
                                                   <td className="text-center">{ String(listseries.ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }</td>
                                                   <td className="text-center">{ String(listseries.active) == 'true' ? <i className="fa fa-circle fa-lg fa-blink green-text"></i> : <i className="fa fa-circle fa-lg red-text"></i> }</td>                                             
