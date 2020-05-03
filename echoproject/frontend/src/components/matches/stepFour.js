@@ -640,8 +640,8 @@ export class StepFourMatchAdminForm extends Component {
   						</div>
   						 
   						<div className="row d-flex justify-content-center">	
-                <div className={`${'col-md-4 match-editor-border'} ${match_team_one_faction_htmlcolor}`}>
-                	<div className="text-center mt-3">
+                <div className="col-md-4 match-editor-border">
+                	<div className={`${'text-center mt-3 pt-2'} ${match_team_one_faction_htmlcolor}`}>
                   <h4 className="font-weight-bold">{ match_team_one_name }</h4>
                   <img className="card--body__img card-img-top pb-2" src={match_team_one_image} alt={ match_team_one_name } aria-label={ match_team_one_name } />
                   </div>
@@ -687,8 +687,8 @@ export class StepFourMatchAdminForm extends Component {
   							<div className="col-md-2 vertical-align-ultimate text-center">
   							<i className="fas fa-times fa-7x"></i>
   							</div>
-                <div className={`${'col-md-4 match-editor-border'} ${match_team_two_faction_htmlcolor}`}>                                             
-  								<div className="text-center mt-3">
+                <div className="col-md-4 match-editor-border">
+                	<div className={`${'text-center mt-3 pt-2'} ${match_team_two_faction_htmlcolor}`}>
                     <h4 className="font-weight-bold">{ match_team_two_name }</h4>
                     <img className="card--body__img card-img-top pb-2" src={match_team_two_image} alt={ match_team_two_name } aria-label={ match_team_two_name } />
                   </div>
@@ -803,7 +803,7 @@ export class StepFourMatchAdminForm extends Component {
                   <td>{ jsonQuery('[id=' + listmatch.gamemap + '].name', { data: this.props.gamemaps }).value } </td>   
                   <td>{listmatch.roomcode}</td>
                   <td className="text-center">{ String(listmatch.ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }</td>
-                  <td className="text-center">{ String(listmatch.active) == 'true' ? <i className="fa fa-circle fa-lg green-text"></i> : <i className="fa fa-circle fa-lg red-text"></i> }</td>
+                  <td className="text-center">{ String(listmatch.active) == 'true' ? <i className="fa fa-circle fa-lg fa-blink green-text"></i> : <i className="fa fa-circle fa-lg red-text"></i> }</td>
                 </tr>
               ))}
               </tbody>

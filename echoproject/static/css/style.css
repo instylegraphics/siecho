@@ -5,11 +5,26 @@ html {
 	-ms-font-smoothing: antialiased!important;
 }
  
+/*
 .btn, 
 p {
-  text-transform: uppercase;
   font-weight: 600;
 }
+*/
+.scene_left_container {
+  min-width: 800px;
+  max-width: 1200px;
+}
+.scene_right_container {
+  min-width: 600px;
+  max-width: 6200px;
+}
+.score {
+    font-size: 4.0rem;
+    font-weight: 600;
+    line-height: 1.0;
+}
+
 .table {
 color: #ffffff;
 }
@@ -221,18 +236,90 @@ main .footer p.credit {
 }
 /* .homepage styles */
 
+/* scene rgb border styles */
+.block {
+	position: relative;
+	margin: 300px auto 0;
+	width: 500px;
+	height: 250px;
+	background: linear-gradient(0deg, #000, #272727);
+}
+
+.block:before, .block:after {
+	content: '';
+	position: absolute;
+	left: -2px;
+	top: -2px;
+	background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, 
+		#0000ff, #00ff00,#ffff00, #ff0000);
+	background-size: 400%;
+	width: calc(100% + 4px);
+	height: calc(100% + 4px);
+	z-index: -1;
+	animation: steam 20s linear infinite;
+}
+
+@keyframes steam {
+	0% {
+		background-position: 0 0;
+	}
+	50% {
+		background-position: 400% 0;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
+
+.block:after {
+	filter: blur(50px);
+}
+/* .scene rgb border styles */
+
+/* blink scene styles */
+@keyframes fa-blink {
+     0% { opacity: 1; }
+     25% { opacity: 0.25; }
+     50% { opacity: 0.5; }
+     75% { opacity: 0.75; }
+     100% { opacity: 0; }
+ }
+.fa-blink {
+   -webkit-animation: fa-blink 1.1s linear infinite;
+   -moz-animation: fa-blink 1.1s linear infinite;
+   -ms-animation: fa-blink 1.1s linear infinite;
+   -o-animation: fa-blink 1.1s linear infinite;
+   animation: fa-blink 1.1s linear infinite;
+}
+/* .blink scene styles */
+
 /* match styles */
+
+
+.match-scenes-scroll {
+    position: absolute;
+    overflow-y: scroll;
+    height:100%;    
+}
+
 .vertical-align-ultimate {
   display : flex;
   align-items : center;
   justify-content: center;
 }
 .match-editor-border {
-  border: 1px solid #ccc;
+  border: 1px solid #dee2e6;
   border-radius: 16px;
   margin: 10px 0px;
 }
-
+.match-editor-border-noradius {
+  border: 1px solid #dee2e6;
+  margin: 10px 0px;
+}
+.match-editor-border-noradius-green {
+  border: 2px solid #4caf50;
+  margin: 10px 0px;
+}
 .table-dark,.table-dark>td,.table-dark>th {
     background-color: #515456;
 }

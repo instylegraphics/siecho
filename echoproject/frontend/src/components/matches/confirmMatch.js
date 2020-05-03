@@ -266,7 +266,7 @@ export class ConfirmMatchForm extends Component {
 						</div>
 
 						<div className="col-md-3 col-sm-6">
-              { String(series_active) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }                           
+              { String(series_active) == 'true' ? <i className="fas fa-circle fa-lg fa-blink green-text"></i> : <i className="fas fa-circle fa-lg red-text"></i> }                           
 						</div>
 
 				  	<div className="col-md-3 col-sm-6">						
@@ -280,7 +280,7 @@ export class ConfirmMatchForm extends Component {
 							<h5>Match Active:</h5>
 						</div>
 						<div className="col-md-3 col-sm-6">
-              { String(match_active) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }                        
+              { String(match_active) == 'true' ? <i className="fas fa-circle fa-lg fa-blink green-text"></i> : <i className="fas fa-circle fa-lg red-text"></i> }                        
 						</div>
             						 
 					</div>

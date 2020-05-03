@@ -184,7 +184,7 @@ export class FormSeries extends Component {
     	
     						<div class="row d-flex justify-content-center text-center">
     							<div class="col-md-5 match-editor-border null">
-    								<div class="form-group my-3">
+    								<div class="form-group my-3 pb-3">
     									<label class="col-form-label col-form-label-lg">Team One</label>
       									<select name="team_one" className="form-control custom-select" onChange={this.onChange}>
                           <option>Select Team One</option>
@@ -197,7 +197,7 @@ export class FormSeries extends Component {
     							<div class="col-md-2 vertical-align-ultimate text-center"><i class="fas fa-times fa-7x"></i>
     							</div>
     							<div class="col-md-5 match-editor-border null">
-    								<div class="form-group my-3">
+    								<div class="form-group my-3 pb-3">
     									<label class="col-form-label col-form-label-lg">Team Two</label>
                          <select name="team_two" className="form-control custom-select" onChange={this.onChange}>
                           <option>Select Team Two</option>
@@ -212,7 +212,7 @@ export class FormSeries extends Component {
     						<div class="row">
     							<div class="col-md-12">
     								<div class="form-group">
-    									<label>Total Matches (Best of)</label>
+    									<label class="col-form-label col-form-label-lg">Total Matches (Best of)</label>
                       <input
                         className="form-control"
                         type="number"
@@ -268,7 +268,7 @@ export class FormSeries extends Component {
                       <td>{ jsonQuery('[id=' + listseries.team_two + '].short_name', { data: this.props.teams }).value }</td>
                       <td className="text-center">{listseries.team_two_score}</td>
                       <td className="text-center">{ String(listseries.ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }</td>
-                      <td className="text-center">{ String(listseries.active) == 'true' ? <i className="fa fa-circle fa-lg green-text"></i> : <i className="fa fa-circle fa-lg red-text"></i> }
+                      <td className="text-center">{ String(listseries.active) == 'true' ? <i className="fa fa-circle fa-lg fa-blink green-text"></i> : <i className="fa fa-circle fa-lg red-text"></i> }
       
                         </td>
                       <td className="text-center">

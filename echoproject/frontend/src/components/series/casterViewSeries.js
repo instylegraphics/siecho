@@ -152,15 +152,17 @@ export class CasterViewSeries extends Component {
     var jsonQuery = require('json-query');
  
    //get active match info 
-    var match_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].id', { data: this.props.matches }).value;
-    var match_roomcode = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].roomcode', { data: this.props.matches }).value;   
-    var match_team_one_score = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_one_score', { data: this.props.matches }).value;
-    var match_team_two_score = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_two_score', { data: this.props.matches }).value;
-    var match_match_order = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].match_order', { data: this.props.matches }).value; 
-    var match_active = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].active', { data: this.props.matches }).value;   
-    var match_ended = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].ended', { data: this.props.matches }).value;     
+    var match_id = jsonQuery('[*series=' + this.props.valueProps.seriesid + '][active=true].id', { data: this.props.matches }).value;
+    var match_roomcode = jsonQuery('[*series=' + this.props.valueProps.seriesid + '][active=true].roomcode', { data: this.props.matches }).value;   
+    var match_team_one_score = jsonQuery('[*series=' + this.props.valueProps.seriesid + '][active=true].team_one_score', { data: this.props.matches }).value;
+    var match_team_two_score = jsonQuery('[*series=' + this.props.valueProps.seriesid + '][active=true].team_two_score', { data: this.props.matches }).value;
+    var match_match_order = jsonQuery('[*series=' + this.props.valueProps.seriesid + '][active=true].match_order', { data: this.props.matches }).value; 
+    var match_active = jsonQuery('[*series=' + this.props.valueProps.seriesid + '][active=true].active', { data: this.props.matches }).value;   
+    var match_ended = jsonQuery('[*series=' + this.props.valueProps.seriesid + '][active=true].ended', { data: this.props.matches }).value;     
     var match_team_one_faction_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_one_faction', { data: this.props.matches }).value; 
     var match_team_two_faction_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_two_faction', { data: this.props.matches }).value; 
+    var match_team_one_faction_name = jsonQuery('[id=' + match_team_one_faction_id + '].name', { data: this.props.gamefactions }).value;
+    var match_team_two_faction_name = jsonQuery('[id=' + match_team_two_faction_id + '].name', { data: this.props.gamefactions }).value;
     var match_team_one_faction_htmlcolor = jsonQuery('[id=' + match_team_one_faction_id + '].htmlcolorvalue', { data: this.props.gamefactions }).value;
     var match_team_two_faction_htmlcolor = jsonQuery('[id=' + match_team_two_faction_id + '].htmlcolorvalue', { data: this.props.gamefactions }).value;
     var match_team_one_id = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][active=true].team_one', { data: this.props.matches }).value; 
@@ -180,174 +182,310 @@ export class CasterViewSeries extends Component {
    //if all matches in series ended return null to show END SERIES button
     var match_still_not_ended = jsonQuery('[*series=' + this.props.valueProps.seriesid+ '][*ended=false].id', { data: this.props.matches }).value;
     
+    //tournament info
+    var tournament_name = jsonQuery('[id=' + this.props.valueProps.seriesid + '].tournament.name', { data: this.props.seriesdetails }).value;
+    var series_name = jsonQuery('[id=' + this.props.valueProps.seriesid + '].name', { data: this.props.seriesdetails }).value;
+    var series_bestof = jsonQuery('[id=' + this.props.valueProps.seriesid + '].best_of', { data: this.props.seriesdetails }).value;
+    
     return (
        
     <React.Fragment>
-    <main className="page-content">
-      <div className="container">  
-        
-         <div className="card card-body mt-4 mb-4">
-            <h1>Caster View</h1>
-<p>match_id: { match_id }</p>
-<p>match_roomcode: { match_roomcode }</p>
-<p>match_match_order: { match_match_order }</p>
-<p>match_active: { String(match_active) }</p>
-<p>match_ended: { String(match_ended) }</p>
-<p>match_gamemap_name: { String(match_gamemap_name) }</p>
-<p>match_gamemode_name: { String(match_gamemode_name) }</p>
- 
-<p>match_team_one_name: { match_team_one_name }</p>
-<p>match_team_one_score: { match_team_one_score }</p>
-<p>match_team_one_faction_htmlcolor: { match_team_one_faction_htmlcolor }</p>
-<p>match_team_one_image: { match_team_one_image }</p>
- 
-<p>match_team_two_name: { match_team_two_name }</p>
-<p>match_team_two_score: { match_team_two_score }</p>
-<p>match_team_two_faction_htmlcolor: { match_team_two_faction_htmlcolor }</p>
-<p>match_team_two_image: { match_team_two_image }</p>
-
- <p>match_winner_name: { match_winner_name }</p>
- <p>match_still_not_ended: { match_still_not_ended }</p>
- <p>match_still_not_ended str:{ String(match_still_not_ended) }:</p>
-           
-           { String(match_still_not_ended) == '' ? 
-           <button onClick={ this.endSeriesForm } className="btn btn-danger btn-sm">End Series</button>
-           : <button className="btn btn-danger btn-sm disabled">End Series</button>
-           }
-
-              {this.props.valueProps.seriesid ?
-                  <div class="empty">
-          <h2>Current Matches for This Series</h2>
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Match Order</th>
-                  <th>Room Code</th>
-                  <th>Team One Score</th>
-                  <th>Team Two Score</th>
-                  <th>Match Winner</th>
-                  <th>Ended</th>
-                  <th>Active</th>
-                   
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.matches.map(listmatch => (
-                  <tr key={listmatch.id} className={ match_id == listmatch.id ? 'table-success' : '' } >
-                    <td>{listmatch.id}</td>
-                    <td>{listmatch.match_order}</td>
-                    <td>{listmatch.roomcode}</td>
-                    <td>{listmatch.team_one_score}</td>
-                    <td>{listmatch.team_two_score}</td>
-                    <td>{String(listmatch.winner)}:{ jsonQuery('[id=' + listmatch.winner + '].name', { data: this.props.teams }).value } </td>
-                    <td>{String(listmatch.ended)}</td>
-                    <td>{String(listmatch.active)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-              : <div>
-              <h2>No Matches Created for this Series</h2>
-              </div>         
-             }
-
-             
-             {this.props.valueProps.tournament ?
-                  <div class="empty">
-          <h2>Current Series for This Tournament</h2>
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Series Order</th>
-                  <th># of Matches</th>
-                  <th>Series Winner</th>
-                  <th>Ended</th>
-                  <th>Active</th>
-                   
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.series.map(listseries => (
-                  <tr key={listseries.id} className={ this.props.valueProps.seriesid == listseries.id ? 'table-success' : '' } >
-                    <td>{listseries.id}</td>
-                    <td>{listseries.name}</td>
-                    <td>{listseries.series_order}</td>
-                    <td>{listseries.best_of}</td>
-                    <td>{listseries.winner}</td>                    
-                    <td>{String(listseries.ended)}</td>
-                    <td>{String(listseries.active)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-              : <div>
-              <h2>No Series Created for this Tournament</h2>
-              </div>         
-             }
-             
- 
- 
-               {this.props.valueProps.seriesid ?
-                  <div class="empty">
-          <h2>Current Scenes</h2>
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Scene Name</th>
-                  <th>Desc 1</th>
-                  <th>Desc 2</th>
-                  <th>Live</th>
-                  <th>Activate</th>  
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.scenes.map(listscenes => (
-                  <tr key={listscenes.id} className={ listscenes.active ? 'table-success' : '' } >
-                    <td>{listscenes.id}</td>
-                    <td>{listscenes.name}</td>
-                    <td>{listscenes.desc1}</td>                    
-                    <td>{listscenes.desc2}</td>
-                    <td>{String(listscenes.active)}</td>
-                    <td>
-                      <button
-                      onClick={(e) => {
-                      //console.log("Activate listscenes.id:" + listscenes.id);
-                      this.props.updateSceneActivate( listscenes, this.props.scenes );
-                      //Object.assign(document.createElement('a'), { target: '_scenetab', href: '/#/caster/' + listscenes.id }).click();
-                      const socket = socketIOClient("http://192.241.146.171:4001");
-                      socket.emit('change scene', listscenes.id) // change scene by passing id to socket
-                      }}
-                      className="btn btn-success btn-sm">{" "} Activate
-                      </button>
-                      </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-              : <div>
-              <h2>No Scenes Created</h2>
-              </div>         
-             }
-             
-          <div className="form-group">
-            <button type="button" className="btn btn-primary" onClick={this.back}>
-              Back
-            </button>
+      <main className="page-content">
+          <div className="container-fluid">
+              <div className="col-12 m-auto card card-body mt-4 mb-4 ">
+                  <div className="row no-gutters">
+                      <div className="col-9 scene_left_container">
+                          <div className="container">
+                              <div className="row">
+                                  <div className="col-md-6">
+                                      <h1>Game Statistics</h1>
+                                      <p className="h5">Tournament: <span className="text-warning">{ tournament_name }</span></p>
+                                      <p className="h4">Series: <span className="text-warning">{ series_name }</span></p>
+                                  </div>
+                                  
+                                  <div className="col-md-6 text-right">
+                                      { String(match_still_not_ended) == '' ? 
+                                      <button type="button" onClick={ this.endSeriesForm } className="btn btn-danger btn-lg waves-effect waves-light">End Series</button>
+                                      : 
+                                      <button className="btn btn-danger btn-lg waves-effect waves-light disabled">End Series</button>
+                                      }
+                                      <button type="button" className="btn btn-primary btn-lg btn-deep-purple waves-effect waves-light" onClick={this.back}>Back</button>
+                                  </div>
+                              </div>
+                              
+                              { match_id ?
+                              <div className="empty">
+                              <div className="row  mt-3">
+                                  <div className="col-md-12 col-sm-12">
+                                      <h3 className="h3-responsive font-weight-bold"><i className="fa fa-circle fa-sm green-text fa-blink"></i> Current Match</h3>
+                                  </div>
+                              </div>
+                              <div className="row">
+                                  <div className="col-md-3 col-sm-6">
+                                      <h5>Match Number</h5>
+                                  </div>
+                                  <div className="col-md-3 col-sm-6">
+                                      <p className="h4"><span className="text-warning font-weight-bold">{ match_match_order }</span> of { series_bestof }</p>
+                                  </div>
+                                      <div className="col-md-3 col-sm-6">
+                                      <h5>Room Code</h5>
+                                  </div>
+                                  <div className="col-md-3 col-sm-6">
+                                      <p className="h4 text-warning">{ match_roomcode }</p>
+                                  </div>
+                                  <div className="col-md-3 col-sm-6">
+                                      <h5>Game Mode</h5>
+                                  </div>
+                                  <div className="col-md-3 col-sm-6">
+                                      <p className="h4 text-warning">{ match_gamemode_name }</p>
+                                  </div>
+                                      <div className="col-md-3 col-sm-6">
+                                      <h5>Game Map</h5>
+                                  </div>
+                                  <div className="col-md-3 col-sm-6">
+                                      <p className="h4 text-warning">{ match_gamemap_name }</p>
+                                  </div>
+                              </div>
+      
+                              <div className="row mt-2 mb-2">
+                                  <div className="col-md-10 offset-md-1">
+                                      <div className="row d-flex justify-content-center"> 
+                                          <div className="col-md-4 match-editor-border mb-2 text-center">
+                                              <div className={`${'text-center mt-3 pt-2'} ${ match_team_one_faction_htmlcolor }`}>
+                                                  { match_team_one_id == match_winner_id ?
+                                                  <div>
+                                                  <h2 class="text-warning font-weight-bold fa-blink">WINNER!</h2>
+                                                  <p className="h4 fa-blink">{ match_team_one_name }</p>
+                                                  <img className="card--body__img card-img-top pb-2 fa-blink" src={ match_team_one_image } alt={ match_team_one_name } aria-label={ match_team_one_name } />
+                                                  </div>
+                                                  :
+                                                  <div>
+                                                  <h6 className="text-warning">Team One</h6>
+                                                  <p className="h4">{ match_team_one_name }</p>
+                                                  <img className="card--body__img card-img-top pb-2" src={ match_team_one_image } alt={ match_team_one_name } aria-label={ match_team_one_name } />
+                                                  </div>
+                                                  } 
+                                                  
+                                              </div>
+                                              <div className={`${'mb-2 pb-1'} ${ match_team_one_faction_htmlcolor }`}>
+                                                  <h6 className="text-warning">Team Faction</h6> 
+                                                  <p className="h4">{ match_team_one_faction_name }</p>
+                                              </div>
+                                              <div>
+                                                  <h6 className="text-warning">Score</h6> 
+                                                  <p className="score">{ match_team_one_score }</p>
+                                              </div>
+      
+                                          </div>
+                                          <div className="col-md-2 vertical-align-ultimate text-center"><i className="fas fa-times fa-7x"></i>
+                                          </div>
+      
+                                          <div className="col-md-4 match-editor-border mb-2 text-center">
+                                              <div className={`${'text-center mt-3 pt-2'} ${ match_team_two_faction_htmlcolor }`}>
+                                                  { match_team_two_id == match_winner_id ?
+                                                  <div>
+                                                  <h2 class="text-warning font-weight-bold fa-blink">WINNER!</h2>
+                                                  <p className="h4 fa-blink">{ match_team_two_name }</p>
+                                                  <img className="card--body__img card-img-top pb-2 fa-blink" src={ match_team_two_image } alt={ match_team_two_name } aria-label={ match_team_two_name } />
+                                                  </div>
+                                                  :
+                                                  <div>
+                                                  <h6 className="text-warning">Team Two</h6>
+                                                  <p className="h4">{ match_team_two_name }</p>
+                                                  <img className="card--body__img card-img-top pb-2" src={ match_team_two_image } alt={ match_team_two_name } aria-label={ match_team_two_name } />
+                                                  </div>
+                                                  }
+                                              </div>
+                                              <div className={`${'mb-2 pb-1'} ${ match_team_two_faction_htmlcolor }`}>
+                                                  <h6 className="text-warning">Team Faction</h6> 
+                                                  <p className="h4">{ match_team_two_faction_name }</p>
+                                              </div>
+                                              <div>
+                                                  <h6 className="text-warning">Score</h6> 
+                                                  <p className="score">{ match_team_two_score }</p>
+                                              </div>
+                                          </div>
+      
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              :
+                              <div className="row  mt-3">
+                                  <div className="col-md-12 col-sm-12">
+                                      <h3 className="h3-responsive font-weight-bold"><i className="fa fa-circle fa-sm red-text"></i> No Live Match</h3>
+                                  </div>
+                              </div>
+                              }
+      
+                              {this.props.valueProps.seriesid ?
+                              <div className="row no-gutters">
+                                  <div className="col-md-12 m-auto card card-body">
+                                      <h3>Matches for <span className="text-warning font-weight-bold">{ series_name }</span> Series</h3>
+                                      <div className="table-responsive">
+                                          <table className="table table-striped">
+                                              <thead>
+                                              <tr>
+                                                  <th className="text-center">ID</th>
+                                                  <th className="text-center">Match #</th>
+                                                  <th>Match Winner</th>
+                                                  <th className="text-center">{ match_team_one_name } Score</th>
+                                                  <th className="text-center">{ match_team_two_name } Score</th>
+                                                  <th>Game Mode</th>
+                                                  <th>Game Map</th>
+                                                  <th>Room Code</th>
+                                                  <th className="text-center">Ended</th>
+                                                  <th className="text-center">Active</th>
+                                              </tr>
+                                              </thead>
+                                              <tbody>
+                                              {this.props.matches.map(listmatch => (
+                                                <tr key={listmatch.id} className={ match_id == listmatch.id ? 'table-darks' : '' } >
+                                                  <td className="text-center">{listmatch.id}</td>
+                                                  <td className="text-center">{listmatch.match_order}</td>
+                                                  <td>{ jsonQuery('[id=' + listmatch.winner + '].name', { data: this.props.teams }).value }</td>
+                                                  <td className="text-center">{listmatch.team_one_score}</td>
+                                                  <td className="text-center">{listmatch.team_two_score}</td>
+                                                  <td>{ jsonQuery('[id=' + listmatch.gamemode + '].name', { data: this.props.gamemodes }).value }</td>
+                                                  <td>{ jsonQuery('[id=' + listmatch.gamemap + '].name', { data: this.props.gamemaps }).value }</td>
+                                                  <td>{listmatch.roomcode}</td>
+                                                  <td className="text-center">{ String(listmatch.ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }</td>
+                                                  <td className="text-center">{ String(listmatch.active) == 'true' ? <i className="fa fa-circle fa-lg fa-blink green-text"></i> : <i className="fa fa-circle fa-lg red-text"></i> }</td>                                              
+                                                </tr>
+                                                ))}
+                                              </tbody>
+                    
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                              :
+                              <div className="row no-gutters">
+                                  <div className="col-md-12 m-auto card card-body">
+                                      <h3>No Matches found for this Series</h3>
+                                  </div>
+                              </div>         
+                              }
+                              
+                              {this.props.valueProps.tournament ?
+                              <div className="row no-gutters">
+                                  <div className="col-md-12 m-auto card card-body">
+                                      <h3>Series for <span className="text-warning font-weight-bold">{ tournament_name }</span> Tournament</h3>
+                                      <div className="table-responsive">
+                                          <table className="table table-striped">
+                                              <thead>
+                                              <tr>
+                                                  <th className="text-center">Order</th>
+                                                  <th>Name</th>
+                                                  <th>Winner</th>
+                                                  <th className="text-center">Best Of</th>
+                                                  <th>Team One</th>
+                                                  <th className="text-center">Team One Score</th>
+                                                  <th>Team Two</th>
+                                                  <th className="text-center">Team Two Score</th>
+                                                  <th className="text-center">Ended</th>
+                                                  <th className="text-center">Active</th>
+                                              </tr>
+                                              </thead>
+                                              <tbody>
+                                              {this.props.series.map(listseries => (
+                                                <tr key={listseries.id} className={ this.props.valueProps.seriesid == listseries.id ? 'table-darks' : '' } >
+                                                  <td className="text-center">{listseries.series_order}</td>
+                                                  <td>{listseries.name}</td>
+                                                  <td>{listseries.winner}</td>                                            
+                                                  <td className="text-center">{listseries.best_of}</td>
+                                                  <td>{listseries.team_one}</td>
+                                                  <td className="text-center">{listseries.team_one_score}</td>      
+                                                  <td>{listseries.team_two}</td>
+                                                  <td className="text-center">{listseries.team_two_score}</td>                                                         
+                                                  <td className="text-center">{ String(listseries.ended) == 'true' ? <i className="fas fa-check fa-lg green-text"></i> : <i className="fas fa-times fa-lg red-text"></i> }</td>
+                                                  <td className="text-center">{ String(listseries.active) == 'true' ? <i className="fa fa-circle fa-lg fa-blink green-text"></i> : <i className="fa fa-circle fa-lg red-text"></i> }</td>                                             
+                                                </tr>
+                                              ))}
+                                              </tbody>  
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                              : 
+                              <div className="row no-gutters">
+                                  <div className="col-md-12 m-auto card card-body">
+                                      <h3>No Series Created for this Tournament</h3>
+                                  </div>
+                              </div>         
+                              }
+                              
+                          </div>	
+                      </div>
+                      
+                      {this.props.valueProps.seriesid ?
+                      <div className="col-3 scene_right_container">
+                          <div className="match-scenes-scroll">
+                              <div className="row no-gutters">
+                                  <div className="col-md-12 col-sm-12">
+                                      <h3>Desk Scenes</h3>
+                                  </div>
+                              </div>
+                              
+            
+                              {this.props.scenes.map(listscenes => (
+                                <div key={listscenes.id} className={ listscenes.active ? 'row no-gutters match-editor-border-noradius-green white-text fa-blink' : 'row no-gutters match-editor-border-noradius grey-text' } >
+                                
+                                    <div className="col-md-12 col-sm-12 ">
+                                        { listscenes.active ?
+                                        <h5 className="font-weight-bold ml-3 mt-2"><i className="fas fa-video red-text fa-blink"></i> LIVE</h5>
+                                        :
+                                        <h5 className="font-weight-bold ml-3 mt-2"><i className="fas fa-video green-text"></i> READY</h5>
+                                        }
+                                    </div>
+                                    <div className="col-md-5 col-sm-12">
+                                        <h5 className="font-weight-bold text-warning ml-3 mt-2">{ listscenes.name }</h5>							
+                                        <div className="article__content ml-3 mb-1">{ listscenes.desc1 }</div>
+                                        { listscenes.desc2 ?
+                                        <div className="article__content ml-3">
+                                          <i className="fas fa-comment-alt gray-text"></i> { listscenes.desc2 }
+                                        </div>
+                                        :
+                                        <div></div>
+                                        }
+                                        <button
+                                        onClick={(e) => {
+                                        //console.log("Activate listscenes.id:" + listscenes.id);
+                                        this.props.updateSceneActivate( listscenes, this.props.scenes );
+                                        //Object.assign(document.createElement('a'), { target: '_scenetab', href: '/#/caster/' + listscenes.id }).click();
+                                        const socket = socketIOClient("http://192.241.146.171:4001");
+                                        socket.emit('change scene', listscenes.id) // change scene by passing id to socket
+                                        }}
+                                        className={ listscenes.active ? 'btn btn-sm btn-primary btn-success waves-effect waves-light ml-3 mb-3' : 'btn btn-sm btn-primary btn-indigo waves-effect waves-light ml-3 mb-3' } >
+                                        Activate
+                                        </button>                                
+                                    </div>
+                                    <div className="col-md-7 col-sm-12">
+                                        <img id="imgview" className="scene--image d-block img-fluid" src={ listscenes.img_default_url } alt={ listscenes.name } />
+                                    </div>	
+                                </div>
+                              ))}
+                              
+                          </div>
+                      </div>
+                      :
+                      <div className="col-3 scene_right_container">
+                          <div className="match-scenes-scroll">
+                              <div className="row no-gutters">
+                                  <div className="col-md-12 col-sm-12">
+                                      <h3>No Scenes Created</h3>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>        
+                      }
+                      
+                  </div>
+              </div>
           </div>
       
-         </div>
-        
-          </div>
-        </main>
-         
-        </React.Fragment>
+      </main>
+   </React.Fragment>
 
     );
   }
