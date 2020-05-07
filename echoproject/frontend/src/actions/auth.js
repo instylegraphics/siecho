@@ -1,25 +1,8 @@
 import axios from "axios";
-import { returnErrors } from "./messages";
+import { createMessage, returnErrors } from "./messages";
 
 import {
-  GET_TOURNAMENTS,
-  GET_MATCHES,
-  GET_MATCH,
-  UDPATE_MATCH,
-  GET_TEAMS,
-  GET_GAMES,
-  GET_GAME_MAPS,
-  GET_GAME_MODES,
-  GET_LEADS,
-  DELETE_LEAD,
-  ADD_LEAD,
   CLEAR_LEADS,
-  GET_SERIES,
-  DELETE_SERIES,
-  ADD_SERIES,
-  CLEAR_SERIES,
-  GET_ERRORS,
-  CREATE_MESSAGE,
   USER_LOADING,
   USER_LOADED,
   AUTH_ERROR,
@@ -42,6 +25,7 @@ export const loadUser = () => (dispatch, getState) => {
         type: USER_LOADED,
         payload: res.data
       });
+      console.log('USER_LOADED:');
       console.log(res.data);
     })
     .catch(err => {
@@ -71,6 +55,8 @@ export const login = (username, password) => dispatch => {
         type: LOGIN_SUCCESS,
         payload: res.data
       });
+      console.log('LOGIN_SUCCESS:');
+      console.log(res.data);
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -95,10 +81,13 @@ export const register = ({ username, password, email }) => dispatch => {
   axios
     .post("/api/auth/register", body, config)
     .then(res => {
+      dispatch(createMessage({ registerUser: "User Registered: Wait for an email confirming your access" }));
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
       });
+      console.log('REGISTER_SUCCESS:');
+      console.log(res.data);
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
