@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from si.models import (Tournament, Series, Scene, Team, Player, GameFaction, Match, PlayerStats, Game, GameMode, GameMap)
 
-from si.serializers import ( TournamentSerializer, TournamentGetSerializer, SeriesSerializer, SceneSerializer, SeriesGetSerializer, TeamSerializer, PlayerSerializer, GameFactionSerializer, MatchSerializer, MatchGetSerializer, PlayerStatsSerializer, GameSerializer, GameModeSerializer, GameMapSerializer)
+from si.serializers import ( TournamentSerializer, TournamentGetSerializer, SeriesSerializer, SceneSerializer, SeriesGetSerializer, TeamSerializer, GameFactionSerializer, MatchSerializer, MatchGetSerializer, PlayerSerializer, PlayerGetSerializer, PlayerStatsSerializer, PlayerStatsGetSerializer, GameSerializer, GameModeSerializer, GameMapSerializer)
 
 
 class TournamentViewSet(viewsets.ModelViewSet):
@@ -56,14 +56,6 @@ class TeamViewSet(viewsets.ModelViewSet):
     serializer_class = TeamSerializer
 
 
-class PlayerViewSet(viewsets.ModelViewSet):
-    queryset = Player.objects.all()
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
-    serializer_class = PlayerSerializer
-
-
 class GameFactionViewSet(viewsets.ModelViewSet):
     queryset = GameFaction.objects.all()
     permission_classes = [
@@ -87,6 +79,22 @@ class MatchGetViewSet(viewsets.ModelViewSet):
     ]
     serializer_class = MatchGetSerializer
     
+
+class PlayerViewSet(viewsets.ModelViewSet):
+    queryset = Player.objects.all()
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    serializer_class = PlayerSerializer
+
+
+class PlayerGetViewSet(viewsets.ModelViewSet):
+    queryset = Player.objects.all()
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    serializer_class = PlayerGetSerializer
+    
     
 class PlayerStatsViewSet(viewsets.ModelViewSet):
     queryset = PlayerStats.objects.all()
@@ -96,6 +104,14 @@ class PlayerStatsViewSet(viewsets.ModelViewSet):
     serializer_class = PlayerStatsSerializer
 
 
+class PlayerStatsGetViewSet(viewsets.ModelViewSet):
+    queryset = PlayerStats.objects.all()
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+    serializer_class = PlayerStatsGetSerializer
+    
+    
 class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     permission_classes = [

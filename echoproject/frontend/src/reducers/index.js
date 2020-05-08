@@ -11,6 +11,7 @@ import gamemodes from "./gamemodes"
 import gamefactions from "./gamefactions"
 import scene from "./scenes";
 import scenes from "./scenes";
+import players from "./players";
 import errors from "./errors";
 import messages from "./messages";
 import auth from "./auth";
@@ -28,6 +29,7 @@ export default combineReducers({
   gamefactions,
   scene,
   scenes,
+  players,
   errors,
   messages,
   auth

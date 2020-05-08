@@ -6,6 +6,7 @@ import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
 import { getGameFactions } from "../../actions/gamefactions";
+import { getPlayers } from "../../actions/players";
 
 export class StepFourMatchAdminForm extends Component {
 
@@ -38,7 +39,8 @@ export class StepFourMatchAdminForm extends Component {
     getTeams: PropTypes.func.isRequired,
     getGameMaps: PropTypes.func.isRequired,
     getGameModes: PropTypes.func.isRequired,
-    getGameFactions: PropTypes.func.isRequired
+    getGameFactions: PropTypes.func.isRequired,
+    getPlayers: PropTypes.func.isRequired
   };
   
   
@@ -51,7 +53,8 @@ export class StepFourMatchAdminForm extends Component {
     this.props.getGameMaps();
     this.props.getGameModes();
     this.props.getGameFactions();
-        
+    this.props.getPlayers();
+    
     console.log('componentDidMount this.props');
     console.log(this.props);
     console.log('componentDidMount this.props.match'); 
@@ -831,8 +834,9 @@ const mapStateToProps = state => ({
   teams: state.teams.teams,
   gamemaps: state.gamemaps.gamemaps,
   gamemodes: state.gamemodes.gamemodes,
-  gamefactions: state.gamefactions.gamefactions
+  gamefactions: state.gamefactions.gamefactions,
+  players: state.players.players
 });
 
-export default connect( mapStateToProps,{ getMatch, getMatches, getMatchesDetails, updateMatch, getTeams, getGameMaps, getGameModes, getGameFactions } )(StepFourMatchAdminForm);
+export default connect( mapStateToProps,{ getMatch, getMatches, getMatchesDetails, updateMatch, getTeams, getGameMaps, getGameModes, getGameFactions, getPlayers } )(StepFourMatchAdminForm);
  

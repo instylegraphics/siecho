@@ -25,6 +25,8 @@ export const DELETE_LEAD = "DELETE_LEAD";
 export const ADD_LEAD = "ADD_LEAD";
 export const CLEAR_LEADS = 'CLEAR_LEADS';
 
+export const GET_PLAYERS = 'GET_PLAYERS';
+
 export const GET_SERIES = "GET_SERIES";
 export const GET_SERIES_DETAILS = "GET_SERIES_DETAILS";
 export const UPDATE_SERIES_END = "UPDATE_SERIES_END";

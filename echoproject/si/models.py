@@ -8,6 +8,9 @@ class Game(models.Model):
     img = models.ImageField(upload_to='game/image/', blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ['name']
+        
     def __str__(self):
         return self.name
 
@@ -19,6 +22,9 @@ class GameMode(models.Model):
     img = models.ImageField(upload_to='gamemode/image/',blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ['name']
+        
     def __str__(self):
         return self.name
 
@@ -30,6 +36,9 @@ class GameFaction(models.Model):
     htmlcolorvalue = models.CharField(max_length=100, blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ['name']
+        
     def __str__(self):
         return self.name
 
@@ -39,6 +48,9 @@ class GameMap(models.Model):
     name = models.CharField(max_length=100)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='gamemap/image/',blank=True, null=True)
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -94,6 +106,9 @@ class Team(models.Model):
     logo = models.ImageField(upload_to='team/image/', blank=True, null=True)
     enabled = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ['short_name']
+        
     def __str__(self):
         return self.name
 
@@ -107,9 +122,12 @@ class Player(models.Model):
         Team, on_delete=models.DO_NOTHING, related_name='player_team')
     is_captain = models.BooleanField(default=False, blank=True, null=True)
     enabled = models.BooleanField(default=True)
-    wins = models.PositiveIntegerField(default=0, blank=True, null=True)
-    losses = models.PositiveIntegerField(default=0, blank=True, null=True)
+    series_win = models.PositiveIntegerField(default=0, blank=True, null=True)
+    series_loss = models.PositiveIntegerField(default=0, blank=True, null=True)
 
+    class Meta:
+        ordering = ['username']
+        
     def __str__(self):
         return '[{}] {}'.format(self.team.short_name, self.username)
 
@@ -173,17 +191,20 @@ class PlayerStats(models.Model):
 
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, blank=True, null=True)  
+    gamemode = models.ForeignKey(GameMode, on_delete=models.CASCADE, blank=True, null=True)
+    gamemap = models.ForeignKey(GameMap, on_delete=models.CASCADE, blank=True, null=True)    
     kills = models.PositiveIntegerField(default=0, blank=True, null=True)
     deaths = models.PositiveIntegerField(default=0, blank=True, null=True)
     assist = models.PositiveIntegerField(default=0, blank=True, null=True)
     goals = models.PositiveIntegerField(default=0, blank=True, null=True)
     grabs = models.PositiveIntegerField(default=0, blank=True, null=True)
     drops = models.PositiveIntegerField(default=0, blank=True, null=True)
-    wins = models.PositiveIntegerField(default=0, blank=True, null=True)
-    losses = models.PositiveIntegerField(default=0, blank=True, null=True)
-    gamesplayed = models.PositiveIntegerField(default=0, blank=True, null=True)
-    gamemode = models.ForeignKey(GameMode, on_delete=models.CASCADE, blank=True, null=True)
-    gamemap = models.ForeignKey(GameMap, on_delete=models.CASCADE, blank=True, null=True)
+    win = models.PositiveIntegerField(default=0, blank=True, null=True)
+    loss = models.PositiveIntegerField(default=0, blank=True, null=True)
 
+    class Meta:
+        ordering = ['match']
+        
     def __str__(self):
         return self.player.username
