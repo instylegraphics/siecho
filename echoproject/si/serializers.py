@@ -115,6 +115,7 @@ class PlayerStatsGetSerializer(serializers.ModelSerializer):
 
     match = MatchSerializer(read_only=True)
     player = PlayerSerializer(read_only=True)
+    team = TeamSerializer(read_only=True)
     game = GameSerializer(read_only=True) 
     gamemode = GameModeSerializer(read_only=True) 
     gamemode = GameModeSerializer(read_only=True) 

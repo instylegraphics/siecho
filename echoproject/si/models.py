@@ -60,12 +60,9 @@ class Tournament(models.Model):
 
     name = models.CharField(max_length=100)
     game = models.ForeignKey(Game, on_delete=models.DO_NOTHING)
-    producer = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='tournament_producer')
-    coproducer_one = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='tournament_coproducer_one', blank=True, null=True)
-    coproducer_two = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='tournament_coproducer_two', blank=True, null=True)
+    producer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='tournament_producer')
+    coproducer_one = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='tournament_coproducer_one', blank=True, null=True)
+    coproducer_two = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='tournament_coproducer_two', blank=True, null=True)
     scheduled_date = models.DateTimeField()
     img = models.ImageField(upload_to='tournament/image/', blank=True, null=True)
     enabled = models.BooleanField(default=True)
@@ -118,13 +115,13 @@ class Player(models.Model):
     username = models.CharField(max_length=100)
     firstname = models.CharField(max_length=100, blank=True, null=True)
     lastname = models.CharField(max_length=100, blank=True, null=True)
-    team = models.ForeignKey(
-        Team, on_delete=models.DO_NOTHING, related_name='player_team')
+    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING, blank=True, null=True)
     is_captain = models.BooleanField(default=False, blank=True, null=True)
     enabled = models.BooleanField(default=True)
     series_win = models.PositiveIntegerField(default=0, blank=True, null=True)
     series_loss = models.PositiveIntegerField(default=0, blank=True, null=True)
-
+    image = models.ImageField(upload_to='player/image/', blank=True, null=True)
+    
     class Meta:
         ordering = ['username']
         
@@ -137,14 +134,11 @@ class Series(models.Model):
     name = models.CharField(max_length=100)
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     series_order = models.PositiveIntegerField(default=1, blank=True, null=True)
-    team_one = models.ForeignKey(
-        Team, on_delete=models.DO_NOTHING, related_name='series_team_one')
+    team_one = models.ForeignKey(Team, on_delete=models.DO_NOTHING, related_name='series_team_one')
     team_one_score = models.PositiveIntegerField(default=0, blank=True, null=True)
-    team_two = models.ForeignKey(
-        Team, on_delete=models.DO_NOTHING, related_name='series_team_two')
+    team_two = models.ForeignKey(Team, on_delete=models.DO_NOTHING, related_name='series_team_two')
     team_two_score = models.PositiveIntegerField(default=0, blank=True, null=True)
-    winner = models.ForeignKey(
-        Team, on_delete=models.DO_NOTHING, blank=True, null=True)
+    winner = models.ForeignKey(Team, on_delete=models.DO_NOTHING, blank=True, null=True)
     best_of = models.PositiveIntegerField(default=5)
     active = models.BooleanField(default=False)
     ended = models.BooleanField(default=False)
@@ -161,22 +155,16 @@ class Match(models.Model):
 
     series = models.ForeignKey(Series, on_delete=models.CASCADE, blank=True, null=True)
     gamemap = models.ForeignKey(GameMap, on_delete=models.DO_NOTHING, blank=True, null=True)
-    gamemode = models.ForeignKey(
-        GameMode, on_delete=models.DO_NOTHING, blank=True, null=True)
+    gamemode = models.ForeignKey(GameMode, on_delete=models.DO_NOTHING, blank=True, null=True)
     match_order = models.PositiveIntegerField(default=1)
     roomcode = models.CharField(max_length=100, blank=True, null=True)
-    team_one = models.ForeignKey(
-        Team, on_delete=models.DO_NOTHING, related_name='match_team_one', blank=True, null=True)
+    team_one = models.ForeignKey(Team, on_delete=models.DO_NOTHING, related_name='match_team_one', blank=True, null=True)
     team_one_score = models.PositiveIntegerField(default=0, blank=True, null=True)
-    team_one_faction = models.ForeignKey(
-        GameFaction, on_delete=models.DO_NOTHING, related_name='match_team_one_faction', blank=True, null=True)
-    team_two = models.ForeignKey(
-        Team, on_delete=models.DO_NOTHING, related_name='match_team_two', blank=True, null=True)
+    team_one_faction = models.ForeignKey(GameFaction, on_delete=models.DO_NOTHING, related_name='match_team_one_faction', blank=True, null=True)
+    team_two = models.ForeignKey(Team, on_delete=models.DO_NOTHING, related_name='match_team_two', blank=True, null=True)
     team_two_score = models.PositiveIntegerField(default=0, blank=True, null=True)
-    team_two_faction = models.ForeignKey(
-        GameFaction, on_delete=models.DO_NOTHING, related_name='match_team_two_faction', blank=True, null=True)
-    winner = models.ForeignKey(
-        Team, on_delete=models.DO_NOTHING, blank=True, null=True)
+    team_two_faction = models.ForeignKey(GameFaction, on_delete=models.DO_NOTHING, related_name='match_team_two_faction', blank=True, null=True)
+    winner = models.ForeignKey(Team, on_delete=models.DO_NOTHING, blank=True, null=True)
     active = models.BooleanField(default=False)
     ended = models.BooleanField(default=False)
 
@@ -189,11 +177,12 @@ class Match(models.Model):
 
 class PlayerStats(models.Model):
 
-    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    match = models.ForeignKey(Match, on_delete=models.DO_NOTHING)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    game = models.ForeignKey(Game, on_delete=models.CASCADE, blank=True, null=True)  
-    gamemode = models.ForeignKey(GameMode, on_delete=models.CASCADE, blank=True, null=True)
-    gamemap = models.ForeignKey(GameMap, on_delete=models.CASCADE, blank=True, null=True)    
+    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING, blank=True, null=True)   
+    game = models.ForeignKey(Game, on_delete=models.DO_NOTHING, blank=True, null=True)  
+    gamemode = models.ForeignKey(GameMode, on_delete=models.DO_NOTHING, blank=True, null=True)
+    gamemap = models.ForeignKey(GameMap, on_delete=models.DO_NOTHING, blank=True, null=True)    
     kills = models.PositiveIntegerField(default=0, blank=True, null=True)
     deaths = models.PositiveIntegerField(default=0, blank=True, null=True)
     assist = models.PositiveIntegerField(default=0, blank=True, null=True)
