@@ -8,6 +8,8 @@ import { getTeams} from "../../actions/teams";
 import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
 import { getGameFactions } from "../../actions/gamefactions";
+import { getPlayers } from "../../actions/players";
+import { getPlayerStats } from "../../actions/playerstats";
 import { setIntervalAsync } from 'set-interval-async/dynamic';
 import { clearIntervalAsync } from 'set-interval-async';
 import socketIOClient from "socket.io-client";
@@ -32,6 +34,7 @@ export class CasterViewSeries extends Component {
         //console.log('fetch start');
         await this.props.getMatches(this.props.valueProps.seriesid);
         await this.props.getSeries(this.props.valueProps.tournament);
+        await this.props.getPlayerStats(); 
       },3000
     );
    
@@ -42,6 +45,8 @@ export class CasterViewSeries extends Component {
     this.props.getGameMaps();
     this.props.getGameModes();
     this.props.getGameFactions();
+    this.props.getPlayers();
+    this.props.getPlayerStats();    
         
   };
   
@@ -136,7 +141,9 @@ export class CasterViewSeries extends Component {
     getGameModes: PropTypes.func.isRequired,
     getGameFactions: PropTypes.func.isRequired,
     updateSceneActivate: PropTypes.func.isRequired, 
-    updateSceneDeActivate: PropTypes.func.isRequired
+    updateSceneDeActivate: PropTypes.func.isRequired,
+    getPlayers: PropTypes.array.isRequired,
+    getPlayerStats: PropTypes.array.isRequired,
   };
 
 
@@ -186,7 +193,31 @@ export class CasterViewSeries extends Component {
     var tournament_name = jsonQuery('[id=' + this.props.valueProps.seriesid + '].tournament.name', { data: this.props.seriesdetails }).value;
     var series_name = jsonQuery('[id=' + this.props.valueProps.seriesid + '].name', { data: this.props.seriesdetails }).value;
     var series_bestof = jsonQuery('[id=' + this.props.valueProps.seriesid + '].best_of', { data: this.props.seriesdetails }).value;
-    
+ 
+   //players stats [*match=2][*team=2]
+   var playerstats_team_one_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + ']', { data: this.props.playerstats }).value; 
+   var playerstats_team_two_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + ']', { data: this.props.playerstats }).value; 
+
+    //team one player stats [*team=1][*match=2][*kills > 0]
+   var playerstats_team_one_kills_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '][*kills>0].id', { data: this.props.playerstats }).value; 
+   var playerstats_team_one_deaths_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '][*deaths>0].id', { data: this.props.playerstats }).value;
+   var playerstats_team_one_assist_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '][*assist>0].id', { data: this.props.playerstats }).value;
+   var playerstats_team_one_goals_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '][*goals>0].id', { data: this.props.playerstats }).value;
+   var playerstats_team_one_grabs_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '][*grabs>0].id', { data: this.props.playerstats }).value;
+   var playerstats_team_one_drops_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '][*drops>0].id', { data: this.props.playerstats }).value;
+   var playerstats_team_one_score_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '][*score>0].id', { data: this.props.playerstats }).value;
+   //console.log('playerstats_team_one_score_exist:' + JSON.stringify(playerstats_team_one_score_exist) );
+   //team two player stats
+   var playerstats_team_two_kills_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '][*kills>0].id', { data: this.props.playerstats }).value; 
+   var playerstats_team_two_deaths_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '][*deaths>0].id', { data: this.props.playerstats }).value;
+   var playerstats_team_two_assist_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '][*assist>0].id', { data: this.props.playerstats }).value;
+   var playerstats_team_two_goals_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '][*goals>0].id', { data: this.props.playerstats }).value;
+   var playerstats_team_two_grabs_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '][*grabs>0].id', { data: this.props.playerstats }).value;
+   var playerstats_team_two_drops_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '][*drops>0].id', { data: this.props.playerstats }).value;
+   var playerstats_team_two_score_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '][*score>0].id', { data: this.props.playerstats }).value;
+                                                                                                                                    
+
+   
     return (
        
     <React.Fragment>
@@ -309,14 +340,93 @@ export class CasterViewSeries extends Component {
                                       </div>
                                   </div>
                               </div>
+                              
+                              
+                              <div className="row no-gutters">
+            										<div className="col-md-6 col-sm-12 m-auto card card-body">
+            											
+            											<h3>Team One <span className="text-warning font-weight-bold">{ match_team_one_name }</span> Players</h3>
+            
+            											<div className="table-responsiveX">
+            												<table className="table table-striped">
+            													<thead>
+            														<tr>
+            															<th>Username</th>
+            															{ playerstats_team_one_kills_exist != "" ? <th className="text-center">Kills</th> : '' }
+            															{ playerstats_team_one_deaths_exist != "" ? <th className="text-center">Deaths</th> : '' }
+            															{ playerstats_team_one_assist_exist != "" ? <th className="text-center">Assist</th> : '' }
+            															{ playerstats_team_one_goals_exist != "" ? <th className="text-center">Goals</th> : '' }
+            															{ playerstats_team_one_grabs_exist != "" ? <th className="text-center">Grabs</th> : '' }
+            															{ playerstats_team_one_drops_exist != "" ? <th className="text-center">Drops</th> : '' }  
+            															{ playerstats_team_one_score_exist != "" ? <th className="text-center">Score</th> : '' }
+                                        </tr>
+            													</thead>
+                                      <tbody>
+                                      { playerstats_team_one_object.map(listplayers => (
+                                        <tr key={listplayers.id} className={ listplayers.is_captain ? 'table-dark' : '' }>
+                                          <td>{ listplayers.is_captain ? <i className="fas fa-crown font-weight-bold text-warning"></i> : '' } { jsonQuery('[id=' + listplayers.player + '].username', { data: this.props.players }).value }</td>	
+            															{ playerstats_team_one_kills_exist != "" ? <td className="text-center">{ listplayers.kills }</td> : '' }
+            															{ playerstats_team_one_deaths_exist != "" ? <td className="text-center">{ listplayers.deaths }</td> : '' }
+            															{ playerstats_team_one_assist_exist != "" ? <td className="text-center">{ listplayers.assist }</td> : '' }
+            															{ playerstats_team_one_goals_exist != "" ? <td className="text-center">{ listplayers.goals }</td> : '' }
+            															{ playerstats_team_one_grabs_exist != "" ? <td className="text-center">{ listplayers.grabs }</td> : '' }
+            															{ playerstats_team_one_drops_exist != "" ? <td className="text-center">{ listplayers.drops }</td> : '' }
+                                          { playerstats_team_one_score_exist != "" ? <td className="text-center">{ listplayers.score }</td> : '' }
+                                        </tr>
+                                       ))}                                                                                                     
+            													</tbody>
+            												</table>
+            											</div>
+            										</div>	
+            										<div className="col-md-6 col-sm-12 m-auto card card-body">	
+            											<h3>Team Two <span className="text-warning font-weight-bold">{ match_team_two_name }</span> Players</h3>
+            										
+            											<div className="table-responsiveX">
+            													<table className="table table-striped">
+            													<thead>
+            														<tr>
+            															<th>Username</th>
+            															{ playerstats_team_two_kills_exist != "" ? <th className="text-center">Kills</th> : '' }
+            															{ playerstats_team_two_deaths_exist != "" ? <th className="text-center">Deaths</th> : '' }
+            															{ playerstats_team_two_assist_exist != "" ? <th className="text-center">Assist</th> : '' }
+            															{ playerstats_team_two_goals_exist != "" ? <th className="text-center">Goals</th> : '' }
+            															{ playerstats_team_two_grabs_exist != "" ? <th className="text-center">Grabs</th> : '' }
+            															{ playerstats_team_two_drops_exist != "" ? <th className="text-center">Drops</th> : '' }  
+            															{ playerstats_team_two_score_exist != "" ? <th className="text-center">Score</th> : '' }
+                                        </tr>
+            													</thead>
+                                      <tbody>
+                                      { playerstats_team_two_object.map(listplayers => (
+                                        <tr key={listplayers.id} className={ listplayers.is_captain ? 'table-dark' : '' }>
+                                          <td>{ listplayers.is_captain ? <i className="fas fa-crown font-weight-bold text-warning"></i> : '' } { jsonQuery('[id=' + listplayers.player + '].username', { data: this.props.players }).value }</td>	
+            															{ playerstats_team_two_kills_exist != "" ? <td className="text-center">{ listplayers.kills }</td> : '' }
+            															{ playerstats_team_two_deaths_exist != "" ? <td className="text-center">{ listplayers.deaths }</td> : '' }
+            															{ playerstats_team_two_assist_exist != "" ? <td className="text-center">{ listplayers.assist }</td> : '' }
+            															{ playerstats_team_two_goals_exist != "" ? <td className="text-center">{ listplayers.goals }</td> : '' }
+            															{ playerstats_team_two_grabs_exist != "" ? <td className="text-center">{ listplayers.grabs }</td> : '' }
+            															{ playerstats_team_two_drops_exist != "" ? <td className="text-center">{ listplayers.drops }</td> : '' }
+                                          { playerstats_team_two_score_exist != "" ? <td className="text-center">{ listplayers.score }</td> : '' }
+                                        </tr>
+                                       ))}                                                                                                     
+            													</tbody>
+            												</table>
+            											</div>
+            											
+            										</div>
+            									</div>
+                                
+                              
+                              
+                              
                               </div>
                               :
-                              <div className="row  mt-3">
+                              <div className="row mt-3">
                                   <div className="col-md-12 col-sm-12">
                                       <h3 className="h3-responsive font-weight-bold"><i className="fa fa-circle fa-sm red-text"></i> No Live Match</h3>
                                   </div>
                               </div>
                               }
+ 
       
                               {this.props.valueProps.seriesid ?
                               <div className="row no-gutters">
@@ -500,7 +610,9 @@ const mapStateToProps = state => ({
   teams: state.teams.teams,
   gamemaps: state.gamemaps.gamemaps,
   gamemodes: state.gamemodes.gamemodes,
-  gamefactions: state.gamefactions.gamefactions  
+  gamefactions: state.gamefactions.gamefactions,
+  players: state.players.players,
+  playerstats: state.playerstats.playerstats  
 });
 
-export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatches, getMatchesDetails, getScenes, getTeams, getGameMaps, getGameModes, getGameFactions, updateSceneActivate, updateSceneDeActivate } )(CasterViewSeries);
+export default connect( mapStateToProps,{ getSeries, getSeriesDetails, updateSeriesEnd, getMatches, getMatchesDetails, getScenes, getTeams, getGameMaps, getGameModes, getGameFactions, updateSceneActivate, updateSceneDeActivate, getPlayers, getPlayerStats } )(CasterViewSeries);
