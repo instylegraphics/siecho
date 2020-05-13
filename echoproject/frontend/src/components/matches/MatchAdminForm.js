@@ -15,7 +15,9 @@ export class matchAdminForm extends Component {
     step: 1,
     tournament: "",
     series: "",
-    match: "" 
+    match: "",
+    game: "",
+    gameName: ""
   };
   
   // Proceed to next step
@@ -34,7 +36,24 @@ export class matchAdminForm extends Component {
     });
   };
 
-  // Handle fields change
+  // save game id 
+  get_gameID = ( gid, gname ) => {
+    const { game, gameName } = this.state;
+    this.setState({
+      game: gid,
+      gameName: gname
+    });
+  };
+  
+  // handlechange step 1
+   handleChange_step1 = ( tournamentid ) => {
+    const { tournament } = this.state;
+    this.setState({
+      tournament: tournamentid 
+    });
+  };
+   
+  // Handle fields change, step 2 to 4
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
     //this.setState({ [e.target.name]: e.target.value });
@@ -42,15 +61,16 @@ export class matchAdminForm extends Component {
  
   render() {
     const { step } = this.state;
-    const { tournament, series, match } = this.state;
-    const valueProps = { tournament, series, match };
+    const { tournament, series, match, game, gameName } = this.state;
+    const valueProps = { tournament, series, match, game, gameName };
      
     switch (step) {
       case 1:
         return (
           <StepOneTournamentForm
             nextStep={this.nextStep}
-            handleChange={this.handleChange}
+            handleChange_step1={this.handleChange_step1}
+            get_gameID={this.get_gameID}
             valueProps={valueProps}
           />
         );

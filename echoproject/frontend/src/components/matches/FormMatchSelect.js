@@ -8,7 +8,8 @@ export class FormMatchSelect extends Component {
   state = {
     tournament: "",
     series: "",
-    match: ""
+    match: "",
+    game: ""
   };
 
   static propTypes = {

@@ -7,6 +7,7 @@ import { getGameMaps } from "../../actions/gamemaps";
 import { getGameModes } from "../../actions/gamemodes";
 import { getGameFactions } from "../../actions/gamefactions";
 import { getPlayers } from "../../actions/players";
+import { getPlayerStats, addPlayerStats, deletePlayerStats, updatePlayerStats } from "../../actions/playerstats";
 
 export class StepFourMatchAdminForm extends Component {
 
@@ -21,7 +22,23 @@ export class StepFourMatchAdminForm extends Component {
       team_two_faction: "",
       team_two_score: "",
       winner: ""
-    }   
+    },
+    playerAddTeamOne: {
+      match:"",
+      player:"",
+      team: "",
+      game: "",
+      gamemode: "",
+      gamemap: ""
+    },
+    playerAddTeamTwo: {
+      match:"",
+      player:"",
+      team: "",
+      game: "",
+      gamemode: "",
+      gamemap: ""
+    }    
   };
 
   static propTypes = {
@@ -40,12 +57,16 @@ export class StepFourMatchAdminForm extends Component {
     getGameMaps: PropTypes.func.isRequired,
     getGameModes: PropTypes.func.isRequired,
     getGameFactions: PropTypes.func.isRequired,
-    getPlayers: PropTypes.func.isRequired
+    getPlayers: PropTypes.array.isRequired,
+    getPlayerStats: PropTypes.array.isRequired,
+    addPlayerStats: PropTypes.array.isRequired,
+    deletePlayerStats: PropTypes.array.isRequired,
+    updatePlayerStats: PropTypes.func.isRequired
   };
   
   
   componentDidMount() {
-    console.log("componentDidMount matchid:" + this.props.valueProps.match);
+    //console.log("componentDidMount matchid:" + this.props.valueProps.match);
     this.props.getMatch(this.props.valueProps.match);
     this.props.getMatches(this.props.valueProps.series);
     this.props.getMatchesDetails(this.props.valueProps.series);
@@ -54,11 +75,12 @@ export class StepFourMatchAdminForm extends Component {
     this.props.getGameModes();
     this.props.getGameFactions();
     this.props.getPlayers();
+    this.props.getPlayerStats();
     
-    console.log('componentDidMount this.props');
-    console.log(this.props);
-    console.log('componentDidMount this.props.match'); 
-    console.log(this.props.match);
+    //console.log('componentDidMount this.props');
+    //console.log(this.props);
+    //console.log('componentDidMount this.props.match'); 
+    //console.log(this.props.match);
 
     
     const { matchData } = this.state;
@@ -558,14 +580,31 @@ export class StepFourMatchAdminForm extends Component {
     var match_team_two_id = jsonQuery('[id=' + this.props.valueProps.match + '].team_two', { data: this.props.matches }).value; 
     var match_team_two_name = jsonQuery('[id=' + match_team_two_id + '].short_name', { data: this.props.teams }).value;
     var match_team_two_image = jsonQuery('[id=' + match_team_two_id + '].logo', { data: this.props.teams }).value;
- 
+
+    var match_gamemode_id = jsonQuery('[id=' + this.props.valueProps.match + '].gamemode', { data: this.props.matches }).value; 
+    var match_gamemode_name = jsonQuery('[id=' + match_gamemode_id + '].name', { data: this.props.gamemodes }).value;
+    var match_gamemap_id = jsonQuery('[id=' + this.props.valueProps.match + '].gamemap', { data: this.props.matches }).value;
+    var match_gamemap_name = jsonQuery('[id=' + match_gamemap_id + '].name', { data: this.props.gamemaps }).value;
+   //players
+   var players_team_one_object = jsonQuery('[*team=' + match_team_one_id + '][*enabled=true]', { data: this.props.players }).value; 
+   var players_team_two_object = jsonQuery('[*team=' + match_team_two_id + '][*enabled=true]', { data: this.props.players }).value; 
+
+   //players stats [*match=2][*team=2]
+   var playerstats_team_one_object = jsonQuery('[*match=' + this.props.valueProps.match + '][*team=' + match_team_one_id + ']', { data: this.props.playerstats }).value; 
+   var playerstats_team_two_object = jsonQuery('[*match=' + this.props.valueProps.match + '][*team=' + match_team_two_id + ']', { data: this.props.playerstats }).value; 
+      
+   //game
+   var game_id = this.props.valueProps.game;
+   var game_name = this.props.valueProps.gameName;  
+   
     return (
     <React.Fragment>
         
 		<main className="page-content">
-			<div className="container">
-
-  				<div className="col-md-8 m-auto card card-body mt-4 mb-4 ">
+			<div className="container-fluid">
+    		<div class="row">
+    			<div class="col-md-6 card card-body">
+          
   					<form onSubmit={this.onSubmit.bind(this)}>
   						<div className="row">
   							<div className="col-md-8">
@@ -770,6 +809,555 @@ export class StepFourMatchAdminForm extends Component {
   							</div>
   						</div>
   					</form>
+            
+            </div>
+
+      			<div className="col-md-6 card card-body">
+      				
+      				<div className="col-md-12">
+      					<div className="row">
+      						<div className="col-md-7">
+      							<h3>Team One <span className="text-warning font-weight-bold">{ match_team_one_name }</span> Players</h3>
+      						</div>
+      						<div className="col-md-5">
+      							<div className="row text-right">
+      								<form className="form-inline">
+      								  <div className="form-group">
+        									<label for="winner" className="sr-only">Add Team One Player</label>
+        									<select id="team_one_addplayer" name="player" className="form-control form-control-sm custom-select form-control-sm-truefalse" 
+                          onChange={(e) => {
+                          e.preventDefault();
+                          let { playerAddTeamOne } = this.state;
+                          playerAddTeamOne.player = e.target.value;
+                          playerAddTeamOne.match = this.props.valueProps.match;
+                          playerAddTeamOne.game = game_id;
+                          playerAddTeamOne.gamemap = match_gamemap_id;
+                          playerAddTeamOne.gamemode = match_gamemode_id;
+                          playerAddTeamOne.team = match_team_one_id;
+                          //console.log("e.target.value:" + e.target.value);
+                          //console.log("playerAdd:" + currentMatchData.gamemode );
+                          this.setState({ playerAddTeamOne });
+                          }}
+                          defaultValue={ null }
+                          >
+                          <option value="">Select Team One Player</option>
+                            {players_team_one_object.map(pmap => (
+                            <option key={pmap.id} value={pmap.id}>{pmap.username}</option>
+                          ))}
+                          </select>
+                        
+                          <button
+                          onClick={(e) => {
+                          e.preventDefault();
+                          let { playerAddTeamOne } = this.state;
+                          //console.log("playerAdd:" + playerAdd);
+                          var dataPlayerAddTeamOne = JSON.stringify( playerAddTeamOne ); 
+                          dataPlayerAddTeamOne = JSON.parse(dataPlayerAddTeamOne);    
+                          console.log("return all add player obj records");
+                          console.log(dataPlayerAddTeamOne);
+                          this.props.addPlayerStats( dataPlayerAddTeamOne );
+                          }}
+                          className="ml-2 btn btn-primary btn-sm btn btn-deep-purple waves-effect waves-light">Add Player
+                          </button>
+    								    </div>
+      								                                                 
+      								</form>
+      							</div>
+      						</div>
+      					</div>
+      
+      
+      					<div className="table-responsive">
+      						<table className="table table-striped">
+      							<thead>                                            
+      								<tr>
+      									<th className="text-center">Username</th>
+      									<th className="text-center">Kills</th>
+      									<th className="text-center">Deaths</th>
+      									<th className="text-center">Assist</th>
+      									<th className="text-center">Goals</th>
+      									<th className="text-center">Grabs</th>
+      									<th className="text-center">Drops</th>
+      									<th className="text-center">Score</th>
+      									<th className="text-center">Captain</th>
+      									<th className="text-center">Delete</th>
+      									<th className="text-center">Update</th>
+      								</tr>
+      							</thead>
+      							<tbody>
+                      {playerstats_team_one_object.map(listplayers => (
+                      <tr key={listplayers.id} className={ listplayers.is_captain ? 'table-dark' : '' }>
+                        <td className="text-center">{ jsonQuery('[id=' + listplayers.player + '].username', { data: this.props.players }).value }</td>
+                        <td className="text-center">
+                          <input
+                          id={ 'ptone-kills-' + listplayers.id }
+                          name={ 'ptone-kills-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.kills }              
+                          /> 
+                        </td>
+                        <td className="text-center">
+                          <input
+                          id={ 'ptone-deaths-' + listplayers.id }
+                          name={ 'ptone-deaths-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.deaths }              
+                          /> 
+                        </td>
+                         <td className="text-center">
+                          <input
+                          id={ 'ptone-assist-' + listplayers.id }
+                          name={ 'ptone-assist-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.assist }              
+                          /> 
+                        </td>
+                        <td className="text-center">
+                          <input
+                          id={ 'ptone-goals-' + listplayers.id }
+                          name={ 'ptone-goals-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.goals }              
+                          /> 
+                        </td>                        
+                        <td className="text-center">
+                          <input
+                          id={ 'ptone-grabs-' + listplayers.id }
+                          name={ 'ptone-grabs-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.grabs }              
+                          /> 
+                        </td> 
+                        <td className="text-center">
+                          <input
+                          id={ 'ptone-drops-' + listplayers.id }
+                          name={ 'ptone-drops-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.drops }              
+                          /> 
+                        </td>                                                     
+                        <td className="text-center">
+                          <input
+                          id={ 'ptone-score-' + listplayers.id }
+                          name={ 'ptone-score-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.score }              
+                          /> 
+                        </td>                     
+                       <td className="text-center"> 
+                          <select
+                          id={ 'ptone-is_captain-' + listplayers.id }
+                          name={ 'ptone-is_captain-' + listplayers.id }
+                          className="form-control form-control-sm form-control-sm-truefalse custom-select" 
+                          defaultValue={ String(listplayers.is_captain) }
+                          >
+      										  <option value="false">no</option>
+      											<option value="true">yes</option>
+                           ))}                                                                                
+      										</select>                    
+                        </td>
+                        <td className="text-center">
+                          <button
+                          onClick={(e) => {
+                          //e.preventDefault();
+                          this.props.deletePlayerStats(listplayers.id);
+                          }}
+                          className="btn btn-danger btn-sm btn-danger waves-effect waves-light btn-nomargin">Delete
+                          </button>
+                        </td>
+      									<td className="text-center">
+                          <button
+                          onClick={(e) => {
+                          e.preventDefault();
+                          var ptone_kills  = $("#ptone-kills-" + listplayers.id ).val();
+                          var ptone_deaths = $("#ptone-deaths-" + listplayers.id ).val();
+                          var ptone_assist = $("#ptone-assist-" + listplayers.id ).val();
+                          var ptone_goals = $("#ptone-goals-" + listplayers.id ).val();
+                          var ptone_grabs = $("#ptone-grabs-" + listplayers.id ).val();
+                          var ptone_drops = $("#ptone-drops-" + listplayers.id ).val();
+                          var ptone_score = $("#ptone-score-" + listplayers.id ).val();
+                          var ptone_is_captain = $("#ptone-is_captain-" + listplayers.id ).val();  
+                          console.log("update listplayers.id:" + listplayers.id);
+                          console.log('ptone_kills:' + ptone_kills);
+                          console.log('ptone_deaths:' + ptone_deaths);
+                          console.log('ptone_assist:' + ptone_assist);
+                          console.log('ptone_goals:' + ptone_goals);
+                          console.log('ptone_grabs:' + ptone_grabs);
+                          console.log('ptone_drops:' + ptone_drops);
+                          console.log('ptone-score:' + ptone_score);
+                          console.log('ptone_is_captain:' + ptone_is_captain);
+ 
+                           //  gamemap
+                          var ptone_default_gamemap = "";
+                          if (typeof this.props.match.gamemap.id != 'undefined' && this.props.match.gamemap.id) {
+                              ptone_default_gamemap = this.props.match.gamemap.id;
+                          } else {
+                              if (typeof this.props.match.gamemap != 'undefined' && this.props.match.gamemap) {
+                                ptone_default_gamemap = this.props.match.gamemap;
+                              }
+                          } 
+                          console.log('ptone_default_gamemap:' + ptone_default_gamemap);  
+                          // gamemode 
+                          var ptone_default_gamemode = "";
+                          if (typeof this.props.match.gamemode.id != 'undefined' && this.props.match.gamemode.id) {
+                              ptone_default_gamemode = this.props.match.gamemode.id;
+                          } else {
+                              if (typeof this.props.match.gamemode != 'undefined' && this.props.match.gamemode) {
+                                ptone_default_gamemode = this.props.match.gamemode;
+                              }
+                          } 
+                          console.log('ptone_default_gamemode:' + ptone_default_gamemode);  
+                  
+                          const postPlayerTeamOneObj = {
+                            playerstatsid: listplayers.id,
+                            is_captain: ptone_is_captain,
+                            score: ptone_score,
+                            kills: ptone_kills,
+                            deaths: ptone_deaths,
+                            assist: ptone_assist,
+                            goals: ptone_goals,
+                            grabs: ptone_grabs,
+                            drops: ptone_drops,
+                            match: listplayers.match,
+                            player: listplayers.player,
+                            team: listplayers.team,
+                            game: game_id,
+                            gamemode: ptone_default_gamemode,
+                            gamemap: ptone_default_gamemap
+                          }
+ 
+                          this.props.updatePlayerStats( postPlayerTeamOneObj );
+                          console.log('postPlayerTeamOneObj:' + JSON.stringify(postPlayerTeamOneObj) );
+                          }}
+                          className="btn btn-primary btn-sm btn-dark-green waves-effect waves-light btn-nomargin">Update
+                          </button>                                              
+                        </td>
+                      </tr>
+                      ))}
+ 
+      							</tbody>
+      						</table>
+      					</div>
+ 
+ 
+
+     					<div className="row">
+      						<div className="col-md-7">
+      							<h3>Team Two <span className="text-warning font-weight-bold">{ match_team_two_name }</span> Players</h3>
+      						</div>
+      						<div className="col-md-5">
+      							<div className="row text-right">
+      								<form className="form-inline">
+      								  <div className="form-group">
+        									<label for="winner" className="sr-only">Add Team Two Player</label>
+        									<select id="team_two_addplayer" name="player" className="form-control form-control-sm custom-select form-control-sm-truefalse" 
+                          onChange={(e) => {
+                          e.preventDefault();
+                          let { playerAddTeamTwo } = this.state;
+                          playerAddTeamTwo.player = e.target.value;
+                          playerAddTeamTwo.match = this.props.valueProps.match;
+                          playerAddTeamTwo.game = game_id;
+                          playerAddTeamTwo.gamemap = match_gamemap_id;
+                          playerAddTeamTwo.gamemode = match_gamemode_id;
+                          playerAddTeamTwo.team = match_team_two_id;
+                          //console.log("e.target.value:" + e.target.value);
+                          //console.log("playerAdd:" + currentMatchData.gamemode );
+                          this.setState({ playerAddTeamTwo });
+                          }}
+                          defaultValue={ null }
+                          >
+                          <option value="">Select Team Two Player</option>
+                            {players_team_two_object.map(pmap => (
+                            <option key={pmap.id} value={pmap.id}>{pmap.username}</option>
+                          ))}
+                          </select>
+                        
+                          <button
+                          onClick={(e) => {
+                          e.preventDefault();
+                          let { playerAddTeamTwo } = this.state;
+                          //console.log("playerAdd:" + playerAdd);
+                          var dataPlayerAddTeamTwo = JSON.stringify( playerAddTeamTwo ); 
+                          dataPlayerAddTeamTwo = JSON.parse(dataPlayerAddTeamTwo);    
+                          console.log("return all add player obj records");
+                          console.log(dataPlayerAddTeamTwo);
+                          this.props.addPlayerStats( dataPlayerAddTeamTwo );
+                          }}
+                          className="ml-2 btn btn-primary btn-sm btn btn-deep-purple waves-effect waves-light">Add Player
+                          </button>
+    								    </div>
+      								                                                 
+      								</form>
+      							</div>
+      						</div>
+      					</div>
+      
+      
+      					<div className="table-responsive">
+      						<table className="table table-striped">
+      							<thead>                                            
+      								<tr>
+      									<th className="text-center">Username</th>
+      									<th className="text-center">Kills</th>
+      									<th className="text-center">Deaths</th>
+      									<th className="text-center">Assist</th>
+      									<th className="text-center">Goals</th>
+      									<th className="text-center">Grabs</th>
+      									<th className="text-center">Drops</th>
+      									<th className="text-center">Score</th>
+      									<th className="text-center">Captain</th>
+      									<th className="text-center">Delete</th>
+      									<th className="text-center">Update</th>
+      								</tr>
+      							</thead>
+      							<tbody>
+                      {playerstats_team_two_object.map(listplayers => (
+                      <tr key={listplayers.id} className={ listplayers.is_captain ? 'table-dark' : '' }>
+                        <td className="text-center">{ jsonQuery('[id=' + listplayers.player + '].username', { data: this.props.players }).value }</td>
+                        <td className="text-center">
+                          <input
+                          id={ 'pttwo-kills-' + listplayers.id }
+                          name={ 'pttwo-kills-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.kills }              
+                          /> 
+                        </td>
+                        <td className="text-center">
+                          <input
+                          id={ 'pttwo-deaths-' + listplayers.id }
+                          name={ 'pttwo-deaths-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.deaths }              
+                          /> 
+                        </td>
+                         <td className="text-center">
+                          <input
+                          id={ 'pttwo-assist-' + listplayers.id }
+                          name={ 'pttwo-assist-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.assist }              
+                          /> 
+                        </td>
+                        <td className="text-center">
+                          <input
+                          id={ 'pttwo-goals-' + listplayers.id }
+                          name={ 'pttwo-goals-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.goals }              
+                          /> 
+                        </td>                        
+                        <td className="text-center">
+                          <input
+                          id={ 'pttwo-grabs-' + listplayers.id }
+                          name={ 'pttwo-grabs-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.grabs }              
+                          /> 
+                        </td> 
+                        <td className="text-center">
+                          <input
+                          id={ 'pttwo-drops-' + listplayers.id }
+                          name={ 'pttwo-drops-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.drops }              
+                          /> 
+                        </td>                                                     
+                        <td className="text-center">
+                          <input
+                          id={ 'pttwo-score-' + listplayers.id }
+                          name={ 'pttwo-score-' + listplayers.id }
+                          className="form-control form-control-sm"
+                          type="number"
+                          min="0" 
+                          step="1"
+                          onChange={(e) => {
+                          //console.log("e.target.value:" + e.target.value);
+                          }}
+                          defaultValue={ listplayers.score }              
+                          /> 
+                        </td>                     
+                       <td className="text-center"> 
+                          <select
+                          id={ 'pttwo-is_captain-' + listplayers.id }
+                          name={ 'pttwo-is_captain-' + listplayers.id }
+                          className="form-control form-control-sm form-control-sm-truefalse custom-select" 
+                          defaultValue={ String(listplayers.is_captain) }
+                          >
+      										  <option value="false">no</option>
+      											<option value="true">yes</option>
+                           ))}                                                                                
+      										</select>                    
+                        </td>
+                        <td className="text-center">
+                          <button
+                          onClick={(e) => {
+                          //e.preventDefault();
+                          this.props.deletePlayerStats(listplayers.id);
+                          }}
+                          className="btn btn-danger btn-sm btn-danger waves-effect waves-light btn-nomargin">Delete
+                          </button>
+                        </td>
+      									<td className="text-center">
+                          <button
+                          onClick={(e) => {
+                          e.preventDefault();
+                          var pttwo_kills  = $("#pttwo-kills-" + listplayers.id ).val();
+                          var pttwo_deaths = $("#pttwo-deaths-" + listplayers.id ).val();
+                          var pttwo_assist = $("#pttwo-assist-" + listplayers.id ).val();
+                          var pttwo_goals = $("#pttwo-goals-" + listplayers.id ).val();
+                          var pttwo_grabs = $("#pttwo-grabs-" + listplayers.id ).val();
+                          var pttwo_drops = $("#pttwo-drops-" + listplayers.id ).val();
+                          var pttwo_score = $("#pttwo-score-" + listplayers.id ).val();
+                          var pttwo_is_captain = $("#pttwo-is_captain-" + listplayers.id ).val();  
+                          console.log("update listplayers.id:" + listplayers.id);
+                          console.log('pttwo_kills:' + pttwo_kills);
+                          console.log('pttwo_deaths:' + pttwo_deaths);
+                          console.log('pttwo_assist:' + pttwo_assist);
+                          console.log('pttwo_goals:' + pttwo_goals);
+                          console.log('pttwo_grabs:' + pttwo_grabs);
+                          console.log('pttwo_drops:' + pttwo_drops);
+                          console.log('ptone-score:' + pttwo_score);
+                          console.log('pttwo_is_captain:' + pttwo_is_captain);
+ 
+                           //  gamemap
+                          var pttwo_default_gamemap = "";
+                          if (typeof this.props.match.gamemap.id != 'undefined' && this.props.match.gamemap.id) {
+                              pttwo_default_gamemap = this.props.match.gamemap.id;
+                          } else {
+                              if (typeof this.props.match.gamemap != 'undefined' && this.props.match.gamemap) {
+                                pttwo_default_gamemap = this.props.match.gamemap;
+                              }
+                          } 
+                          console.log('pttwo_default_gamemap:' + pttwo_default_gamemap);  
+                          // gamemode 
+                          var pttwo_default_gamemode = "";
+                          if (typeof this.props.match.gamemode.id != 'undefined' && this.props.match.gamemode.id) {
+                              pttwo_default_gamemode = this.props.match.gamemode.id;
+                          } else {
+                              if (typeof this.props.match.gamemode != 'undefined' && this.props.match.gamemode) {
+                                pttwo_default_gamemode = this.props.match.gamemode;
+                              }
+                          } 
+                          console.log('pttwo_default_gamemode:' + pttwo_default_gamemode);  
+                  
+                          const postPlayerTeamTwoObj = {
+                            playerstatsid: listplayers.id,
+                            is_captain: pttwo_is_captain,
+                            score: pttwo_score,
+                            kills: pttwo_kills,
+                            deaths: pttwo_deaths,
+                            assist: pttwo_assist,
+                            goals: pttwo_goals,
+                            grabs: pttwo_grabs,
+                            drops: pttwo_drops,
+                            match: listplayers.match,
+                            player: listplayers.player,
+                            team: listplayers.team,
+                            game: game_id,
+                            gamemode: pttwo_default_gamemode,
+                            gamemap: pttwo_default_gamemap
+                          }
+ 
+                          this.props.updatePlayerStats( postPlayerTeamTwoObj );
+                          console.log('postPlayerTeamOneObj:' + JSON.stringify(postPlayerTeamTwoObj) );
+                          }}
+                          className="btn btn-primary btn-sm btn-dark-green waves-effect waves-light btn-nomargin">Update
+                          </button>                                              
+                        </td>
+                      </tr>
+                      ))}
+ 
+      							</tbody>
+      						</table>
+      					</div>
+
+ 
+       
+      				</div>
+      				
+      			</div>
+      
+
+
+                
   				</div>
         </div>
 
@@ -835,8 +1423,9 @@ const mapStateToProps = state => ({
   gamemaps: state.gamemaps.gamemaps,
   gamemodes: state.gamemodes.gamemodes,
   gamefactions: state.gamefactions.gamefactions,
-  players: state.players.players
+  players: state.players.players,
+  playerstats: state.playerstats.playerstats
 });
 
-export default connect( mapStateToProps,{ getMatch, getMatches, getMatchesDetails, updateMatch, getTeams, getGameMaps, getGameModes, getGameFactions, getPlayers } )(StepFourMatchAdminForm);
+export default connect( mapStateToProps,{ getMatch, getMatches, getMatchesDetails, updateMatch, getTeams, getGameMaps, getGameModes, getGameFactions, getPlayers, getPlayerStats, addPlayerStats, deletePlayerStats, updatePlayerStats } )(StepFourMatchAdminForm);
  

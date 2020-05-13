@@ -115,8 +115,10 @@ class Player(models.Model):
     username = models.CharField(max_length=100)
     firstname = models.CharField(max_length=100, blank=True, null=True)
     lastname = models.CharField(max_length=100, blank=True, null=True)
+    email = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=100, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
     team = models.ForeignKey(Team, on_delete=models.DO_NOTHING, blank=True, null=True)
-    is_captain = models.BooleanField(default=False, blank=True, null=True)
     enabled = models.BooleanField(default=True)
     series_win = models.PositiveIntegerField(default=0, blank=True, null=True)
     series_loss = models.PositiveIntegerField(default=0, blank=True, null=True)
@@ -182,18 +184,20 @@ class PlayerStats(models.Model):
     team = models.ForeignKey(Team, on_delete=models.DO_NOTHING, blank=True, null=True)   
     game = models.ForeignKey(Game, on_delete=models.DO_NOTHING, blank=True, null=True)  
     gamemode = models.ForeignKey(GameMode, on_delete=models.DO_NOTHING, blank=True, null=True)
-    gamemap = models.ForeignKey(GameMap, on_delete=models.DO_NOTHING, blank=True, null=True)    
+    gamemap = models.ForeignKey(GameMap, on_delete=models.DO_NOTHING, blank=True, null=True)
+    is_captain = models.BooleanField(default=False, blank=True, null=True)   
+    win = models.PositiveIntegerField(default=0, blank=True, null=True)
+    loss = models.PositiveIntegerField(default=0, blank=True, null=True)
+    score = models.PositiveIntegerField(default=0, blank=True, null=True)
     kills = models.PositiveIntegerField(default=0, blank=True, null=True)
     deaths = models.PositiveIntegerField(default=0, blank=True, null=True)
     assist = models.PositiveIntegerField(default=0, blank=True, null=True)
     goals = models.PositiveIntegerField(default=0, blank=True, null=True)
     grabs = models.PositiveIntegerField(default=0, blank=True, null=True)
     drops = models.PositiveIntegerField(default=0, blank=True, null=True)
-    win = models.PositiveIntegerField(default=0, blank=True, null=True)
-    loss = models.PositiveIntegerField(default=0, blank=True, null=True)
 
     class Meta:
-        ordering = ['match']
+        ordering = ['match', 'team']
         
     def __str__(self):
         return self.player.username

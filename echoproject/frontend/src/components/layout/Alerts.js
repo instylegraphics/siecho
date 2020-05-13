@@ -24,6 +24,9 @@ export class Alerts extends Component {
     if (message !== prevProps.message) {
       if (message.deleteLead) alert.success(message.deleteLead);
       if (message.addLead) alert.success(message.addLead);
+      if (message.addPlayerStats) alert.success(message.addPlayerStats);
+      if (message.deletePlayerStats) alert.success(message.deletePlayerStats);
+      if (message.updatePlayerStats) alert.success(message.updatePlayerStats);
       if (message.passwordNotMatch) alert.error(message.passwordNotMatch);
       if (message.tournamentNull) alert.error(message.tournamentNull);
       if (message.seriesNull) alert.error(message.seriesNull);

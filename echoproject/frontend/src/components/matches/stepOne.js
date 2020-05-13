@@ -35,9 +35,14 @@ export class StepOneTournamentForm extends Component {
   
   }
   render() {
-    const { valueProps, handleChange } = this.props;  
+    const { valueProps, handleChange_step1, get_gameID } = this.props;  
     console.log(this.props);
- 
+    
+    var jsonQuery = require('json-query');
+
+  
+
+    
     return (
       <React.Fragment>
       <main className="page-content">
@@ -77,7 +82,17 @@ export class StepOneTournamentForm extends Component {
 
         <div className="form-group mt-4">
               <label><h2>Select Tournament</h2></label>       
-                 <select required value={valueProps.tournament} name="tournament" className="form-control custom-select-lg card--body__formSelect" onChange={ handleChange('tournament') }  >
+                 <select required value={valueProps.tournament} name="tournament" className="form-control custom-select-lg card--body__formSelect" 
+                 onChange={(e) => {
+                 var game_id = jsonQuery('[id=' + e.target.value + '].game.id', { data: this.props.tournaments }).value;
+                 var game_name = jsonQuery('[id=' + e.target.value + '].game.name', { data: this.props.tournaments }).value;                       
+                 console.log("game_id:" + game_id);
+                 console.log("game_name:" + game_name);
+                 get_gameID( game_id, game_name );
+                 handleChange_step1( e.target.value );
+                 console.log("e.target.value:" + e.target.value);
+                 }}
+                 >
                  <option>List of Tournaments</option>
                  {this.props.tournaments.map(tournament => (
                   <option key={tournament.id} value={tournament.id}>{tournament.name}</option>
