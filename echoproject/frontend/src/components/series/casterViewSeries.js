@@ -16,6 +16,17 @@ import socketIOClient from "socket.io-client";
 
 export class CasterViewSeries extends Component {
 
+   //get total of object passed
+   getSum = ( obj ) => {
+     var temp_total = 0;
+     for (let [key, value] of Object.entries( obj )) {
+       //console.log(`${key}: ${value}`);
+       temp_total = temp_total + value;
+     }
+     //console.log('fnc total:' + temp_total);   
+     return temp_total;
+   };
+   
   componentDidMount() {
 //    console.log("XXXXXXXXXX componentDidMount - casterViewSeries");
 //    console.log('valueProps.seriesid');
@@ -60,6 +71,7 @@ export class CasterViewSeries extends Component {
     e.preventDefault();
     this.props.prevStep();
   };
+ 
  
   //function to end series active to false, make sure all matches are done. calculates team scores and winner
   endSeriesForm = e => {
@@ -206,7 +218,51 @@ export class CasterViewSeries extends Component {
    var playerstats_team_one_grabs_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '][*grabs>0].id', { data: this.props.playerstats }).value;
    var playerstats_team_one_drops_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '][*drops>0].id', { data: this.props.playerstats }).value;
    var playerstats_team_one_score_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '][*score>0].id', { data: this.props.playerstats }).value;
-   //console.log('playerstats_team_one_score_exist:' + JSON.stringify(playerstats_team_one_score_exist) );
+   
+   var playerstats_team_one_kills_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '].kills', { data: this.props.playerstats }).value;
+   var playerstats_team_one_kills_match_total = this.getSum( playerstats_team_one_kills_match_total_object );
+   var playerstats_team_two_kills_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '].kills', { data: this.props.playerstats }).value;
+   var playerstats_team_two_kills_match_total = this.getSum( playerstats_team_two_kills_match_total_object );
+
+   var playerstats_team_one_deaths_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '].deaths', { data: this.props.playerstats }).value;
+   var playerstats_team_one_deaths_match_total = this.getSum( playerstats_team_one_deaths_match_total_object );
+   var playerstats_team_two_deaths_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '].deaths', { data: this.props.playerstats }).value;
+   var playerstats_team_two_deaths_match_total = this.getSum( playerstats_team_two_deaths_match_total_object );
+
+   var playerstats_team_one_assist_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '].assist', { data: this.props.playerstats }).value;
+   var playerstats_team_one_assist_match_total = this.getSum( playerstats_team_one_assist_match_total_object );
+   var playerstats_team_two_assist_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '].assist', { data: this.props.playerstats }).value;
+   var playerstats_team_two_assist_match_total = this.getSum( playerstats_team_two_assist_match_total_object );
+
+   var playerstats_team_one_goals_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '].goals', { data: this.props.playerstats }).value;
+   var playerstats_team_one_goals_match_total = this.getSum( playerstats_team_one_goals_match_total_object );
+   var playerstats_team_two_goals_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '].goals', { data: this.props.playerstats }).value;
+   var playerstats_team_two_goals_match_total = this.getSum( playerstats_team_two_goals_match_total_object );
+
+   var playerstats_team_one_goals_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '].goals', { data: this.props.playerstats }).value;
+   var playerstats_team_one_goals_match_total = this.getSum( playerstats_team_one_goals_match_total_object );
+   var playerstats_team_two_goals_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '].goals', { data: this.props.playerstats }).value;
+   var playerstats_team_two_goals_match_total = this.getSum( playerstats_team_two_goals_match_total_object );
+   
+   var playerstats_team_one_grabs_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '].grabs', { data: this.props.playerstats }).value;
+   var playerstats_team_one_grabs_match_total = this.getSum( playerstats_team_one_grabs_match_total_object );
+   var playerstats_team_two_grabs_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '].grabs', { data: this.props.playerstats }).value;
+   var playerstats_team_two_grabs_match_total = this.getSum( playerstats_team_two_grabs_match_total_object );
+   
+   var playerstats_team_one_drops_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '].drops', { data: this.props.playerstats }).value;
+   var playerstats_team_one_drops_match_total = this.getSum( playerstats_team_one_drops_match_total_object );
+   var playerstats_team_two_drops_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '].drops', { data: this.props.playerstats }).value;
+   var playerstats_team_two_drops_match_total = this.getSum( playerstats_team_two_drops_match_total_object );
+   
+   var playerstats_team_one_score_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_one_id + '].score', { data: this.props.playerstats }).value;
+   var playerstats_team_one_score_match_total = this.getSum( playerstats_team_one_score_match_total_object );
+   var playerstats_team_two_score_match_total_object = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '].score', { data: this.props.playerstats }).value;
+   var playerstats_team_two_score_match_total = this.getSum( playerstats_team_two_score_match_total_object );               
+   //console.log('playerstats_team_one_kills_match_total_object JSON.stringify:' + JSON.stringify(playerstats_team_one_kills_match_total_object) );
+   //console.log('playerstats_team_two_kills_match_total_object JSON.stringify:' + JSON.stringify(playerstats_team_two_kills_match_total_object) );
+   //console.log('team 1 kills sum:' + playerstats_team_one_kills_match_total );
+   //console.log('team 2 kills sum:' + playerstats_team_two_kills_match_total );
+
    //team two player stats
    var playerstats_team_two_kills_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '][*kills>0].id', { data: this.props.playerstats }).value; 
    var playerstats_team_two_deaths_exist = jsonQuery('[*match=' + match_id + '][*team=' + match_team_two_id + '][*deaths>0].id', { data: this.props.playerstats }).value;
@@ -343,7 +399,7 @@ export class CasterViewSeries extends Component {
                               
                               
                               <div className="row no-gutters">
-            										<div className="col-md-6 col-sm-12 m-auto card card-body">
+            										<div className="col-md-6 col-sm-12 card card-body">
             											
             											<h3>Team One <span className="text-warning font-weight-bold">{ match_team_one_name }</span> Players</h3>
             
@@ -373,12 +429,22 @@ export class CasterViewSeries extends Component {
             															{ playerstats_team_one_drops_exist != "" ? <td className="text-center">{ listplayers.drops }</td> : '' }
                                           { playerstats_team_one_score_exist != "" ? <td className="text-center">{ listplayers.score }</td> : '' }
                                         </tr>
-                                       ))}                                                                                                     
+                                       ))}
+                                       <tr>
+                                          <td>Total</td>
+            															{ playerstats_team_two_kills_exist != "" ? <td className="text-center">{ playerstats_team_one_kills_match_total }</td> : '' }
+            															{ playerstats_team_two_deaths_exist != "" ? <td className="text-center">{ playerstats_team_one_deaths_match_total }</td> : '' }
+            															{ playerstats_team_two_assist_exist != "" ? <td className="text-center">{ playerstats_team_one_assist_match_total }</td> : '' }
+            															{ playerstats_team_two_goals_exist != "" ? <td className="text-center">{ playerstats_team_one_goals_match_total }</td> : '' }
+            															{ playerstats_team_two_grabs_exist != "" ? <td className="text-center">{ playerstats_team_one_grabs_match_total }</td> : '' }
+            															{ playerstats_team_two_drops_exist != "" ? <td className="text-center">{ playerstats_team_one_drops_match_total }</td> : '' }
+                                          { playerstats_team_two_score_exist != "" ? <td className="text-center">{ playerstats_team_one_score_match_total }</td> : '' }                                           
+                                       </tr>                                                                                                  
             													</tbody>
             												</table>
             											</div>
             										</div>	
-            										<div className="col-md-6 col-sm-12 m-auto card card-body">	
+            										<div className="col-md-6 col-sm-12 card card-body">	
             											<h3>Team Two <span className="text-warning font-weight-bold">{ match_team_two_name }</span> Players</h3>
             										
             											<div className="table-responsiveX">
@@ -407,7 +473,17 @@ export class CasterViewSeries extends Component {
             															{ playerstats_team_two_drops_exist != "" ? <td className="text-center">{ listplayers.drops }</td> : '' }
                                           { playerstats_team_two_score_exist != "" ? <td className="text-center">{ listplayers.score }</td> : '' }
                                         </tr>
-                                       ))}                                                                                                     
+                                       ))}
+                                       <tr>
+                                          <td>Total</td>
+            															{ playerstats_team_two_kills_exist != "" ? <td className="text-center">{ playerstats_team_two_kills_match_total }</td> : '' }
+            															{ playerstats_team_two_deaths_exist != "" ? <td className="text-center">{ playerstats_team_two_deaths_match_total }</td> : '' }
+            															{ playerstats_team_two_assist_exist != "" ? <td className="text-center">{ playerstats_team_two_assist_match_total }</td> : '' }
+            															{ playerstats_team_two_goals_exist != "" ? <td className="text-center">{ playerstats_team_two_goals_match_total }</td> : '' }
+            															{ playerstats_team_two_grabs_exist != "" ? <td className="text-center">{ playerstats_team_two_grabs_match_total }</td> : '' }
+            															{ playerstats_team_two_drops_exist != "" ? <td className="text-center">{ playerstats_team_two_drops_match_total }</td> : '' }
+                                          { playerstats_team_two_score_exist != "" ? <td className="text-center">{ playerstats_team_two_score_match_total }</td> : '' }
+                                       </tr>                                                                                                     
             													</tbody>
             												</table>
             											</div>

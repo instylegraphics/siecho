@@ -834,6 +834,8 @@ export class StepFourMatchAdminForm extends Component {
                           playerAddTeamOne.gamemap = match_gamemap_id;
                           playerAddTeamOne.gamemode = match_gamemode_id;
                           playerAddTeamOne.team = match_team_one_id;
+                          playerAddTeamOne.series = this.props.valueProps.series;
+                          playerAddTeamOne.tournament = this.props.valueProps.tournament;                           
                           //console.log("e.target.value:" + e.target.value);
                           //console.log("playerAdd:" + currentMatchData.gamemode );
                           this.setState({ playerAddTeamOne });
@@ -871,7 +873,7 @@ export class StepFourMatchAdminForm extends Component {
       						<table className="table table-striped">
       							<thead>                                            
       								<tr>
-      									<th className="text-center">Username</th>
+      									<th>Username</th>
       									<th className="text-center">Kills</th>
       									<th className="text-center">Deaths</th>
       									<th className="text-center">Assist</th>
@@ -887,7 +889,7 @@ export class StepFourMatchAdminForm extends Component {
       							<tbody>
                       {playerstats_team_one_object.map(listplayers => (
                       <tr key={listplayers.id} className={ listplayers.is_captain ? 'table-dark' : '' }>
-                        <td className="text-center">{ jsonQuery('[id=' + listplayers.player + '].username', { data: this.props.players }).value }</td>
+                        <td>{ listplayers.is_captain ? <i className="fas fa-crown font-weight-bold text-warning"></i> : '' } { jsonQuery('[id=' + listplayers.player + '].username', { data: this.props.players }).value }</td>
                         <td className="text-center">
                           <input
                           id={ 'ptone-kills-' + listplayers.id }
@@ -1019,7 +1021,7 @@ export class StepFourMatchAdminForm extends Component {
                           var ptone_drops = $("#ptone-drops-" + listplayers.id ).val();
                           var ptone_score = $("#ptone-score-" + listplayers.id ).val();
                           var ptone_is_captain = $("#ptone-is_captain-" + listplayers.id ).val();  
-                          console.log("update listplayers.id:" + listplayers.id);
+                          /*console.log("update listplayers.id:" + listplayers.id);
                           console.log('ptone_kills:' + ptone_kills);
                           console.log('ptone_deaths:' + ptone_deaths);
                           console.log('ptone_assist:' + ptone_assist);
@@ -1028,7 +1030,7 @@ export class StepFourMatchAdminForm extends Component {
                           console.log('ptone_drops:' + ptone_drops);
                           console.log('ptone-score:' + ptone_score);
                           console.log('ptone_is_captain:' + ptone_is_captain);
- 
+                           */
                            //  gamemap
                           var ptone_default_gamemap = "";
                           if (typeof this.props.match.gamemap.id != 'undefined' && this.props.match.gamemap.id) {
@@ -1038,7 +1040,7 @@ export class StepFourMatchAdminForm extends Component {
                                 ptone_default_gamemap = this.props.match.gamemap;
                               }
                           } 
-                          console.log('ptone_default_gamemap:' + ptone_default_gamemap);  
+                          //console.log('ptone_default_gamemap:' + ptone_default_gamemap);  
                           // gamemode 
                           var ptone_default_gamemode = "";
                           if (typeof this.props.match.gamemode.id != 'undefined' && this.props.match.gamemode.id) {
@@ -1048,10 +1050,12 @@ export class StepFourMatchAdminForm extends Component {
                                 ptone_default_gamemode = this.props.match.gamemode;
                               }
                           } 
-                          console.log('ptone_default_gamemode:' + ptone_default_gamemode);  
+                          //console.log('ptone_default_gamemode:' + ptone_default_gamemode);  
                   
                           const postPlayerTeamOneObj = {
                             playerstatsid: listplayers.id,
+                            series: listplayers.series,
+                            tournament: listplayers.tournament,                            
                             is_captain: ptone_is_captain,
                             score: ptone_score,
                             kills: ptone_kills,
@@ -1102,6 +1106,8 @@ export class StepFourMatchAdminForm extends Component {
                           playerAddTeamTwo.gamemap = match_gamemap_id;
                           playerAddTeamTwo.gamemode = match_gamemode_id;
                           playerAddTeamTwo.team = match_team_two_id;
+                          playerAddTeamTwo.series = this.props.valueProps.series;
+                          playerAddTeamTwo.tournament = this.props.valueProps.tournament;                            
                           //console.log("e.target.value:" + e.target.value);
                           //console.log("playerAdd:" + currentMatchData.gamemode );
                           this.setState({ playerAddTeamTwo });
@@ -1139,7 +1145,7 @@ export class StepFourMatchAdminForm extends Component {
       						<table className="table table-striped">
       							<thead>                                            
       								<tr>
-      									<th className="text-center">Username</th>
+      									<th>Username</th>
       									<th className="text-center">Kills</th>
       									<th className="text-center">Deaths</th>
       									<th className="text-center">Assist</th>
@@ -1155,7 +1161,7 @@ export class StepFourMatchAdminForm extends Component {
       							<tbody>
                       {playerstats_team_two_object.map(listplayers => (
                       <tr key={listplayers.id} className={ listplayers.is_captain ? 'table-dark' : '' }>
-                        <td className="text-center">{ jsonQuery('[id=' + listplayers.player + '].username', { data: this.props.players }).value }</td>
+                        <td>{ listplayers.is_captain ? <i className="fas fa-crown font-weight-bold text-warning"></i> : '' } { jsonQuery('[id=' + listplayers.player + '].username', { data: this.props.players }).value }</td>
                         <td className="text-center">
                           <input
                           id={ 'pttwo-kills-' + listplayers.id }
@@ -1287,15 +1293,15 @@ export class StepFourMatchAdminForm extends Component {
                           var pttwo_drops = $("#pttwo-drops-" + listplayers.id ).val();
                           var pttwo_score = $("#pttwo-score-" + listplayers.id ).val();
                           var pttwo_is_captain = $("#pttwo-is_captain-" + listplayers.id ).val();  
-                          console.log("update listplayers.id:" + listplayers.id);
-                          console.log('pttwo_kills:' + pttwo_kills);
-                          console.log('pttwo_deaths:' + pttwo_deaths);
-                          console.log('pttwo_assist:' + pttwo_assist);
-                          console.log('pttwo_goals:' + pttwo_goals);
-                          console.log('pttwo_grabs:' + pttwo_grabs);
-                          console.log('pttwo_drops:' + pttwo_drops);
-                          console.log('ptone-score:' + pttwo_score);
-                          console.log('pttwo_is_captain:' + pttwo_is_captain);
+                          //console.log("update listplayers.id:" + listplayers.id);
+                          //console.log('pttwo_kills:' + pttwo_kills);
+                          //console.log('pttwo_deaths:' + pttwo_deaths);
+                          //console.log('pttwo_assist:' + pttwo_assist);
+                          //console.log('pttwo_goals:' + pttwo_goals);
+                          //console.log('pttwo_grabs:' + pttwo_grabs);
+                          //console.log('pttwo_drops:' + pttwo_drops);
+                          //console.log('ptone-score:' + pttwo_score);
+                          //console.log('pttwo_is_captain:' + pttwo_is_captain);
  
                            //  gamemap
                           var pttwo_default_gamemap = "";
@@ -1306,7 +1312,7 @@ export class StepFourMatchAdminForm extends Component {
                                 pttwo_default_gamemap = this.props.match.gamemap;
                               }
                           } 
-                          console.log('pttwo_default_gamemap:' + pttwo_default_gamemap);  
+                          //console.log('pttwo_default_gamemap:' + pttwo_default_gamemap);  
                           // gamemode 
                           var pttwo_default_gamemode = "";
                           if (typeof this.props.match.gamemode.id != 'undefined' && this.props.match.gamemode.id) {
@@ -1316,10 +1322,12 @@ export class StepFourMatchAdminForm extends Component {
                                 pttwo_default_gamemode = this.props.match.gamemode;
                               }
                           } 
-                          console.log('pttwo_default_gamemode:' + pttwo_default_gamemode);  
+                          //console.log('pttwo_default_gamemode:' + pttwo_default_gamemode);  
                   
                           const postPlayerTeamTwoObj = {
                             playerstatsid: listplayers.id,
+                            series: listplayers.series,
+                            tournament: listplayers.tournament,
                             is_captain: pttwo_is_captain,
                             score: pttwo_score,
                             kills: pttwo_kills,

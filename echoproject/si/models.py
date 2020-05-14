@@ -182,6 +182,8 @@ class PlayerStats(models.Model):
     match = models.ForeignKey(Match, on_delete=models.DO_NOTHING)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.DO_NOTHING, blank=True, null=True)   
+    tournament = models.ForeignKey(Tournament, on_delete=models.DO_NOTHING, blank=True, null=True)
+    series = models.ForeignKey(Series, on_delete=models.DO_NOTHING, blank=True, null=True)    
     game = models.ForeignKey(Game, on_delete=models.DO_NOTHING, blank=True, null=True)  
     gamemode = models.ForeignKey(GameMode, on_delete=models.DO_NOTHING, blank=True, null=True)
     gamemap = models.ForeignKey(GameMap, on_delete=models.DO_NOTHING, blank=True, null=True)
