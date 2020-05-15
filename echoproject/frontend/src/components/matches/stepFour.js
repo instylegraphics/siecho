@@ -1419,14 +1419,12 @@ export class StepFourMatchAdminForm extends Component {
               {this.props.matches.map(listmatch => (
                 <tr key={listmatch.id} className={ this.props.valueProps.match == listmatch.id ? 'table-dark' : '' }>
                   <td className="text-center">{listmatch.id}</td>
-                  
                   <td className="text-center">{listmatch.match_order}</td>
                   { ( (listmatch.team_one_score  == listmatch.team_two_score) && (String(listmatch.active) == 'false') ) ?
                   <td>Draw/Tie</td>
                   :
                   <td>{ jsonQuery('[id=' + listmatch.winner + '].short_name', { data: this.props.teams }).value }</td>
-                  }
-                                                                        
+                  }                                                               
                   <td className={`${'text-center'} ${ jsonQuery('[id=' + listmatch.team_one_faction + '].htmlcolorvalue', { data: this.props.gamefactions }).value }`} >{ listmatch.team_one_score }</td>  
                   <td className={`${'text-center'} ${ jsonQuery('[id=' + listmatch.team_two_faction + '].htmlcolorvalue', { data: this.props.gamefactions }).value }`} >{ listmatch.team_two_score }</td>  
                   <td>{ jsonQuery('[id=' + listmatch.gamemode + '].name', { data: this.props.gamemodes }).value } </td>
