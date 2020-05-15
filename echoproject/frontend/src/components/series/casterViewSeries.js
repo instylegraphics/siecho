@@ -103,11 +103,14 @@ export class CasterViewSeries extends Component {
     }// for loop
     //console.log('f_team_one_score:' + f_team_one_score);  
     //console.log('f_team_two_score:' + f_team_two_score);   
-    if ( f_team_one_score > f_team_two_score ) {
+    if ( f_team_one_score == f_team_two_score ) {
+      //if tie no winner
+      f_winner = null;
+    } else if ( f_team_one_score < f_team_two_score ) {
+      f_winner = f_match_team_two_id;
+    } else if ( f_team_one_score > f_team_two_score ) {
       f_winner = f_match_team_one_id;
-    } else {
-      f_winner = f_team_two_score;
-    }
+    } 
     //console.log('f_winner:' + f_winner); 
         
      const postObj = {
@@ -566,9 +569,9 @@ export class CasterViewSeries extends Component {
                                                   <th>Winner</th>
                                                   <th className="text-center">Best Of</th>
                                                   <th>Team One</th>
-                                                  <th className="text-center">Team One Score</th>
+                                                  <th className="text-center">Team One Wins</th>
                                                   <th>Team Two</th>
-                                                  <th className="text-center">Team Two Score</th>
+                                                  <th className="text-center">Team Two Wins</th>
                                                   <th className="text-center">Ended</th>
                                                   <th className="text-center">Active</th>
                                               </tr>

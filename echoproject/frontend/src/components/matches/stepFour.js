@@ -113,22 +113,22 @@ export class StepFourMatchAdminForm extends Component {
   //submit button function
   onSubmit = e => {
     e.preventDefault();
-    console.log('inside match form');
-    console.log('b4 submit this.props :');
-    console.log(this.props);
-    console.log('valueProps Form - match id :' + this.props.valueProps.match );
+    //console.log('inside match form');
+    //console.log('b4 submit this.props :');
+    //console.log(this.props);
+    //console.log('valueProps Form - match id :' + this.props.valueProps.match );
         
-    console.log('b4 submit');
+    //console.log('b4 submit');
    
     //grab values to update series to activate, then go forward to edit page
     var f_jsonQuery = require('json-query');
     
     // getting the form values - roomcode
     var s_roomcode = this.state.currentMatchData.roomcode;  
-    console.log('this.state.currentMatchData.roomcode:' + s_roomcode);
+    //console.log('this.state.currentMatchData.roomcode:' + s_roomcode);
          
     var jq_roomcode = $("#roomcode").val();  
-    console.log('jquery roomcode:' + jq_roomcode);
+    //console.log('jquery roomcode:' + jq_roomcode);
     
     var f_roomcode = "";
     if (typeof s_roomcode != 'undefined' && s_roomcode) {
@@ -138,14 +138,14 @@ export class StepFourMatchAdminForm extends Component {
           f_roomcode = jq_roomcode;
         }
     } 
-    console.log('f_roomcode:' + f_roomcode);
+    //console.log('f_roomcode:' + f_roomcode);
        
     // getting the form values - gamemode
     var s_gamemode = this.state.currentMatchData.gamemode;  
-    console.log('this.state.currentMatchData.gamemode:' + s_gamemode);
+    //console.log('this.state.currentMatchData.gamemode:' + s_gamemode);
          
     var jq_gamemode = $("#gamemode").val();  
-    console.log('jq_gamemode:' + jq_gamemode);
+    //console.log('jq_gamemode:' + jq_gamemode);
     
     var f_gamemode = "";
     if (typeof s_gamemode != 'undefined' && s_gamemode) {
@@ -155,14 +155,14 @@ export class StepFourMatchAdminForm extends Component {
           f_gamemode = jq_gamemode;
         }
     } 
-    console.log('f_gamemode:' + f_gamemode);     
+    //console.log('f_gamemode:' + f_gamemode);     
  
     // getting the form values - gamemap
     var s_gamemap = this.state.currentMatchData.gamemap;  
-    console.log('this.state.currentMatchData.gamemap:' + s_gamemap);
+    //console.log('this.state.currentMatchData.gamemap:' + s_gamemap);
          
     var jq_gamemap = $("#gamemap").val();  
-    console.log('jq_gamemap:' + jq_gamemap);
+    //console.log('jq_gamemap:' + jq_gamemap);
     
     var f_gamemap = "";
     if (typeof s_gamemap != 'undefined' && s_gamemap) {
@@ -172,14 +172,14 @@ export class StepFourMatchAdminForm extends Component {
           f_gamemap = jq_gamemap;
         }
     } 
-    console.log('f_gamemap:' + f_gamemap);  
+    //console.log('f_gamemap:' + f_gamemap);  
     
     // getting the form values - team_one_faction
     var s_team_one_faction= this.state.currentMatchData.team_one_faction;  
-    console.log('this.state.currentMatchData.team_one_faction:' + s_team_one_faction);
+    //console.log('this.state.currentMatchData.team_one_faction:' + s_team_one_faction);
          
     var jq_team_one_faction = $("#team_one_faction").val();  
-    console.log('jq_team_one_faction:' + jq_team_one_faction);
+    //console.log('jq_team_one_faction:' + jq_team_one_faction);
     
     var f_team_one_faction = "";
     if (typeof s_team_one_faction != 'undefined' && s_team_one_faction) {
@@ -189,14 +189,14 @@ export class StepFourMatchAdminForm extends Component {
           f_team_one_faction = jq_team_one_faction;
         }
     } 
-    console.log('f_team_one_faction:' + f_team_one_faction);  
+    //console.log('f_team_one_faction:' + f_team_one_faction);  
     
      // getting the form values - team_one_score
     var s_team_one_score = this.state.currentMatchData.team_one_score;  
-    console.log('this.state.currentMatchData.team_one_score:' + s_team_one_score);
+    //console.log('this.state.currentMatchData.team_one_score:' + s_team_one_score);
          
     var jq_team_one_score = $("#team_one_score").val();  
-    console.log('jq_team_one_score:' + jq_team_one_score);
+    //console.log('jq_team_one_score:' + jq_team_one_score);
     
     var f_team_one_score = "";
     if (typeof s_team_one_score != 'undefined' && s_team_one_score) {
@@ -206,15 +206,15 @@ export class StepFourMatchAdminForm extends Component {
           f_team_one_score = jq_team_one_score;
         }
     } 
-    console.log('f_team_one_score:' + f_team_one_score); 
+    //console.log('f_team_one_score:' + f_team_one_score); 
     
     
     // getting the form values - team_two_faction
     var s_team_two_faction = this.state.currentMatchData.team_two_faction;  
-    console.log('this.state.currentMatchData.team_two_faction:' + s_team_two_faction);
+    //console.log('this.state.currentMatchData.team_two_faction:' + s_team_two_faction);
          
     var jq_team_two_faction = $("#team_two_faction").val();  
-    console.log('jq_team_two_faction:' + jq_team_two_faction);
+    //console.log('jq_team_two_faction:' + jq_team_two_faction);
     
     var f_team_two_faction = "";
     if (typeof s_team_two_faction != 'undefined' && s_team_two_faction) {
@@ -224,14 +224,14 @@ export class StepFourMatchAdminForm extends Component {
           f_team_two_faction = jq_team_two_faction;
         }
     } 
-    console.log('f_team_two_faction:' + f_team_two_faction);  
+    //console.log('f_team_two_faction:' + f_team_two_faction);  
     
      // getting the form values - team_two_score
     var s_team_two_score = this.state.currentMatchData.team_two_score;  
-    console.log('this.state.currentMatchData.team_two_score:' + s_team_two_score);
+    //console.log('this.state.currentMatchData.team_two_score:' + s_team_two_score);
          
     var jq_team_two_score = $("#team_two_score").val();  
-    console.log('jq_team_two_score:' + jq_team_two_score);
+    //console.log('jq_team_two_score:' + jq_team_two_score);
     
     var f_team_two_score = "";
     if (typeof s_team_two_score != 'undefined' && s_team_two_score) {
@@ -241,10 +241,10 @@ export class StepFourMatchAdminForm extends Component {
           f_team_two_score = jq_team_two_score;
         }
     } 
-    console.log('f_team_two_score:' + f_team_two_score); 
+    //console.log('f_team_two_score:' + f_team_two_score); 
     
-    // getting the form values - winner
-    var s_winner = this.state.currentMatchData.winner;  
+    // getting the form values - winner **old manual method
+/*    var s_winner = this.state.currentMatchData.winner;  
     console.log('this.state.currentMatchData.winner:' + s_winner);
          
     var jq_winner = $("#winner").val();  
@@ -259,8 +259,10 @@ export class StepFourMatchAdminForm extends Component {
         }
     } 
     console.log('f_winner:' + f_winner);    
-        
-     
+*/        
+    //winner should be auto determind
+    var f_winner = null;
+    
     const postObj = {
       matchid: this.props.valueProps.match,
       roomcode: f_roomcode,
@@ -275,8 +277,8 @@ export class StepFourMatchAdminForm extends Component {
       ended: 'false'    
     } 
 
-    console.log('POST');       
-    console.log('matchid:' + this.props.valueProps.match);  
+    console.log('POST update match');       
+/*    console.log('matchid:' + this.props.valueProps.match);  
     console.log('roomcode:' + f_roomcode); 
     console.log('gamemode:' + f_gamemode); 
     console.log('gamemap:' + f_gamemap);  
@@ -288,11 +290,11 @@ export class StepFourMatchAdminForm extends Component {
             
     console.log('postObj:');
     console.log(postObj);
-    
+*/    
     this.props.updateMatch( postObj );
     
-    console.log('step4 afer update post valueProps:');
-    console.log(this.props);
+    //console.log('step4 afer update post valueProps:');
+    //console.log(this.props);
 
     //clear state
 /*
@@ -307,22 +309,22 @@ export class StepFourMatchAdminForm extends Component {
   endMatchForm = e => {
     e.preventDefault();
  
-    console.log('inside match form END');
-    console.log('b4 submit this.props :');
-    console.log(this.props);
-    console.log('valueProps Form - match id :' + this.props.valueProps.match );
+    //console.log('inside match form END');
+    //console.log('b4 submit this.props :');
+    //console.log(this.props);
+    //console.log('valueProps Form - match id :' + this.props.valueProps.match );
         
-    console.log('b4 submit');
+    //console.log('b4 submit');
    
     //grab values to update series to activate, then go forward to edit page
     var f_jsonQuery = require('json-query');
     
     // getting the form values - roomcode
     var s_roomcode = this.state.currentMatchData.roomcode;  
-    console.log('this.state.currentMatchData.roomcode:' + s_roomcode);
+    //console.log('this.state.currentMatchData.roomcode:' + s_roomcode);
          
     var jq_roomcode = $("#roomcode").val();  
-    console.log('jquery roomcode:' + jq_roomcode);
+    //console.log('jquery roomcode:' + jq_roomcode);
     
     var f_roomcode = "";
     if (typeof s_roomcode != 'undefined' && s_roomcode) {
@@ -332,14 +334,14 @@ export class StepFourMatchAdminForm extends Component {
           f_roomcode = jq_roomcode;
         }
     } 
-    console.log('f_roomcode:' + f_roomcode);
+    //console.log('f_roomcode:' + f_roomcode);
        
     // getting the form values - gamemode
     var s_gamemode = this.state.currentMatchData.gamemode;  
-    console.log('this.state.currentMatchData.gamemode:' + s_gamemode);
+    //console.log('this.state.currentMatchData.gamemode:' + s_gamemode);
          
     var jq_gamemode = $("#gamemode").val();  
-    console.log('jq_gamemode:' + jq_gamemode);
+    //console.log('jq_gamemode:' + jq_gamemode);
     
     var f_gamemode = "";
     if (typeof s_gamemode != 'undefined' && s_gamemode) {
@@ -349,14 +351,14 @@ export class StepFourMatchAdminForm extends Component {
           f_gamemode = jq_gamemode;
         }
     } 
-    console.log('f_gamemode:' + f_gamemode);     
+    //console.log('f_gamemode:' + f_gamemode);     
  
     // getting the form values - gamemap
     var s_gamemap = this.state.currentMatchData.gamemap;  
-    console.log('this.state.currentMatchData.gamemap:' + s_gamemap);
+    //console.log('this.state.currentMatchData.gamemap:' + s_gamemap);
          
     var jq_gamemap = $("#gamemap").val();  
-    console.log('jq_gamemap:' + jq_gamemap);
+    //console.log('jq_gamemap:' + jq_gamemap);
     
     var f_gamemap = "";
     if (typeof s_gamemap != 'undefined' && s_gamemap) {
@@ -366,14 +368,14 @@ export class StepFourMatchAdminForm extends Component {
           f_gamemap = jq_gamemap;
         }
     } 
-    console.log('f_gamemap:' + f_gamemap);  
+    //console.log('f_gamemap:' + f_gamemap);  
     
     // getting the form values - team_one_faction
     var s_team_one_faction= this.state.currentMatchData.team_one_faction;  
-    console.log('this.state.currentMatchData.team_one_faction:' + s_team_one_faction);
+    //console.log('this.state.currentMatchData.team_one_faction:' + s_team_one_faction);
          
     var jq_team_one_faction = $("#team_one_faction").val();  
-    console.log('jq_team_one_faction:' + jq_team_one_faction);
+    //console.log('jq_team_one_faction:' + jq_team_one_faction);
     
     var f_team_one_faction = "";
     if (typeof s_team_one_faction != 'undefined' && s_team_one_faction) {
@@ -383,14 +385,14 @@ export class StepFourMatchAdminForm extends Component {
           f_team_one_faction = jq_team_one_faction;
         }
     } 
-    console.log('f_team_one_faction:' + f_team_one_faction);  
+    //console.log('f_team_one_faction:' + f_team_one_faction);  
     
      // getting the form values - team_one_score
     var s_team_one_score = this.state.currentMatchData.team_one_score;  
-    console.log('this.state.currentMatchData.team_one_score:' + s_team_one_score);
+    //console.log('this.state.currentMatchData.team_one_score:' + s_team_one_score);
          
     var jq_team_one_score = $("#team_one_score").val();  
-    console.log('jq_team_one_score:' + jq_team_one_score);
+    //console.log('jq_team_one_score:' + jq_team_one_score);
     
     var f_team_one_score = "";
     if (typeof s_team_one_score != 'undefined' && s_team_one_score) {
@@ -400,15 +402,15 @@ export class StepFourMatchAdminForm extends Component {
           f_team_one_score = jq_team_one_score;
         }
     } 
-    console.log('f_team_one_score:' + f_team_one_score); 
+    //console.log('f_team_one_score:' + f_team_one_score); 
     
     
     // getting the form values - team_two_faction
     var s_team_two_faction = this.state.currentMatchData.team_two_faction;  
-    console.log('this.state.currentMatchData.team_two_faction:' + s_team_two_faction);
+    //console.log('this.state.currentMatchData.team_two_faction:' + s_team_two_faction);
          
     var jq_team_two_faction = $("#team_two_faction").val();  
-    console.log('jq_team_two_faction:' + jq_team_two_faction);
+    //console.log('jq_team_two_faction:' + jq_team_two_faction);
     
     var f_team_two_faction = "";
     if (typeof s_team_two_faction != 'undefined' && s_team_two_faction) {
@@ -418,14 +420,14 @@ export class StepFourMatchAdminForm extends Component {
           f_team_two_faction = jq_team_two_faction;
         }
     } 
-    console.log('f_team_two_faction:' + f_team_two_faction);  
+    //console.log('f_team_two_faction:' + f_team_two_faction);  
     
      // getting the form values - team_two_score
     var s_team_two_score = this.state.currentMatchData.team_two_score;  
-    console.log('this.state.currentMatchData.team_two_score:' + s_team_two_score);
+    //console.log('this.state.currentMatchData.team_two_score:' + s_team_two_score);
          
     var jq_team_two_score = $("#team_two_score").val();  
-    console.log('jq_team_two_score:' + jq_team_two_score);
+    //console.log('jq_team_two_score:' + jq_team_two_score);
     
     var f_team_two_score = "";
     if (typeof s_team_two_score != 'undefined' && s_team_two_score) {
@@ -435,9 +437,10 @@ export class StepFourMatchAdminForm extends Component {
           f_team_two_score = jq_team_two_score;
         }
     } 
-    console.log('f_team_two_score:' + f_team_two_score); 
+    //console.log('f_team_two_score:' + f_team_two_score); 
     
-    // getting the form values - winner
+    // getting the form values - winner ** old method
+/*
     var s_winner = this.state.currentMatchData.winner;  
     console.log('this.state.currentMatchData.winner:' + s_winner);
          
@@ -452,7 +455,22 @@ export class StepFourMatchAdminForm extends Component {
           f_winner = jq_winner;
         }
     } 
-    console.log('f_winner:' + f_winner);    
+*/  
+    //auto determin winner or draw
+    var team_one_id = this.state.matchData.team_one.id;  
+    var team_two_id = this.state.matchData.team_two.id; 
+    //console.log('team_one_id:' + team_one_id);  
+    //console.log('team_two_id:' + team_two_id);  
+    var f_winnerEnd = "";
+    if ( f_team_one_score == f_team_two_score ) {
+      //if tie no winner
+      f_winnerEnd = null;
+    } else if ( f_team_two_score > f_team_one_score ) {
+      f_winnerEnd = team_two_id;
+    } else if ( f_team_one_score > f_team_two_score ) {
+      f_winnerEnd = team_one_id;
+    } 
+    //console.log('f_winnerEnd:' + f_winnerEnd);    
         
      
     const postObj = {
@@ -464,13 +482,13 @@ export class StepFourMatchAdminForm extends Component {
       team_one_score: f_team_one_score,
       team_two_faction: f_team_two_faction,
       team_two_score: f_team_two_score,
-      winner: f_winner,
+      winner: f_winnerEnd,
       active: 'false',
       ended: 'true'
     } 
 
     console.log('POST MATCH END');       
-    console.log('matchid:' + this.props.valueProps.match);  
+/*    console.log('matchid:' + this.props.valueProps.match);  
     console.log('roomcode:' + f_roomcode); 
     console.log('gamemode:' + f_gamemode); 
     console.log('gamemap:' + f_gamemap);  
@@ -479,14 +497,14 @@ export class StepFourMatchAdminForm extends Component {
     console.log('team_two_faction:' + f_team_two_faction);  
     console.log('team_two_score:' + f_team_two_score); 
     console.log('winner:' + f_winner);     
-            
+          
     console.log('postObj:');
     console.log(postObj);
-    
+*/      
     this.props.updateMatch( postObj );
     
-    console.log('step4 afer update post valueProps:');
-    console.log(this.props);
+//    console.log('step4 afer update post valueProps:');
+//    console.log(this.props);
 
     //clear state
 /*
@@ -501,8 +519,8 @@ export class StepFourMatchAdminForm extends Component {
   render() {
     const { valueProps, handleChange } = this.props;
      
-    console.log('step4 Match Admin: valueProps.match:');
-    console.log(this.props.match);
+    //console.log('step4 Match Admin: valueProps.match:');
+    //console.log(this.props.match);
     
     var jsonQuery = require('json-query');
     
@@ -513,7 +531,7 @@ export class StepFourMatchAdminForm extends Component {
     } else {
         default_gamemode = this.props.match.gamemode.id;
     } 
-    console.log('default_gamemode:' + String(default_gamemode) );  
+    //console.log('default_gamemode:' + String(default_gamemode) );  
 
     //gamemap   
     var default_gamemap;
@@ -522,7 +540,7 @@ export class StepFourMatchAdminForm extends Component {
     } else {
         default_gamemap = this.props.match.gamemap.id;
     } 
-    console.log('default_gamemap:' + String(default_gamemap) );  
+    //console.log('default_gamemap:' + String(default_gamemap) );  
     
     //this.props.match.team_one_faction.id
     var default_team_one_faction;
@@ -531,7 +549,7 @@ export class StepFourMatchAdminForm extends Component {
     } else {
         default_team_one_faction = this.props.match.team_one_faction.id;
     } 
-    console.log('default_team_one_faction:' + String(default_team_one_faction) );
+    //console.log('default_team_one_faction:' + String(default_team_one_faction) );
     
     //this.props.match.team_one_faction.id
     var default_team_two_faction;
@@ -540,7 +558,7 @@ export class StepFourMatchAdminForm extends Component {
     } else {
         default_team_two_faction = this.props.match.team_two_faction.id;
     } 
-    console.log('default_team_two_faction:' + String(default_team_two_faction) );
+    //console.log('default_team_two_faction:' + String(default_team_two_faction) );
         
     //this.props.match.winner.id
     var default_winner;
@@ -549,7 +567,7 @@ export class StepFourMatchAdminForm extends Component {
     } else {
         default_winner = this.props.match.winner.id;
     } 
-    console.log('default_winner:' + String(default_winner) );
+    //console.log('default_winner:' + String(default_winner) );
 
     // tournament info
     var tournament_name_value = jsonQuery('series.tournament.name', { data: this.props.match }).value;
@@ -569,6 +587,11 @@ export class StepFourMatchAdminForm extends Component {
     var match_active = jsonQuery('active', { data: this.props.match }).value;    
     var match_ended = jsonQuery('ended', { data: this.props.match }).value;     
     //match info that updates
+    var match_match_winner = jsonQuery('winner.id', { data: this.props.match }).value;
+    if ( ( match_match_winner == "") || (match_match_winner == null ) ) { 
+      match_match_winner = jsonQuery('winner', { data: this.props.match }).value;
+    }
+    
     var match_team_one_faction_id = jsonQuery('[id=' + this.props.valueProps.match + '].team_one_faction', { data: this.props.matches }).value;
     var match_team_two_faction_id = jsonQuery('[id=' + this.props.valueProps.match + '].team_two_faction', { data: this.props.matches }).value;
     var match_team_one_faction_htmlcolor = jsonQuery('[id=' + match_team_one_faction_id + '].htmlcolorvalue', { data: this.props.gamefactions }).value;
@@ -628,8 +651,8 @@ export class StepFourMatchAdminForm extends Component {
                         onChange={(e) => {
                         let { currentMatchData } = this.state;
                         currentMatchData.roomcode = e.target.value;
-                        console.log("e.target.value:" + e.target.value);
-                        console.log("currentMatchData.roomcode:" + currentMatchData.roomcode );
+                        //console.log("e.target.value:" + e.target.value);
+                        //console.log("currentMatchData.roomcode:" + currentMatchData.roomcode );
                         this.setState({ currentMatchData });
                         }}
                         defaultValue={ this.props.match.roomcode }
@@ -646,8 +669,8 @@ export class StepFourMatchAdminForm extends Component {
                        onChange={(e) => {
                       let { currentMatchData } = this.state;
                       currentMatchData.winner = e.target.value;
-                      console.log("e.target.value:" + e.target.value);
-                      console.log("currentMatchData.gamemode:" + currentMatchData.gamemode );
+                      //console.log("e.target.value:" + e.target.value);
+                      //console.log("currentMatchData.gamemode:" + currentMatchData.gamemode );
                       this.setState({ currentMatchData });          
                       }}
                       defaultValue={ default_gamemode }
@@ -666,8 +689,8 @@ export class StepFourMatchAdminForm extends Component {
                        onChange={(e) => {
                       let { currentMatchData } = this.state;
                       currentMatchData.winner = e.target.value;
-                      console.log("e.target.value:" + e.target.value);
-                      console.log("currentMatchData.gamemap:" + currentMatchData.gamemap );
+                      //console.log("e.target.value:" + e.target.value);
+                      //console.log("currentMatchData.gamemap:" + currentMatchData.gamemap );
                       this.setState({ currentMatchData });          
                       }}
                       defaultValue={ default_gamemap }
@@ -683,18 +706,30 @@ export class StepFourMatchAdminForm extends Component {
   						 
   						<div className="row d-flex justify-content-center">	
                 <div className="col-md-4 match-editor-border">
-                	<div className={`${'text-center mt-3 pt-2'} ${match_team_one_faction_htmlcolor}`}>
-                  <h4 className="font-weight-bold">{ match_team_one_name }</h4>
-                  <img className="card--body__img card-img-top pb-2" src={match_team_one_image} alt={ match_team_one_name } aria-label={ match_team_one_name } />
-                  </div>
+                	
+                  <div className={`${'text-center mt-3 pt-2'} ${match_team_one_faction_htmlcolor}`}>
+                  { match_team_one_id == match_match_winner ?
+                  <span>
+                    <h5 class="text-warning font-weight-bold fa-blink">WINNER!</h5>   
+                    <h4 className="font-weight-bold fa-blink">{ match_team_one_name }</h4>
+                    <img className="card--body__img card-img-top pb-2 fa-blink" src={match_team_one_image} alt={ match_team_one_name } aria-label={ match_team_one_name } />
+                  </span>
+                  :
+                  <span>
+                    <h4 className="font-weight-bold">{ match_team_one_name }</h4>
+                    <img className="card--body__img card-img-top pb-2 " src={match_team_one_image} alt={ match_team_one_name } aria-label={ match_team_one_name } />
+                  </span>
+                  } 
+                  </div>                                
+
                   <div className="form-group">
   									<label className="col-form-label col-form-label-lg">Team One Faction</label>
                     <select id="team_one_faction" name="team_one_faction" className="form-control custom-select" 
                      onChange={(e) => {
                     let { currentMatchData } = this.state;
                     currentMatchData.team_one_faction = e.target.value;
-                    console.log("e.target.value:" + e.target.value);
-                    console.log("currentMatchData.team_one_faction:" + currentMatchData.team_one_faction );
+                    //console.log("e.target.value:" + e.target.value);
+                    //console.log("currentMatchData.team_one_faction:" + currentMatchData.team_one_faction );
                     this.setState({ currentMatchData });          
                     }}
                     defaultValue={ default_team_one_faction }
@@ -718,8 +753,8 @@ export class StepFourMatchAdminForm extends Component {
                       onChange={(e) => {
                       let { currentMatchData } = this.state;
                       currentMatchData.team_one_score = e.target.value;
-                      console.log("e.target.value:" + e.target.value);
-                      console.log("currentMatchData.team_one_score:" + currentMatchData.team_one_score );
+                      //console.log("e.target.value:" + e.target.value);
+                      //console.log("currentMatchData.team_one_score:" + currentMatchData.team_one_score );
                       this.setState({ currentMatchData });          
                       }}
                       defaultValue={ this.props.match.team_one_score }              
@@ -730,18 +765,30 @@ export class StepFourMatchAdminForm extends Component {
   							<i className="fas fa-times fa-7x"></i>
   							</div>
                 <div className="col-md-4 match-editor-border">
-                	<div className={`${'text-center mt-3 pt-2'} ${match_team_two_faction_htmlcolor}`}>
+                	
+                  <div className={`${'text-center mt-3 pt-2'} ${match_team_two_faction_htmlcolor}`}>
+                  { match_team_two_id == match_match_winner ?
+                  <span>
+                    <h5 class="text-warning font-weight-bold fa-blink">WINNER!</h5>
+                    <h4 className="font-weight-bold fa-blink">{ match_team_two_name }</h4>
+                    <img className="card--body__img card-img-top pb-2 fa-blink" src={match_team_two_image} alt={ match_team_two_name } aria-label={ match_team_two_name } />   
+                  </span>
+                  :
+                  <span>
                     <h4 className="font-weight-bold">{ match_team_two_name }</h4>
                     <img className="card--body__img card-img-top pb-2" src={match_team_two_image} alt={ match_team_two_name } aria-label={ match_team_two_name } />
-                  </div>
+                  </span>
+                  } 
+                  </div>  
+         
                   <div className="form-group">
   									<label className="col-form-label col-form-label-lg">Team Two Faction</label>
                     <select id="team_two_faction" name="team_two_faction" className="form-control custom-select" 
                      onChange={(e) => {
                     let { currentMatchData } = this.state;
                     currentMatchData.team_two_faction = e.target.value;
-                    console.log("e.target.value:" + e.target.value);
-                    console.log("currentMatchData.team_two_faction:" + currentMatchData.team_two_faction );
+                    //console.log("e.target.value:" + e.target.value);
+                    //console.log("currentMatchData.team_two_faction:" + currentMatchData.team_two_faction );
                     this.setState({ currentMatchData });          
                     }}
                     defaultValue={ default_team_two_faction }
@@ -765,8 +812,8 @@ export class StepFourMatchAdminForm extends Component {
                     onChange={(e) => {
                     let { currentMatchData } = this.state;
                     currentMatchData.team_two_score = e.target.value;
-                    console.log("e.target.value:" + e.target.value);
-                    console.log("currentMatchData.team_two_score:" + currentMatchData.team_two_score );
+                    //console.log("e.target.value:" + e.target.value);
+                    //console.log("currentMatchData.team_two_score:" + currentMatchData.team_two_score );
                     this.setState({ currentMatchData });          
                     }}
                     defaultValue={ this.props.match.team_two_score }              
@@ -776,30 +823,8 @@ export class StepFourMatchAdminForm extends Component {
   						</div>
   						 
   
-  						<div className="row">	
-  							<div className="col-md-12">
-  								<div className="form-group">
-  									<label className="col-form-label col-form-label-lg">Match Winner</label>
-                    <select 
-                     id="winner" name="winner" className="form-control custom-select"
-                     datainitval={ this.props.match.winner }
-                     onChange={(e) => {
-                     let { currentMatchData } = this.state;
-                     currentMatchData.winner = e.target.value;
-                     console.log("e.target.value:" + e.target.value);
-                     console.log("currentMatchData.winner:" + currentMatchData.winner );
-                     this.setState({ currentMatchData });          
-                     }}
-                     defaultValue={ default_winner }
-                     >
-                     <option value="">Select Match Winner</option>
-                      {this.props.teams.map(team => (
-                      <option key={team.id} value={team.id}>{team.name}</option>
-                     ))}
-                  </select>
-  								</div>
-  							</div>
-  						</div> 
+
+                      
   						<div className="row mt-3">								
   							<div className="col-md-6">
   								<button type="submit" className="btn btn-primary btn-lg btn btn-dark-green waves-effect waves-light btn-block mx-0 my-0">Update Match</button>
@@ -855,8 +880,8 @@ export class StepFourMatchAdminForm extends Component {
                           //console.log("playerAdd:" + playerAdd);
                           var dataPlayerAddTeamOne = JSON.stringify( playerAddTeamOne ); 
                           dataPlayerAddTeamOne = JSON.parse(dataPlayerAddTeamOne);    
-                          console.log("return all add player obj records");
-                          console.log(dataPlayerAddTeamOne);
+                          //console.log("return all add player obj records");
+                          //console.log(dataPlayerAddTeamOne);
                           this.props.addPlayerStats( dataPlayerAddTeamOne );
                           }}
                           className="ml-2 btn btn-primary btn-sm btn btn-deep-purple waves-effect waves-light">Add Player
@@ -1394,8 +1419,14 @@ export class StepFourMatchAdminForm extends Component {
               {this.props.matches.map(listmatch => (
                 <tr key={listmatch.id} className={ this.props.valueProps.match == listmatch.id ? 'table-dark' : '' }>
                   <td className="text-center">{listmatch.id}</td>
+                  
                   <td className="text-center">{listmatch.match_order}</td>
+                  { ( (listmatch.team_one_score  == listmatch.team_two_score) && (String(listmatch.active) == 'false') ) ?
+                  <td>Draw/Tie</td>
+                  :
                   <td>{ jsonQuery('[id=' + listmatch.winner + '].short_name', { data: this.props.teams }).value }</td>
+                  }
+                                                                        
                   <td className={`${'text-center'} ${ jsonQuery('[id=' + listmatch.team_one_faction + '].htmlcolorvalue', { data: this.props.gamefactions }).value }`} >{ listmatch.team_one_score }</td>  
                   <td className={`${'text-center'} ${ jsonQuery('[id=' + listmatch.team_two_faction + '].htmlcolorvalue', { data: this.props.gamefactions }).value }`} >{ listmatch.team_two_score }</td>  
                   <td>{ jsonQuery('[id=' + listmatch.gamemode + '].name', { data: this.props.gamemodes }).value } </td>

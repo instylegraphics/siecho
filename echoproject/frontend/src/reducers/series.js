@@ -21,11 +21,11 @@ export default function (state = initialState, action) {
     case UPDATE_SERIES_END: {
       const series = state.series.map(el => {
           if (el.id === action.payload.id) {
-              console.log("inside UPDATE_SERIES_END");
-              console.log("action.payload.id:" + action.payload.id);
-              console.log("action.payload.active:" + action.payload.active);
-              console.log("action.payload.ended:" + action.payload.ended);
-              console.log("action.payload:" + JSON.stringify(action.payload) );
+              //console.log("inside UPDATE_SERIES_END");
+              //console.log("action.payload.id:" + action.payload.id);
+              //console.log("action.payload.active:" + action.payload.active);
+              //console.log("action.payload.ended:" + action.payload.ended);
+         //console.log("action.payload:" + JSON.stringify(action.payload) );
               //active: action.payload.active;
               //ended: action.payload.ended;
               //const style = { el, [action.payload.property]: action.payload.value };
@@ -49,8 +49,8 @@ export default function (state = initialState, action) {
                };
               //return { el, style };
           } else {
-              console.log("else inside UPDATE_SERIES_END");
-              console.log("el.id:" + el.id);
+              //console.log("else inside UPDATE_SERIES_END");
+              //console.log("el.id:" + el.id);
               return el;
               
           }

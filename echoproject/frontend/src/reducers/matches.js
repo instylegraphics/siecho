@@ -33,12 +33,12 @@ export default function (state = initialState, action) {
   case UPDATE_MATCHES: {
       const matches = state.matches.map(mlist => {
           if (mlist.id === action.payload.id) {
-              console.log("inside UPDATE_MATCHES");
+              /*console.log("inside UPDATE_MATCHES");
               console.log("action.payload.id:" + action.payload.id);
               console.log("action.payload.active:" + action.payload.active);
               console.log("action.payload.ended:" + action.payload.ended);
               console.log("action.payload:" + JSON.stringify(action.payload) );
- 
+              */ 
               return {
               id: action.payload.id,
               match_order: action.payload.match_order,
@@ -57,8 +57,8 @@ export default function (state = initialState, action) {
               winner: action.payload.winner           
                };
           } else {
-              console.log("else inside UPDATE_MATCHES");
-              console.log("mlist.id:" + mlist.id);
+              //console.log("else inside UPDATE_MATCHES");
+              //console.log("mlist.id:" + mlist.id);
               return mlist;
           }
       });

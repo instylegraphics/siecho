@@ -104,7 +104,7 @@ export const updateSeriesEnd = series => (dispatch, getState) => {
   axios
     .put("/si/series/" + series.id + "/", series, tokenConfig(getState))
     .then(res => {
-      dispatch(createMessage({ deleteSeries: "Series Updated" }));
+      dispatch(createMessage({ updateSeriesEnd: "Series Ended" }));
       dispatch({
         type: UPDATE_SERIES_END,
         payload: res.data
