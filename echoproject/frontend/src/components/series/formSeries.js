@@ -261,7 +261,13 @@ export class FormSeries extends Component {
                     <tr key={listseries.id}>
                       <td className="text-center">{listseries.id}</td>
                       <td>{listseries.name}</td>
+                      
+                      { ( ( listseries.team_one_score == listseries.team_two_score) && (String(listseries.ended) == 'true') && (String(listseries.active) == 'false') ) ?
+                      <td>Draw/Tie</td>
+                      :
                       <td>{ jsonQuery('[id=' + listseries.winner + '].short_name', { data: this.props.teams }).value }</td>
+                      }                                
+                      
                       <td className="text-center">{listseries.best_of}</td>
                       <td>{ jsonQuery('[id=' + listseries.team_one + '].short_name', { data: this.props.teams }).value }</td>
                       <td className="text-center">{listseries.team_one_score}</td>

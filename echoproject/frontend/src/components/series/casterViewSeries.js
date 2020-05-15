@@ -582,7 +582,7 @@ export class CasterViewSeries extends Component {
                                                   <td className="text-center">{listseries.series_order}</td>
                                                   <td>{listseries.name}</td>
               
-                                                  { ( ( listseries.team_one_score == listseries.team_two_score) && (String(listseries.ended) == 'true') ) ?
+                                                  { ( ( listseries.team_one_score == listseries.team_two_score) && (String(listseries.ended) == 'true') && (String(listseries.active) == 'false') ) ?
                                                   <td>Draw/Tie</td>
                                                   :
                                                   <td>{ jsonQuery('[id=' + listseries.winner + '].short_name', { data: this.props.teams }).value }</td> 

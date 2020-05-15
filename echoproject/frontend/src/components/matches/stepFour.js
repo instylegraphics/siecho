@@ -1420,7 +1420,7 @@ export class StepFourMatchAdminForm extends Component {
                 <tr key={listmatch.id} className={ this.props.valueProps.match == listmatch.id ? 'table-dark' : '' }>
                   <td className="text-center">{listmatch.id}</td>
                   <td className="text-center">{listmatch.match_order}</td>
-                  { ( (listmatch.team_one_score  == listmatch.team_two_score) && (String(listmatch.active) == 'false') ) ?
+                  { ( (listmatch.team_one_score  == listmatch.team_two_score) && (String(listmatch.ended) == 'true') && (String(listmatch.active) == 'false') ) ?
                   <td>Draw/Tie</td>
                   :
                   <td>{ jsonQuery('[id=' + listmatch.winner + '].short_name', { data: this.props.teams }).value }</td>
